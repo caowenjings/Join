@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="180dp">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+
+            android:id="@+id/tv_stadiumname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="5dp"
+            android:textSize="20dp"
+            android:textColor="@color/colorblack"/>
+
+        <TextView
+            android:id="@+id/tv_place"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="30dp"
+            android:textSize="15dp"
+            android:textColor="@color/colorblack"/>
+
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="30dp"
+            android:textSize="15dp"
+            android:textColor="@color/colorblack" />
+
+        <TextView
+            android:id="@+id/tv_time_order"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="30dp"
+            android:textSize="15dp"
+            android:textColor="@color/colorblack" />
+
+        <Button
+            android:id="@+id/btn_cancel"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:textColor="@color/colorwhite"
+            android:textSize="20dp"
+            android:background="@color/colorblue"
+            android:text="删除"/>
+
+    </LinearLayout>
+
+</LinearLayout>

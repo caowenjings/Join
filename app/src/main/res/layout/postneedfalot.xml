@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/title_top"></include>
+
+<LinearLayout
+    android:layout_marginTop="10dp"
+    android:layout_width="match_parent"
+    android:layout_height="60dp">
+    <TextView
+        style="@style/PostneedTextview"
+        android:text="场馆:" />
+    <TextView
+        android:id="@+id/tv_stadiumname"
+        android:layout_weight="1"
+       style="@style/PostneedTextview" />
+    <Button
+        android:id="@+id/btn_stadiumname"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:background="@color/colorblue"
+        android:text="选择场馆"
+        android:layout_margin="10dp"/>
+</LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+        <TextView
+            style="@style/PostneedTextview"
+            android:text="日期:" />
+        <TextView
+            android:id="@+id/tv_date"
+            android:layout_weight="1"
+            style="@style/PostneedTextview" />
+        <Button
+            android:id="@+id/btn_date"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:background="@color/colorblue"
+            android:text="选择日期"
+            android:layout_margin="10dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+        <TextView
+            style="@style/PostneedTextview"
+            android:text="时间:" />
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_weight="1"
+            style="@style/PostneedTextview" />
+        <Button
+            android:id="@+id/btn_time"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:background="@color/colorblue"
+            android:text="选择时间"
+            android:layout_margin="10dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+        <TextView
+            style="@style/PostneedTextview"
+            android:text="人数:" />
+        <TextView
+            android:id="@+id/tv_num"
+            android:layout_weight="1"
+            style="@style/PostneedTextview" />
+        <Button
+            android:id="@+id/btn_num"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:background="@color/colorblue"
+            android:text="选择人数"
+            android:layout_margin="10dp"/>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+        <TextView
+            style="@style/PostneedTextview"
+            android:text="备注:" />
+
+        <EditText
+            android:id="@+id/et_remark"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="若需要可填写"
+            android:layout_margin="10dp"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_sumbit"
+        android:layout_marginTop="30dp"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:text="提 交"
+        android:textSize="20dp"
+        android:background="@color/colorblue"
+        android:layout_gravity="center_horizontal"/>
+
+</LinearLayout>

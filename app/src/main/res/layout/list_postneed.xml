@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="170dp">
+
+   <LinearLayout
+       android:orientation="vertical"
+       android:layout_marginTop="10dp"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent">
+      <TextView
+          android:id="@+id/tv_stadiumname"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="5dp"
+          android:textSize="20sp"
+          android:textColor="@color/colorblack"/>
+
+       <TextView
+           android:id="@+id/tv_time"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_marginTop="5dp"
+           android:text="15sp"
+           android:layout_marginLeft="60dp"/>
+
+       <TextView
+           android:id="@+id/tv_num"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_marginTop="5dp"
+           android:text="15sp"
+           android:layout_marginLeft="60dp"/>
+       <TextView
+           android:id="@+id/tv_num_join"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_marginTop="5dp"
+           android:text="15sp"
+           android:layout_marginLeft="60dp"/>
+       <TextView
+           android:id="@+id/tv_remark"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_marginTop="5dp"
+           android:text="15sp"
+           android:layout_marginLeft="60dp"/>
+
+       <Button
+           android:id="@+id/btn_delete"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="删除"
+          android:layout_marginLeft="280dp"
+           android:background="@color/colorblue"/>
+   </LinearLayout>
+</LinearLayout>
+

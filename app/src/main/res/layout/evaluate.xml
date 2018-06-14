@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="50dp"
+      android:background="@color/colorblue">
+
+      <ImageView
+          android:id="@+id/iv_back"
+          android:layout_width="40dp"
+          android:layout_height="wrap_content"
+          android:layout_centerVertical="true"
+          android:layout_alignParentLeft="true"
+          android:src="@drawable/go_back_selected"/>
+      <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="60dp"
+          android:layout_centerVertical="true"
+          android:text="评价"
+          android:textSize="25dp"
+          android:textColor="@color/colorwhite"/>
+      <TextView
+          android:id="@+id/tv_fabu"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentRight="true"
+          android:layout_centerVertical="true"
+          android:textSize="20sp"
+          android:text="发布"
+          android:textColor="@color/colorwhite"/>
+  </RelativeLayout>
+
+
+
+    <LinearLayout
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="场馆名："
+            android:textSize="18sp"
+            android:textColor="@color/colorblack"/>
+        <TextView
+            android:layout_margin="10dp"
+            android:id="@+id/tv_stadiumname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:textSize="18sp"
+            android:textColor="@color/colorblack"/>
+    </LinearLayout>
+
+    <ImageView
+        android:layout_margin="10dp"
+        android:id="@+id/iv_picture"
+        android:layout_marginLeft="40dp"
+        android:layout_width="300dp"
+        android:layout_height="100dp"
+        android:padding="5dp"/>
+
+    <View
+        android:layout_margin="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@android:color/darker_gray"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="160dp"
+        android:layout_margin="10dp"
+        android:background="@drawable/border">
+
+        <EditText
+            android:id="@+id/et_evaluate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:hint="这次场馆体验满足你的期待吗？说说你的心得，分享给大家吧"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@android:color/darker_gray"/>
+
+    <TextView
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:text="评价星级"
+        android:textColor="@color/colorblack"/>
+    <RatingBar
+        android:layout_marginLeft="90dp"
+        android:id="@+id/rb_ratbar"
+        style="@style/bookingRatingBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#00000000"
+        android:numStars="5" />
+
+</LinearLayout>

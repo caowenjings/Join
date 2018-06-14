@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/title_top"></include>
+
+
+    <RadioGroup
+        android:id="@+id/rg_userorder"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="25dp">
+
+        <RadioButton
+            android:id="@+id/rb_userorder"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:button="@null"
+            android:text="待评价"
+            android:textSize="15sp"
+            android:gravity="center_horizontal"
+            android:paddingTop="5dp"
+            android:textStyle="bold"
+            android:textColor="@drawable/btn_radio_txt"
+            android:background="@drawable/btn_radio"/>
+        <RadioButton
+            android:id="@+id/rb_pastuser"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:button="@null"
+            android:text="已评价"
+            android:textSize="15sp"
+            android:gravity="center_horizontal"
+            android:paddingTop="5dp"
+            android:textStyle="bold"
+            android:textColor="@drawable/btn_radio_txt"
+            android:background="@drawable/btn_radio"/>
+    </RadioGroup>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/view_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:persistentDrawingCache="animation"/>
+</LinearLayout>
+

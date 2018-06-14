@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!--轮播图banner-->
+    <com.youth.banner.Banner
+        android:id="@+id/banner"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:layout_margin="4dp"
+        app:indicator_width="10dp"
+        app:indicator_height="10dp"
+        app:indicator_drawable_unselected="@color/colorwhite"
+        app:indicator_drawable_selected="@color/colorblue"></com.youth.banner.Banner>
+
+    <RelativeLayout
+        android:id="@+id/lout2"
+        android:layout_below="@+id/banner"
+        android:layout_width="match_parent"
+        android:layout_height="180dp">
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewpager"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/background"/>
+
+        <LinearLayout
+            android:id="@+id/dots"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:background="?android:attr/listDivider">
+    </View>
+
+    <LinearLayout
+        android:id="@+id/lout3"
+        android:layout_below="@+id/lout2"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:background="@color/colorYellow">
+        <TextView
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="公告栏"
+            android:textSize="18dp"
+            android:ems="1"/>
+        <View
+            android:layout_width="2px"
+            android:layout_height="fill_parent"
+            android:background="@color/colorqianhui">
+        </View>
+        <ViewFlipper
+            android:layout_marginLeft="10dp"
+            android:layout_gravity="center_vertical"
+            android:id="@+id/flipper"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:autoStart="true"
+            android:flipInterval="3000"
+            android:inAnimation="@anim/gonggao_up_in"
+            android:outAnimation="@anim/gonggao_up_out"></ViewFlipper>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:background="@color/colorqianhui">
+    </View>
+
+
+    <TextView
+        android:id="@+id/tv"
+        android:layout_below="@+id/lout3"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:text="@string/stadium_list"
+        android:textSize="15sp"
+        android:textColor="@color/colorblack"
+        android:background="@color/color_qianYellow"/>
+
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_below="@+id/tv"
+        android:id="@+id/rv_stadium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </android.support.v7.widget.RecyclerView>
+
+</RelativeLayout>

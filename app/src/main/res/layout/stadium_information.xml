@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorblue">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:src="@drawable/go_back_selected" />
+
+        <TextView
+            android:layout_weight="1"
+            android:id="@+id/tv_stadiumname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="25dp"
+            android:textColor="@color/colorwhite"
+            android:gravity="center"
+            android:layout_gravity="center_vertical"/>
+
+        <ToggleButton
+            android:id="@+id/btn_collection"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:background="@drawable/stadium_collection"
+            android:layout_gravity="center_vertical"
+            android:textOn=""
+            android:textOff=""/>
+
+        <ImageView
+            android:id="@+id/btn_share"
+            android:layout_margin="10dp"
+            android:layout_width="32dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/stadium_share"
+            android:layout_gravity="center_vertical"/>
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/lout2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <RelativeLayout
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/icon_stadium"
+                        android:layout_width="match_parent"
+                        android:layout_height="110dp"
+                        android:layout_margin="10dp"
+                        android:scaleType="fitXY" />
+                    <!--不保持原图大小，拉伸填充满-->
+
+                        <TextView
+                            android:id="@+id/tv_picture_num"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:textColor="@color/colorwhite"
+                            android:background="@color/colorblack"
+                            android:textSize="15sp"
+                            android:layout_alignParentBottom="true"
+                            android:layout_alignParentRight="true"/>
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="20dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tv_stadiumname1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
+                            android:textColor="@color/colorblack"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+
+                        <RatingBar
+                            android:id="@+id/rb_ratbar"
+                            style="@style/bookingRatingBar"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:background="#00000000"
+                            android:isIndicator="true"
+                            android:numStars="5"
+                            android:rating="3.5" />
+
+                        <TextView
+                            android:id="@+id/tv_stadiumtype"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:textSize="15sp" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="#60f79429" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="end">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:src="@drawable/stadium_address" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tv_stadiumaddress"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="5dp"
+                        android:layout_weight="7"
+                        android:gravity="center_vertical"
+                        android:textSize="18dp"
+                        android:textColor="@color/colorblack"/>
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <View
+                android:id="@+id/v1"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_below="@+id/lout2"
+                android:background="#60f79429" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/order_biankuang1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:textColor="@color/colorblack"
+                    android:text="场馆信息：" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#33000000" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="30dp"
+                        android:gravity="center_vertical"
+                        android:text="场馆面积：" />
+
+                    <TextView
+                        android:id="@+id/tv_area"
+                        style="@style/stadiuminformation" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="30dp"
+                        android:gravity="center_vertical"
+                        android:text="营业时间：" />
+
+                    <TextView
+                        android:id="@+id/tv_opentime"
+                        style="@style/stadiuminformation" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="30dp"
+                        android:gravity="center_vertical"
+                        android:text="可容纳的人数：" />
+
+                    <TextView
+                        android:id="@+id/tv_num"
+                        style="@style/stadiuminformation" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="30dp"
+                        android:gravity="center_vertical"
+                        android:text="是否室内：" />
+
+                    <TextView
+                        android:id="@+id/tv_indoor"
+                        style="@style/stadiuminformation" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="30dp"
+                        android:gravity="center_vertical"
+                        android:text="是否有空调：" />
+                    <TextView
+                        android:id="@+id/tv_aircondition"
+                        style="@style/stadiuminformation" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorqianhui" />
+
+            <TextView
+                android:id="@+id/tv_number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:background="@color/colorblue"
+                android:gravity="center_horizontal"
+                android:textSize="15sp"
+                android:textColor="@color/colorblack"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/recycler_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_noevaluate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:textSize="18sp"
+                    android:layout_marginTop="40dp"
+                    android:textColor="@color/colorblack"/>
+
+        </LinearLayout>
+    </RelativeLayout>
+</ScrollView>
+
+
+        <Button
+            android:id="@+id/btn_order"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="立即预约"
+            android:textSize="20dp"
+            android:background="@drawable/stadium_booking_biankuang"
+            android:layout_gravity="bottom"
+            android:layout_margin="20dp"/>
+
+    </FrameLayout>
+
+</LinearLayout>

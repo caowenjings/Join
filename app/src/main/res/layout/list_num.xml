@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:text="人数选择"
+        android:textSize="30dp"
+        android:textColor="@color/colorwhite"
+        android:background="@color/colorAccent"/>
+
+
+    <LinearLayout
+        android:layout_marginTop="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <NumberPicker
+            android:layout_marginLeft="150dp"
+             android:id="@+id/numberPicker"
+             android:layout_width="80dp"
+             android:layout_height="100dp"
+             android:layout_gravity="center_vertical" />
+        <TextView
+            android:layout_marginLeft="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="位"
+            android:textColor="@color/colorAccent"
+            android:textSize="20dp"
+            android:layout_gravity="center_vertical"/>
+
+
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:layout_marginTop="30dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/btn_sure"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/colorAccent"
+            android:textSize="20dp"
+            android:text="确 定"
+            android:layout_alignParentRight="true"/>
+    </RelativeLayout>
+
+</LinearLayout>

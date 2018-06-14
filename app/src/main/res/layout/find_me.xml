@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/title_top"></include>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_marginLeft="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/find_me_touxiang" />
+            <TextView
+                android:id="@+id/user_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="mingzi"
+                android:textSize="20sp"
+                android:textColor="@color/colorblack"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_horizontal"/>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:divider="@drawable/line"
+            android:orientation="vertical"
+            android:showDividers="middle|end"
+            android:background="@drawable/stadium_biankuang"
+            android:layout_margin="15dp">
+
+            <TextView
+                android:id="@+id/stadium_name"
+                style="@style/find_me_textview"
+                android:text="22"/>
+
+            <TextView
+                android:id="@+id/tv_time"
+                style="@style/find_me_textview"
+                android:text="22"/>
+            <TextView
+                android:id="@+id/tv_num"
+                style="@style/find_me_textview"
+                android:text="22"/>
+            <TextView
+                android:id="@+id/tv_num_join"
+                style="@style/find_me_textview"
+                android:text="22"/>
+            <TextView
+                android:id="@+id/tv_remark"
+                style="@style/find_me_textview"
+                android:text="22"/>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,112 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="title">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- alertDialog animation 样式 -->
+    <style name="popupAnimation" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/dialog_in</item>
+        <item name="android:windowExitAnimation">@anim/dialog_out</item>
+    </style>
+
+    <!-- 星星的样式 -->
+    <style name="bookingRatingBar" parent="@android:style/Widget.ActionBar">
+        <item name="android:progressDrawable">@drawable/ratingstars</item>//默认图片
+        <item name="android:minHeight">20dp</item>
+        <item name="android:maxHeight">20dp</item>
+    </style>
+
+    <!-- Dialog 主界面城市搜索框样式 -->
+    <style name="selectDialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowNoTitle">true</item>//无标题
+        <item name="android:windowBackground">@color/transparent</item>
+    </style>
+
+    <!-- stadium里面的 -->
+    <style name="stadiuminformation">
+        <item name="android:layout_margin">5dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@android:color/black</item>
+    </style>
+
+    <!-- 选择场地 -->
+    <style name="stadiumorder_button">
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@color/colorblue</item>
+        <item name="android:layout_margin">2dp</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <!-- 选择场地 -->
+    <style name="stadiumorder_text">
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">18dp</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:layout_margin">10dp</item>
+    </style>
+
+    <!-- 选择场地Dialog的样式 -->
+    <style name="PlaceDialog" parent="Theme.AppCompat.DayNight.Dialog.MinWidth">
+        <item name="android:windowAnimationStyle">@style/PlaceDialogAnimation</item>
+    </style>
+
+    <style name="PlaceDialogAnimation">
+        <item name="android:windowEnterAnimation">@anim/dialog_in</item>
+        <item name="android:windowExitAnimation">@anim/dialog_out</item>
+    </style>
+
+    <!-- findfragment里面的线性布局 -->
+    <style name="FindLinerloayout">
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_marginLeft">20dp</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <!--postneedfloat里面的textview -->
+
+<style name="PostneedTextview" >
+    <item name="android:layout_margin">10dp</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:textColor">@color/colorblack</item>
+    <item name="android:textSize">20dp</item>
+    <item name="android:layout_marginLeft">10dp</item>
+</style>
+
+    <style name="find_me_textview">
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:textColor">@color/colorblack</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:layout_marginLeft">100dp</item>
+        <item name="android:layout_marginTop">5dp</item>
+    </style>
+
+
+</resources>
+
+
+

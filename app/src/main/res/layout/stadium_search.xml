@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorblue">
+
+        <ImageView
+            android:id="@+id/tv_back"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/go_dack_selector" />
+
+        <EditText
+            android:id="@+id/et_search"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="请输入场馆名字"
+            android:drawablePadding="40dp"
+            android:paddingLeft="20dp"
+            android:textSize="20dp"
+            android:drawableLeft="@drawable/stadium_search"
+            android:background="@drawable/searchstadium_biankuang"
+            android:imeOptions="actionSearch"
+            android:singleLine="true"
+            android:lines="1" />
+
+        <ImageView
+            android:id="@+id/iv_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/cha"
+            android:visibility="gone"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
+
+    </LinearLayout>
+
+</LinearLayout>
