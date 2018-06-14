@@ -26,6 +26,7 @@
             android:layout_height="40dp"
             android:textSize="18dp"
             android:hint="请输入你的昵称"
+            android:gravity="center"
             android:background="@drawable/forgive_biankuang"/>
     </LinearLayout>
 
@@ -39,7 +40,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="20dp"
+            android:textSize="16sp"
             android:text="电 话："
             android:textColor="@color/colorblack"/>
         <EditText
@@ -47,8 +48,9 @@
             android:id="@+id/et_tel"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:textSize="18dp"
+            android:textSize="16sp"
             android:hint="请输入你的昵称"
+            android:gravity="center"
             android:background="@drawable/forgive_biankuang"/>
     </LinearLayout>
 
@@ -62,28 +64,29 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="20dp"
-            android:text="新密码："
+            android:textSize="16sp"
+            android:text="真实姓名："
             android:textColor="@color/colorblack"/>
         <EditText
             android:layout_marginTop="10dp"
-            android:id="@+id/et_new_password"
+            android:id="@+id/et_realname"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:textSize="18dp"
-            android:hint="请输入你的密码"
+            android:textSize="16sp"
+            android:hint="请输入你的真实姓名"
+            android:gravity="center"
             android:background="@drawable/forgive_biankuang"/>
     </LinearLayout>
 
     <Button
-        android:id="@+id/btn_sure"
+        android:id="@+id/btn_tijiao"
         android:layout_marginTop="30dp"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="确 定"
-        android:textSize="25dp"
+        android:text="提 交"
+        android:textSize="20sp"
         android:background="@drawable/forgive_button_biankuang"/>
 
 

@@ -44,4 +44,5 @@ public class Conatant {
     public static String URL_GETEVALUATEINFORMATION = URL+"GetEvaluateInformation_Servlet";
     public static String URL_JOINEDUSERINFORMATION = URL+"JoinedUserInformation_Servlet";
     public static String URL_UPDATEPROFILE = URL+"UpdateProfile_Servlet";
+    public static String URL_GETPASSWORD = URL+"ForgetPassword_Servlet";
 }

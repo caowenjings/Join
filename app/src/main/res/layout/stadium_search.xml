@@ -13,11 +13,13 @@
             android:id="@+id/tv_back"
             android:layout_width="32dp"
             android:layout_height="32dp"
+            android:layout_gravity="center_vertical"
             android:src="@drawable/go_dack_selector" />
 
         <EditText
             android:id="@+id/et_search"
             android:layout_weight="1"
+            android:layout_margin="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="请输入场馆名字"
@@ -25,7 +27,7 @@
             android:paddingLeft="20dp"
             android:textSize="20dp"
             android:drawableLeft="@drawable/stadium_search"
-            android:background="@drawable/searchstadium_biankuang"
+            android:background="@color/colorwhite"
             android:imeOptions="actionSearch"
             android:singleLine="true"
             android:lines="1" />

@@ -59,6 +59,7 @@ public class SearchStadium extends AppCompatActivity {
     private User user;
     private String city, stadiumname;
     private Stadium stadium;
+    private String type;
 
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
     @Override
@@ -84,23 +85,33 @@ public class SearchStadium extends AppCompatActivity {
 
     private void initData() {
         user = (User) getIntent().getSerializableExtra("user");
-        //stadiumname = (String) getIntent().getSerializableExtra("stadiumname");
         city = (String) getIntent().getSerializableExtra("city");
-        //stadiumname =String.valueOf(stadium.getStadiumname());
+        type = getIntent().getStringExtra("type");
+        type = String.valueOf("type");
+
         tv_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
+
         iv_Delete.setOnClickListener(new View.OnClickListener() {//清空editview
             @Override
             public void onClick(View v) {
                 et_Search.setText("");
             }
         });
-        editTextSearchListener();
+      //  editTextSearchListener();
+        if(!type.equals("")){
+            Search(type,city);
+            editTextSearchListener();
+        }else {
+            editTextSearchListener();
+        }
     }
+
+
 
     private void editTextSearchListener() {//给软键盘添加动作监听
        et_Search.setOnEditorActionListener(new TextView.OnEditorActionListener() {

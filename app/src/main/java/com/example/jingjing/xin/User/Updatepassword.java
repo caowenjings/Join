@@ -221,3 +221,143 @@ public class Updatepassword extends AppCompatActivity  {
                     }else {
                       updatepassword(userId,newpassword);
 */
+
+/*
+ private EditText et_password_old;
+    private EditText et_password_new;
+    private EditText et_confire_password_new;
+    private LinearLayout lout_passwordold;
+    private Button btn_submit;
+    private ImageView icon_back;
+    private User user;
+    private int method=0;
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_update_password);
+        initView();
+        if(FindFragment.isWiFi(this) || FindFragment.isMobile(this)){
+            initData();
+        }else {
+            Toast.makeText(this,"网络未连接,请检查网络",Toast.LENGTH_SHORT).show();
+        }
+
+
+    }
+
+    private void initView() {
+        lout_passwordold = findViewById(R.id.lout_password);
+        et_password_old = findViewById(R.id.et_password_old);
+        et_password_new = findViewById(R.id.et_password_new);
+        et_confire_password_new = findViewById(R.id.et_confire_password_new);
+        btn_submit = findViewById(R.id.btn_submit);
+        icon_back = findViewById(R.id.icon_back);
+
+        icon_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+    }
+
+    private void initData() {
+        user = (User) getIntent().getSerializableExtra("user");
+        method = (int) getIntent().getSerializableExtra("method");
+        if(method==1){
+         et_password_old.setText(user.getPassword());
+         lout_passwordold.setVisibility(View.GONE);
+        }
+        btn_submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!(et_password_old.getText().toString().equals(""))
+                        && !(et_password_new.getText().toString().equals(""))
+                        && !(et_confire_password_new.getText().toString().equals(""))) {
+                    if (user.getPassword().equals(et_password_old.getText().toString())) {
+                        if (et_password_new.getText().toString().equals(et_confire_password_new.getText().toString())) {
+                            updatePassword(user.getUserId(), et_password_new.getText().toString());
+                        } else {
+                            et_password_new.setText("");
+                            et_confire_password_new.setText("");
+                            Toast.makeText(UpdatePassword.this, "两次输入密码不一致，请重新输入", Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        et_password_old.setText("");
+                        Toast.makeText(UpdatePassword.this, "旧密码输入错误.请重新输入", Toast.LENGTH_SHORT).show();
+                    }
+
+                } else {
+                    Toast.makeText(UpdatePassword.this, "每项不能为空", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+
+
+    }
+
+    private void updatePassword(int userId, String password) {
+        String loginUrl = URL_UPDATEPASSWORD;
+        new UpdatePasswordAsyncTask().execute(loginUrl, String.valueOf(userId), password);
+    }
+
+    private class UpdatePasswordAsyncTask extends AsyncTask<String, Integer, String> {
+        public UpdatePasswordAsyncTask() {
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            Response response = null;
+            String results = null;
+            JSONObject json = new JSONObject();
+            try {
+                json.put("userId", params[1]);
+                json.put("password", params[2]);
+                OkHttpClient okHttpClient = new OkHttpClient();
+                RequestBody requestBody = RequestBody.create(JSON, String.valueOf(json));
+                Request request = new Request.Builder()
+                        .url(params[0])
+                        .post(requestBody)
+                        .build();
+                response = okHttpClient.newCall(request).execute();
+                results = response.body().string();
+                //判断请求是否成功
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return results;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            System.out.println(s);
+            if (s != null) {
+                try {
+                    JSONObject results = new JSONObject(s);
+                    String loginresult = results.getString("result");
+                    System.out.println("22");
+                    System.out.println(loginresult);
+                    if (!"0".equals(loginresult)) {
+                        Toast.makeText(UpdatePassword.this, "修改成功", Toast.LENGTH_SHORT).show();
+                        finish();
+                    } else {
+                        Toast.makeText(UpdatePassword.this, "修改失败", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                System.out.println("结果为空");
+                Toast.makeText(UpdatePassword.this, "网络未连接", Toast.LENGTH_LONG).show();
+
+            }
+        }
+    }
+}
+
+ */
