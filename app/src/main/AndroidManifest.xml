@@ -35,7 +35,6 @@
             android:value="iIcEspGi02SGFOp47XW9Ov7FhOTaTkxq" />
 
 
-        <activity android:name=".User.Forgivepassword_one"></activity>
         <activity android:name=".Stadium.StadiumPicture"></activity>
         <activity android:name=".Stadium.MyEvaluate"></activity>
         <activity android:name=".Stadium.EvaluateInformation"></activity>

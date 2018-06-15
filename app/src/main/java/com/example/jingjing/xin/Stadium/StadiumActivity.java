@@ -1,6 +1,7 @@
 package com.example.jingjing.xin.Stadium;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -88,10 +89,10 @@ public class StadiumActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.stadium_information);
+
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
-
+        setContentView(R.layout.stadium_information);
         initview();
         initdata();
 

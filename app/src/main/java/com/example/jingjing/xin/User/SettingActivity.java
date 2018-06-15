@@ -92,6 +92,7 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
                 Intent intent = new Intent(SettingActivity.this, Updatepassword.class);
                 Bundle mBundle1 = new Bundle();
                 mBundle1.putSerializable("user", user);
+                mBundle1.putSerializable("method",0);
                 intent.putExtras(mBundle1);
                 startActivity(intent);
                 break;

@@ -159,7 +159,7 @@ public class Updatepassword extends AppCompatActivity  {
             oldpassword = et_old_password.getText().toString();
             newpassword = et_new_password.getText().toString();
            confrimpassword= et_comfirm_password.getText().toString();
-        }
+    }
 
 
     private void updatepassword(String userId, String password) {

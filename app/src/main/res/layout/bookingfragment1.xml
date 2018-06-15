@@ -16,6 +16,8 @@
         app:indicator_drawable_unselected="@color/colorwhite"
         app:indicator_drawable_selected="@color/colorblue"></com.youth.banner.Banner>
 
+
+
     <RelativeLayout
         android:id="@+id/lout2"
         android:layout_below="@+id/banner"

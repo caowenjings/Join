@@ -69,6 +69,7 @@ public class  BookingFragment extends BaseFragment implements OnBannerListener{
     private Banner banner;
     private ArrayList bannerLists= new ArrayList<>();;
 
+
     private ViewPager viewPager;
     private List<View> mViewList;
     private List<App> mDatas;//数据源

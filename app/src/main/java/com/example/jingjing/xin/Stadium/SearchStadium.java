@@ -2,6 +2,7 @@ package com.example.jingjing.xin.Stadium;
 
 import android.app.ActionBar;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -66,8 +67,9 @@ public class SearchStadium extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
         setContentView(R.layout.stadium_search);
-
         initView();
         initData();
     }
@@ -86,8 +88,7 @@ public class SearchStadium extends AppCompatActivity {
     private void initData() {
         user = (User) getIntent().getSerializableExtra("user");
         city = (String) getIntent().getSerializableExtra("city");
-        type = getIntent().getStringExtra("type");
-        type = String.valueOf("type");
+        type = (String) getIntent().getSerializableExtra("type");
 
         tv_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,16 +104,38 @@ public class SearchStadium extends AppCompatActivity {
             }
         });
       //  editTextSearchListener();
-        if(!type.equals("")){
+        if(type != null ){
             Search(type,city);
-            editTextSearchListener();
-        }else {
-            editTextSearchListener();
+            et_Search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+                @Override
+                public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                    if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                        String stadiuname = et_Search.getText().toString();
+                        Search(stadiuname, city);
+                        return false;
+                    }
+                    return false;
+                }
+            });
+        } else {
+            et_Search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+                @Override
+                public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                    if (actionId == EditorInfo.IME_ACTION_SEARCH){
+                        String stadiuname = et_Search.getText().toString();
+                        if(stadiuname.length()==0){
+                            iv_Delete.setVisibility(View.GONE);//如果输入框里面的内容为0,就隐藏
+                        }else {
+                            iv_Delete.setVisibility(View.VISIBLE);
+                            Search(stadiuname,city);
+                            return false;
+                        }
+                    }
+                    return  false;
+                }
+            });
         }
     }
-
-
-
     private void editTextSearchListener() {//给软键盘添加动作监听
        et_Search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
            @Override
@@ -130,7 +153,6 @@ public class SearchStadium extends AppCompatActivity {
                return  false;
            }
        });
-
     }
 
     private void Search(String stadiuname, String city) {
@@ -179,7 +201,7 @@ public class SearchStadium extends AppCompatActivity {
                         Stadium stadium = new Stadium();
                         stadium.setStadiumId(js.getInt("stadiumId"));
                         stadium.setStadiumname(js.getString("stadiumname"));
-                        stadium.setStadiumtype(js.getString("stadiumtypeId"));
+                        stadium.setStadiumtype(js.getString("stadiumtypename"));
                         stadium.setArea(js.getString("area"));
                         stadium.setIndoor(js.getInt("indoor"));
                         stadium.setAircondition(js.getInt("aircondition"));
@@ -188,29 +210,15 @@ public class SearchStadium extends AppCompatActivity {
                         stadium.setAdress(js.getString("adress"));
                         stadium.setNum(js.getString("num"));
                         stadium.setOpentime(js.getString("opentime"));
+                        stadium.setClosetime(js.getString("closetime"));
+                        stadium.setGrade((float)js.getDouble("grade"));
+                        stadium.setIconnum(js.getInt("iconnum"));
                         mData.add(stadium);
-                        stadium = mDate2.get(i);
-                    }
-                    List<Stadium> mData2 = new ArrayList<>();
-                    System.out.println("22");
-                    for (int i = 0; i < mData.size(); i++) {
-                        Stadium stadium = new Stadium();
-                        stadium.setMainpicture(mData.get(i).getMainpicture());
-                        stadium.setAdress(mData.get(i).getAdress());
-                        stadium.setCity(mData.get(i).getCity());
-                        stadium.setAircondition(mData.get(i).getAircondition());
-                        stadium.setArea(mData.get(i).getArea());
-                        stadium.setStadiumname(mData.get(i).getStadiumname());
-                        stadium.setIndoor(mData.get(i).getIndoor());
-                        stadium.setNum(mData.get(i).getNum());
-                        stadium.setStadiumtype(mData.get(i).getStadiumtype());
-                        stadium.setStadiumId(mData.get(i).getStadiumId());
-                        stadium.setOpentime(mData.get(i).getOpentime());
-                        mData2.add(stadium);
+
                     }
                     recyclerView.setLayoutManager(layoutManager);
                     recyclerView.addItemDecoration(new DividerItemDecoration(SearchStadium.this, DividerItemDecoration.VERTICAL));
-                    StadiumAdapter adapter = new StadiumAdapter(SearchStadium.this, mData2,user );
+                    StadiumAdapter adapter = new StadiumAdapter(SearchStadium.this, mData,user );
                     recyclerView.setNestedScrollingEnabled(false);
                     recyclerView.setAdapter(adapter);
 
