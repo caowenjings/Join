@@ -9,7 +9,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.jingjing.xin.Bean.App;
-import com.example.jingjing.xin.Bean.AppGrid;
 import com.example.jingjing.xin.Bean.User;
 import com.example.jingjing.xin.R;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;

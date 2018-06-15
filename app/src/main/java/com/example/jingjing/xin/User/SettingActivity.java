@@ -35,7 +35,7 @@ import static com.example.jingjing.xin.constant.Conatant.URL_SELECTUSERBYUSERID;
  * Created by jingjing on 2018/5/16.
  */
 
-public class SettingActivity extends AppCompatActivity implements View.OnClickListener{
+public class SettingActivity extends AppCompatActivity implements View.OnClickListener {
 
     private TextView tv_title;
     private ImageView iv_title;
@@ -52,9 +52,9 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getWindow().setStatusBarColor(Color.TRANSPARENT);
-        android.support.v7.app.ActionBar actionBar =getSupportActionBar();
+        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
         setContentView(R.layout.setting);
 
@@ -62,17 +62,17 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
         initData();
     }
 
-    private void initView(){
-        tv_title=(TextView)findViewById(R.id.tv_title);
-        iv_title=(ImageView)findViewById(R.id.iv_title);
-        tv_back=(RelativeLayout)findViewById(R.id.tv_back);
+    private void initView() {
+        tv_title = (TextView) findViewById(R.id.tv_title);
+        iv_title = (ImageView) findViewById(R.id.iv_title);
+        tv_back = (RelativeLayout) findViewById(R.id.tv_back);
         tv_title.setText("设 置");
 
-        update_password=(ImageView)findViewById(R.id.update_password);
-        about_join=(ImageView)findViewById(R.id.about_join);
+        update_password = (ImageView) findViewById(R.id.update_password);
+        about_join = (ImageView) findViewById(R.id.about_join);
     }
 
-    private void  initData(){
+    private void initData() {
 
         user = (User) getIntent().getSerializableExtra("user");
         userId = String.valueOf(user.getUserId());
@@ -82,7 +82,31 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
 
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.tv_back:
+                finish();
+                break;
+            case R.id.update_password:
+                Intent intent = new Intent(SettingActivity.this, Updatepassword.class);
+                Bundle mBundle1 = new Bundle();
+                mBundle1.putSerializable("user", user);
+                intent.putExtras(mBundle1);
+                startActivity(intent);
+                break;
+            case R.id.about_join:
+                Intent intent1 = new Intent(SettingActivity.this, About_join.class);
+                startActivity(intent1);
+                break;
+            default:
+                break;
 
+        }
+    }
+}
+
+/*
     private void RefrshUser(String userId) {
         String loginUrl = URL_SELECTUSERBYUSERID;
         new RefrshUserAsyncTask().execute(loginUrl, userId);
@@ -141,35 +165,9 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
             } else {
                 System.out.println("结果为空");
                 Toast.makeText(SettingActivity.this, "网络未连接", Toast.LENGTH_LONG).show();
-
             }
         }
     }
 
+*/
 
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.tv_back :
-                finish();
-                break;
-            case R.id.update_password :
-                Intent intent = new Intent(SettingActivity.this,Updatepassword.class);
-                Bundle mBundle1 = new Bundle();
-                mBundle1.putSerializable("user", user);
-                intent.putExtras(mBundle1);
-                startActivity(intent);
-                break;
-            case R.id.about_join:
-                Intent intent1 = new Intent(SettingActivity.this,About_join.class);
-                startActivity(intent1);
-                break;
-
-            default:
-                break;
-
-        }
-
-    }
-}

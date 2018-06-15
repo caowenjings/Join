@@ -279,10 +279,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             }
         }
     }
+
     private void showDialog() {//忘记密码
         user = (User) getIntent().getSerializableExtra("user");
 
-        AlertDialog mDialog = new AlertDialog.Builder(this).create();
+        final AlertDialog mDialog = new AlertDialog.Builder(this).create();
         mDialog.show();
         Window window = mDialog.getWindow();
         window.setGravity(Gravity.BOTTOM);
@@ -296,7 +297,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             @Override
             public void onClick(View v) {
                Intent intent = new Intent(LoginActivity.this, ForgivePassword.class);
-                 Bundle bundle = new Bundle();
+                Bundle bundle = new Bundle();
                 bundle.putSerializable("user",user);
                 intent.putExtras(bundle);
                 startActivity(intent);
@@ -306,7 +307,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               finish();
+                mDialog.dismiss();//关闭对话框
             }
         });
 

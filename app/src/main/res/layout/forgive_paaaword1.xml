@@ -7,12 +7,7 @@
     <include layout="@layout/title_top"></include>
 
     <LinearLayout
-        android:orientation="vertical"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginLeft="30dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+      style="@style/linerLayout_forgive">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -20,47 +15,13 @@
             android:text="昵 称："
             android:textColor="@color/colorblack"/>
         <EditText
-            android:layout_marginTop="10dp"
             android:id="@+id/et_username"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:textSize="18dp"
             android:hint="请输入你的昵称"
-            android:gravity="center"
-            android:background="@drawable/forgive_biankuang"/>
+            style="@style/et_forgive" />
     </LinearLayout>
 
     <LinearLayout
-        android:orientation="vertical"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginLeft="30dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:text="电 话："
-            android:textColor="@color/colorblack"/>
-        <EditText
-            android:layout_marginTop="10dp"
-            android:id="@+id/et_tel"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:textSize="16sp"
-            android:hint="请输入你的昵称"
-            android:gravity="center"
-            android:background="@drawable/forgive_biankuang"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginLeft="30dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        style="@style/linerLayout_forgive">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -68,14 +29,24 @@
             android:text="真实姓名："
             android:textColor="@color/colorblack"/>
         <EditText
-            android:layout_marginTop="10dp"
+
             android:id="@+id/et_realname"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
+            style="@style/et_forgive"
+            android:hint="请输入你的真实姓名" />
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/linerLayout_forgive">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:textSize="16sp"
-            android:hint="请输入你的真实姓名"
-            android:gravity="center"
-            android:background="@drawable/forgive_biankuang"/>
+            android:text="电 话："
+            android:textColor="@color/colorblack"/>
+        <EditText
+            android:id="@+id/et_tel"
+            style="@style/et_forgive"
+            android:hint="请输入你的电话号码" />
     </LinearLayout>
 
     <Button

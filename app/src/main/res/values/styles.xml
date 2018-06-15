@@ -105,6 +105,27 @@
         <item name="android:layout_marginTop">5dp</item>
     </style>
 
+     <!--忘记密码里面的editview-->
+    <style name="et_forgive">
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/forgive_biankuang</item>
+    </style>
+
+    <!--忘记密码里面的linerlayout-->
+    <style name="linerLayout_forgive">
+        <item name="android:orientation">vertical</item>
+        <item name="android:layout_marginTop">20dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginRight">30dp</item>
+        <item name="android:layout_marginLeft">30dp</item>
+    </style>
+
+
 
 </resources>
 
