@@ -1,19 +1,24 @@
 package com.example.jingjing.xin.Stadium;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -61,6 +66,7 @@ public class StadiumActivity extends AppCompatActivity {
     private TextView tv_stadiumname1;
     private TextView tv_area;
     private TextView tv_stadiumtype;
+    private TextView tv_stadiumtel;
     private TextView tv_num;
     private TextView tv_indoor;
     private TextView tv_aircondition;
@@ -74,6 +80,7 @@ public class StadiumActivity extends AppCompatActivity {
     private ImageView tv_back;
     private ImageView btn_share;
     private ImageView iv_stadiumpicture;
+    private ImageView iv_tel;
     private TextView tv_picture_num;
     private RatingBar ratingBar;
     private Button btn_order;
@@ -105,8 +112,10 @@ public class StadiumActivity extends AppCompatActivity {
         tv_back = (ImageView) findViewById(R.id.iv_back);
         btn_share = (ImageView) findViewById(R.id.btn_share);
         iv_stadiumpicture = (ImageView) findViewById(R.id.icon_stadium);
+        iv_tel =(ImageView)findViewById(R.id.iv_tel);
         tv_stadiumname1 = (TextView) findViewById(R.id.tv_stadiumname1);
         tv_stadiumtype = (TextView) findViewById(R.id.tv_stadiumtype);
+        tv_stadiumtel = (TextView) findViewById(R.id.tv_stadiumtel);
         tv_area = (TextView) findViewById(R.id.tv_area);
         tv_num = (TextView) findViewById(R.id.tv_num);
         tv_indoor = (TextView) findViewById(R.id.tv_indoor);
@@ -152,6 +161,7 @@ public class StadiumActivity extends AppCompatActivity {
         tv_opentime.setText(stadium.getOpentime());
         ratingBar.setRating(stadium.getGrade());
         ratingBar.setIsIndicator(true);
+        tv_stadiumtel.setText(stadium.getStadiumtel());
         if (stadium.getIndoor() == 1) {
             tv_indoor.setText(" 是");
         } else {
@@ -225,61 +235,14 @@ public class StadiumActivity extends AppCompatActivity {
                 startActivity(intent1);
             }
         });
-    }
 
-
-    private void stadiuminformation(String stadiunmId, boolean flag) {//显示场馆的信息
-        String loadingUrl = URL_LOADINGORDER;
-        new StadiuminformationAsyncTask().execute(loadingUrl, stadiunmId);
-    }
-
-    private class StadiuminformationAsyncTask extends AsyncTask<String, Integer, String> {
-        public StadiuminformationAsyncTask() {
-        }
-
-        @Override
-        protected String doInBackground(String... params) {
-            Response response = null;
-            String results = null;
-            JSONObject json = new JSONObject();
-            try {
-                json.put("stadiumId", params[1]);
-                OkHttpClient okHttpClient = new OkHttpClient();
-                RequestBody requestBody = RequestBody.create(JSON, String.valueOf(json));
-                Request request = new Request.Builder()
-                        .url(params[0])
-                        .post(requestBody)
-                        .build();
-                response = okHttpClient.newCall(request).execute();
-                results = response.body().string();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (JSONException e) {
-                e.printStackTrace();
+        iv_tel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               showPasswordSetDailog();
             }
-            return results;
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            System.out.println("返回的数据：" + s);
-            stadium = new Stadium();
-            if (s != null) {
-                try {
-                    JSONObject json = new JSONObject(s);
-                    String js = json.getString("results");
-                    if (!"0".equals(js)) {
-
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            } else {
-                System.out.println("结果为空");
-            }
-        }
+        });
     }
-
 
     private void  collection(int stadiunmId, int userId, boolean flag) {//收藏
         String SearchUrl = null;
@@ -521,4 +484,36 @@ public class StadiumActivity extends AppCompatActivity {
         }
     }
 
+    //打电话的弹框
+    private void showPasswordSetDailog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        final AlertDialog dialog = builder.create();
+
+        View view = View.inflate(this, R.layout.tel_dialog, null);
+        // dialog.setView(view);// 将自定义的布局文件设置给dialog
+        dialog.setView(view, 0, 0, 0, 0);// 设置边距为0
+
+        final TextView tv_telnumber =(TextView)view.findViewById(R.id.tv_telnumber);
+        tv_telnumber.setText(stadium.getStadiumtel());
+        Button btn_cancel = (Button) view.findViewById(R.id.btn_cancel);
+        Button btn_ok = (Button) view.findViewById(R.id.btn_call);
+
+        btn_ok.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("MissingPermission")
+            @Override
+            public void onClick(View v) {
+                Uri uri = Uri.parse("tel:"+stadium.getStadiumtel());
+                Intent intent = new Intent(Intent.ACTION_DIAL,uri);
+                startActivity(intent);
+            }
+        });
+
+        btn_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();// 隐藏dialog
+            }
+        });
+        dialog.show();
+    }
 }

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+   android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<TextView
+    android:layout_margin="10dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:textSize="20sp"
+    android:textColor="@color/colorblack"
+    android:text="已经加入的动友："/>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_marginTop="5dp"
+        android:layout_margin="20dp"
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/border">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/user_proflie"
+            android:layout_marginLeft="30dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/find_me_touxiang"
+            android:layout_marginRight="20dp"/>
+        <TextView
+            android:text="22"
+            android:id="@+id/tv_username"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:textSize="18sp"
+            android:textColor="@color/colorblack"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_vertical"/>
+    </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text="22"
+                android:id="@+id/tv_usersex"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:gravity="center_vertical"
+                android:layout_weight="1"
+                android:layout_marginLeft="100dp"/>
+            <TextView
+                android:text="2222222"
+                android:id="@+id/tv_usertel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:gravity="center_vertical|center_horizontal"
+                android:layout_weight="1"/>
+        </LinearLayout>
+
+        <TextView
+            android:layout_weight="1"
+            android:id="@+id/tv_call"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:layout_gravity="right"
+            android:gravity="center_vertical|center_horizontal"
+            android:text="联系"
+            android:padding="5dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/colorblue"/>
+    </LinearLayout>
+</LinearLayout>

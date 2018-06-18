@@ -2,7 +2,9 @@ package com.example.jingjing.xin.Adapter;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +15,8 @@ import android.widget.Toast;
 
 import com.example.jingjing.xin.Bean.Book;
 import com.example.jingjing.xin.Bean.Need;
+import com.example.jingjing.xin.Bean.User;
+import com.example.jingjing.xin.Find.MyFindinformation;
 import com.example.jingjing.xin.R;
 
 import org.json.JSONException;
@@ -76,6 +80,18 @@ public class PostNeedAdapter extends RecyclerView.Adapter<PostNeedAdapter.ViewHo
 
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_postneed,parent,false);
         final ViewHolder holder = new ViewHolder(view);
+        holder.postneedview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int position = holder.getAdapterPosition();
+                Need need =mneed.get(position);//通过position拿到stadium实例
+                Intent intent = new Intent(mcontext,MyFindinformation.class);
+                Bundle mBundle = new Bundle();
+                mBundle.putSerializable("need",need);
+                intent.putExtras(mBundle);
+                mcontext.startActivity(intent);
+            }
+        });
         return holder;
     }
 

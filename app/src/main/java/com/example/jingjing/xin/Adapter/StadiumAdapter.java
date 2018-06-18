@@ -67,7 +67,7 @@ public class StadiumAdapter extends RecyclerView.Adapter<StadiumAdapter.ViewHold
                 Intent intent = new Intent(mContext,StadiumActivity.class);
                 Bundle mBundle = new Bundle();
                 mBundle.putSerializable("user", mUser);
-                mBundle.putSerializable("stadium", stadium);
+                mBundle.putSerializable("stadium", stadium);//传递信息给stadiunACtivity,直接显示出来
                 intent.putExtras(mBundle);
                 mContext.startActivity(intent);
             }

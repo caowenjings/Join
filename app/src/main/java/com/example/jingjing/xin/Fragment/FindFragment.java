@@ -33,6 +33,7 @@ import com.example.jingjing.xin.Base.BaseFragment;
 import com.example.jingjing.xin.Bean.Need;
 import com.example.jingjing.xin.Bean.User;
 import com.example.jingjing.xin.Find.FindSport;
+import com.example.jingjing.xin.Find.MyFindinformation;
 import com.example.jingjing.xin.Find.PostNeed;
 import com.example.jingjing.xin.Find.PostNeedFalot;
 import com.example.jingjing.xin.R;
@@ -69,11 +70,13 @@ public class FindFragment extends BaseFragment  implements OnBannerListener{
     private ArrayList findlists;
     private LinearLayout add_sport;
     private LinearLayout find_soprt;
+    private LinearLayout find_information;
     private RecyclerView recyclerView;
     private LinearLayoutManager layoutManager;
     private SwipeRefreshLayout swipeRefresh;
     private TextView tv_nofind;
     private User user;
+    private Need need;
     private String city;
     private LocationClient mLocationClient;
 
@@ -86,6 +89,7 @@ public class FindFragment extends BaseFragment  implements OnBannerListener{
         find_banner = (Banner) view.findViewById(R.id.baner_find);
         add_sport = (LinearLayout) view.findViewById(R.id.add_sport);
         find_soprt=(LinearLayout)view.findViewById(R.id.find_sport);
+        find_information=(LinearLayout)view.findViewById(R.id.find_information);
         recyclerView=(RecyclerView) view.findViewById(R.id.recycler_view);
         swipeRefresh=(SwipeRefreshLayout)view.findViewById(R.id.swipe);
         tv_nofind=(TextView)view.findViewById(R.id.tv_nofind);
@@ -98,6 +102,8 @@ public class FindFragment extends BaseFragment  implements OnBannerListener{
         setfindBanner();//轮播图
 
         user = (User) getActivity().getIntent().getSerializableExtra("user");
+        need = (Need) getActivity().getIntent().getSerializableExtra("need");
+
 
 
         add_sport.setOnClickListener(new View.OnClickListener() {//发布需求
@@ -118,6 +124,18 @@ public class FindFragment extends BaseFragment  implements OnBannerListener{
                 Bundle mbundle = new Bundle();
                 mbundle.putSerializable("user",user);
                 mbundle.putSerializable("city", "成都市");
+                intent.putExtras(mbundle);
+                startActivity(intent);
+            }
+        });
+
+        find_information.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), MyFindinformation.class);
+                Bundle mbundle = new Bundle();
+                mbundle.putSerializable("user",user);
+                mbundle.putSerializable("need",need);
                 intent.putExtras(mbundle);
                 startActivity(intent);
             }

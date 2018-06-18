@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DividerItemDecoration;
@@ -24,6 +25,7 @@ import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import com.baidu.location.LocationClient;
+import com.bumptech.glide.Glide;
 import com.example.jingjing.xin.Adapter.GridViewAdapter;
 import com.example.jingjing.xin.Adapter.MyPagerAdapter;
 import com.example.jingjing.xin.Adapter.StadiumAdapter;
@@ -36,6 +38,7 @@ import com.example.jingjing.xin.Bean.User;
 import com.example.jingjing.xin.R;
 import com.example.jingjing.xin.Stadium.SearchStadium;
 import com.example.jingjing.xin.Stadium.SerachSelectDialog;
+import com.example.jingjing.xin.Stadium.StadiumActivity;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.listener.OnBannerListener;
@@ -48,6 +51,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+
+import cn.bingoogolapple.bgabanner.BGABanner;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -64,10 +69,14 @@ import static com.example.jingjing.xin.constant.Conatant.URL_SPORTSTYPE;
 /**
  * Created by jingjing on 2018/4/24.
  */
-public class  BookingFragment extends BaseFragment implements OnBannerListener{
+public class  BookingFragment extends BaseFragment {
 
     private Banner banner;
     private ArrayList bannerLists= new ArrayList<>();;
+
+    private BGABanner  mContentBanner;
+
+
 
 
     private ViewPager viewPager;
@@ -100,7 +109,8 @@ public class  BookingFragment extends BaseFragment implements OnBannerListener{
     @Override
     protected View initView() {
         View view = View.inflate(mContext, R.layout.bookingfrgment, null);
-        banner = (Banner) view.findViewById(R.id.banner);
+       // banner = (Banner) view.findViewById(R.id.banner);
+        mContentBanner = (BGABanner)view.findViewById(R.id.bgabanner);
         viewPager = (ViewPager) view.findViewById(R.id.viewpager);
         mDots = (LinearLayout) view.findViewById(R.id.dots);
         flipper = (ViewFlipper) view. findViewById(R.id.flipper);
@@ -116,7 +126,8 @@ public class  BookingFragment extends BaseFragment implements OnBannerListener{
     @Override
     protected void initData() {
         user = (User) getActivity().getIntent().getSerializableExtra("user");
-        setBanner();//轮播图
+       // setBanner();//轮播图
+        setBGAbanner();
         LoadingGongGao();//下载公告
         LoadingCitys();//获取选择处的城市
         LoadingSportsApp();//获取spotrs图标
@@ -161,27 +172,21 @@ public class  BookingFragment extends BaseFragment implements OnBannerListener{
             }
         });
     }
-
     //banner设置轮播图
-    private void setBanner() {
-        bannerLists = new ArrayList<>();
-        bannerLists.add(R.drawable.tu_one);
-       bannerLists.add(R.drawable.tu_two);
-       bannerLists.add(R.drawable.tu_three);
-
-        banner.setDelayTime(3000);//图片间隔时间
-        banner.setImages(bannerLists);//加载图片集合
-        banner.setImageLoader(new MyLoader());
-        banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);//设置格式
-        banner.isAutoPlay(true);//自动加载
-        banner.setIndicatorGravity(BannerConfig.CENTER);//设置指示器的位置，小点点，左中右
-        banner.start(); //开始
-        banner.setOnBannerListener(this);
+    private void setBGAbanner(){
+        mContentBanner.setAdapter(new BGABanner.Adapter<ImageView,String>() {
+        @Override
+        public void fillBannerItem(BGABanner banner, ImageView imageView, @Nullable String model, int position) {
+            Glide.with(BookingFragment.this)
+                    .load(model)
+                    .placeholder(R.drawable.loading)
+                    .error(R.drawable.error)
+                    .centerCrop()
+                    .dontAnimate()
+                    .into(imageView);
+        }
+    });
     }
-    @Override
-    public void OnBannerClick(int position) {
-    }
-
 
     public void setDots() {
         for (int i = 0; i < pageCount; i++) {
@@ -481,7 +486,7 @@ public class  BookingFragment extends BaseFragment implements OnBannerListener{
         @Override
         protected void onPostExecute(String s) {
             System.out.println("返回的数据："+s);
-            List<Stadium> mData = new ArrayList<>();
+            final List<Stadium> mData = new ArrayList<>();
             if (!"null".equals(s)){
                 try {
                     JSONArray results = new JSONArray(s);
@@ -491,6 +496,7 @@ public class  BookingFragment extends BaseFragment implements OnBannerListener{
                         stadium.setStadiumId(js.getInt("stadiumId"));
                         stadium.setStadiumname(js.getString("stadiumname"));
                         stadium.setStadiumtype(js.getString("stadiumtypename"));
+                        stadium.setStadiumtel(js.optString("stadiumtel"));//没有就设置为null
                         stadium.setArea(js.getString("area"));
                         stadium.setIndoor(js.getInt("indoor"));
                         stadium.setAircondition(js.getInt("aircondition"));
@@ -504,7 +510,29 @@ public class  BookingFragment extends BaseFragment implements OnBannerListener{
                         stadium.setIconnum(js.getInt("iconnum"));
                         mData.add(stadium);
                     }
+                    List<String>mbagbanner = new ArrayList<>();//给banner加载图片，来自于场馆的图片
+                    for(int i=0; i<3;i++){
+                        mbagbanner.add(mData.get(i).getMainpicture());
+                    }
+                    List<String>mbagbanner1 = new ArrayList<>();
+                    for(int i=0; i<3;i++){
+                        mbagbanner1.add(mData.get(i).getStadiumname());
+                    }
 
+                   mContentBanner.setData(mbagbanner,mbagbanner1);
+                   mContentBanner.setDelegate(new BGABanner.Delegate() {
+                        @Override
+                        public void onBannerItemClick(BGABanner banner, View itemView, @Nullable Object model, int position) {
+                            Stadium stadium = mData.get(position);
+                            Intent intent = new Intent(getContext(), StadiumActivity.class);
+                            Bundle mbundle = new Bundle();
+                            mbundle.putSerializable("user",user);
+                            mbundle.putSerializable("stadium",stadium);
+                            intent.putExtras(mbundle);
+                            startActivity(intent);
+                        }
+                    });
+                    
                     recyclerView.setLayoutManager(linearLayoutManager);
                     recyclerView.addItemDecoration(new DividerItemDecoration(mContext,DividerItemDecoration.VERTICAL));
                     StadiumAdapter adapter = new StadiumAdapter(mContext,mData,user);

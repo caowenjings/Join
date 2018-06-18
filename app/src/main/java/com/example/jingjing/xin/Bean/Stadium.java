@@ -17,6 +17,7 @@ public class Stadium implements Serializable {
     private String closetime;
     private Float grade;
     private int iconnum;
+    private String stadiumtel;
 
     public Stadium(String mainpicture, String stadiumname, String stadiumtype, String adress) {
         this.stadiumname = stadiumname;
@@ -146,5 +147,13 @@ public class Stadium implements Serializable {
 
     public void setAircondition(int aircondition) {
         this.aircondition = aircondition;
+    }
+
+    public String getStadiumtel() {
+        return stadiumtel;
+    }
+
+    public void setStadiumtel(String stadiumtel) {
+        this.stadiumtel = stadiumtel;
     }
 }

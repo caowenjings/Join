@@ -1,6 +1,7 @@
 package com.example.jingjing.xin.Fragment;
 
 import android.os.AsyncTask;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -35,6 +36,7 @@ public class NouserorderFragment extends BaseFragment {
     private TextView tv_nouser;
     private User user;
     private LinearLayoutManager layoutManager;
+    private SwipeRefreshLayout swipe;
 
 
     private static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
@@ -44,6 +46,7 @@ public class NouserorderFragment extends BaseFragment {
         View view = View.inflate(mContext, R.layout.nouserorder_fragment, null);
         recyclerView = (RecyclerView)view.findViewById(R.id.recycler_view);
         tv_nouser = (TextView)view.findViewById(R.id.tv_nouser);
+        swipe = (SwipeRefreshLayout)view.findViewById(R.id.swipe) ;
         layoutManager = new LinearLayoutManager(getContext());
         return view;
     }
@@ -53,6 +56,14 @@ public class NouserorderFragment extends BaseFragment {
         user = (User) getActivity().getIntent().getSerializableExtra("user");
         nouserorderfragment(user);
 
+        swipe.setColorSchemeResources(R.color.colorPrimary);
+        swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                nouserorderfragment(user);
+                swipe.setRefreshing(false);
+            }
+        });
     }
 
     private void nouserorderfragment(User user){

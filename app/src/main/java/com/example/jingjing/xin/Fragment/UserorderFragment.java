@@ -7,6 +7,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,8 +39,10 @@ public class UserorderFragment extends BaseFragment {
 
     private RecyclerView recyclerView;
     private LinearLayoutManager layoutManager;
+    private LinearLayout find_information;
     private TextView tv_nobooking;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private ImageView no_find;
     private FrameLayout frame_one;
     private FrameLayout frame_wu;
     private FrameLayout frame_you;
@@ -54,11 +58,13 @@ public class UserorderFragment extends BaseFragment {
 
         recyclerView = (RecyclerView)view.findViewById(R.id.recycler_view);
         tv_nobooking = (TextView)view.findViewById(R.id.tv_nobooking);
-        recyclerView = (RecyclerView)view.findViewById(R.id.recycler_view);
+        no_find = (ImageView)view.findViewById(R.id.no_find);
         swipeRefreshLayout=(SwipeRefreshLayout)view.findViewById(R.id.swipe);
         frame_one=(FrameLayout)view.findViewById(R.id.frame_one);
         frame_wu=(FrameLayout)view.findViewById(R.id.frame_wu);
         frame_you=(FrameLayout)view.findViewById(R.id.frame_you);
+        find_information = (LinearLayout)view.findViewById(R.id.find_information);
+        find_information.setVisibility(View.GONE);//不显示顶标，区别于消息界面
         layoutManager = new LinearLayoutManager(getContext());
 
         frame_one.removeView(frame_wu);
@@ -157,6 +163,7 @@ public class UserorderFragment extends BaseFragment {
                 System.out.println("结果为空");
                 List<Book> mData2 = new ArrayList<>();
                 frame_one.addView(frame_wu);//添加布局
+                no_find.setVisibility(View.GONE);
                 tv_nobooking.setText("目前你没有预约场地");
                 recyclerView.setLayoutManager(layoutManager);
                 recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));

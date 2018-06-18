@@ -4,7 +4,7 @@
     package="com.example.jingjing.xin">
 
 
-
+    <uses-permission android:name="android.permission.CALL_PHONE"/>//打电话的用户权限
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />//进行网络定位
@@ -35,6 +35,7 @@
             android:value="iIcEspGi02SGFOp47XW9Ov7FhOTaTkxq" />
 
 
+        <activity android:name=".Find.MyFindinformation"></activity>
         <activity android:name=".Stadium.StadiumPicture"></activity>
         <activity android:name=".Stadium.MyEvaluate"></activity>
         <activity android:name=".Stadium.EvaluateInformation"></activity>
@@ -70,7 +71,6 @@
         <activity android:name=".Activity.WelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

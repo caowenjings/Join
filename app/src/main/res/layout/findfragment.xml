@@ -38,6 +38,7 @@
        android:layout_height="wrap_content">
 
       <LinearLayout
+          android:id="@+id/find_information"
          style="@style/FindLinerloayout"
           android:layout_marginLeft="40dp">
       <ImageView
