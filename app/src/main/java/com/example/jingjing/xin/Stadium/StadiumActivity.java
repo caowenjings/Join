@@ -38,6 +38,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -215,16 +216,24 @@ public class StadiumActivity extends AppCompatActivity {
             }
         });
 
-        btn_share.setOnClickListener(new View.OnClickListener() {
+        btn_share.setOnClickListener(new View.OnClickListener() {//分享场馆
             @Override
             public void onClick(View v) {
 
-               // shareText("分享场馆","热点",stadium.getStadiumname());
-                shareImg("分享场馆","热点",stadium.getStadiumname(),stadium.getMainpicture());
+                   String text = stadium.getStadiumname()
+                        +"\n地址："
+                        +tv_adress.getText().toString()
+                        +"\n项目："+stadium.getStadiumtype()
+                        +"\n场馆面积："+tv_area.getText().toString()
+                        +"\n营业时间："+tv_opentime.getText().toString()
+                        +"\n评分："+stadium.getGrade();
+                shareText("分享场馆","热点",text);
+
+              // shareImg("分享场馆","热点",stadium.getStadiumname(),stadium.getMainpicture());
             }
         });
 
-        iv_stadiumpicture.setOnClickListener(new View.OnClickListener() {
+        iv_stadiumpicture.setOnClickListener(new View.OnClickListener() {//显示更多的图片
             @Override
             public void onClick(View v) {
                 Intent intent1 = new Intent(StadiumActivity.this, StadiumPicture.class);
@@ -236,13 +245,15 @@ public class StadiumActivity extends AppCompatActivity {
             }
         });
 
-        iv_tel.setOnClickListener(new View.OnClickListener() {
+        iv_tel.setOnClickListener(new View.OnClickListener() {//打电话
             @Override
             public void onClick(View v) {
                showPasswordSetDailog();
             }
         });
     }
+
+
 
     private void  collection(int stadiunmId, int userId, boolean flag) {//收藏
         String SearchUrl = null;
@@ -306,6 +317,8 @@ public class StadiumActivity extends AppCompatActivity {
             }
         }
     }
+
+
 
     private  void iscollection(int stadiumId, int userId){//记住收藏的状态
         String SearchUrl = URL_ISCOLLECTED;
@@ -440,49 +453,51 @@ public class StadiumActivity extends AppCompatActivity {
     }
 
 
+       private void shareText(String dlgTitle, String subject, String content){//分享文本
+           if (content == null || "".equals(content)) {
+               return;
+           }
+           Intent intent = new Intent(Intent.ACTION_SEND);
+           intent.setType("text/plain");
+           if (subject != null && !"".equals(subject)) {
+               intent.putExtra(Intent.EXTRA_SUBJECT, subject);
+           }
 
-/*
-    private void shareText(String dlgTitle, String subject, String content){
-        if (content == null || "".equals(content)) {
-            return;
-        }
-        Intent intent = new Intent(Intent.ACTION_SEND);
-        intent.setType("text/plain");
-        if (subject != null && !"".equals(subject)) {
-            intent.putExtra(Intent.EXTRA_SUBJECT, subject);
-        }
+           intent.putExtra(Intent.EXTRA_TEXT, content);
 
-        intent.putExtra(Intent.EXTRA_TEXT, content);
+           // 设置弹出框标题
+           if (dlgTitle != null && !"".equals(dlgTitle)) { // 自定义标题
+               startActivity(Intent.createChooser(intent, dlgTitle));
+           } else { // 系统默认标题
+               startActivity(intent);
+           }
+       }
+       /*
+    //分享文本和照片
+        public void  shareMsg(String activityTitle, String msgTitle, String msgText, String imgPath) {
 
-        // 设置弹出框标题
-        if (dlgTitle != null && !"".equals(dlgTitle)) { // 自定义标题
-            startActivity(Intent.createChooser(intent, dlgTitle));
-        } else { // 系统默认标题
-            startActivity(intent);
-        }
-    }
-    */
-    private void shareImg(String dlgTitle, String subject, String content, String uri) {
-        if (uri == null) {
-            return;
-        }
-        Intent intent = new Intent(Intent.ACTION_SEND);
-        intent.setType("image/*");
-        intent.putExtra(Intent.EXTRA_STREAM, uri);
-        if (subject != null && !"".equals(subject)) {
-            intent.putExtra(Intent.EXTRA_SUBJECT, subject);
-        }
-        if (content != null && !"".equals(content)) {
-            intent.putExtra(Intent.EXTRA_TEXT, content);
-        }
+           Intent intent = new Intent(Intent.ACTION_SEND);
 
-        // 设置弹出框标题
-        if (dlgTitle != null && !"".equals(dlgTitle)) { // 自定义标题
-            startActivity(Intent.createChooser(intent, dlgTitle));
-        } else { // 系统默认标题
-            startActivity(intent);
-        }
-    }
+           if (imgPath == null || imgPath.equals("")) {
+               intent.setType("text/plain"); // 纯文本
+           } else
+   {
+       File f = new File(imgPath);
+
+       if (f != null && f.exists() && f.isFile()) {
+
+           intent.setType("image/jpg");
+           Uri u = Uri.fromFile(f);
+           intent.putExtra(Intent.EXTRA_STREAM, u);
+           }
+           }
+           intent.putExtra(Intent.EXTRA_SUBJECT, msgTitle);
+           intent.putExtra(Intent.EXTRA_TEXT, msgText);
+           intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+           startActivity(Intent.createChooser(intent, activityTitle));
+       }
+
+*/
 
     //打电话的弹框
     private void showPasswordSetDailog() {

@@ -62,6 +62,7 @@
       android:id="@+id/sv_gundong"
       android:layout_width="wrap_content"
       android:layout_height="match_parent">
+
       <include layout="@layout/bookingfragment1"></include>
 
     </ScrollView>

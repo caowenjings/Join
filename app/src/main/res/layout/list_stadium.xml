@@ -34,7 +34,9 @@
             android:drawablePadding="30dp"
             android:drawableLeft="@drawable/stadium_search"
             android:imeOptions="actionSearch"
+            android:singleLine="true"
             android:lines="1"/>
+
         <ImageButton
             android:id="@+id/iv_delete"
             android:layout_width="wrap_content"

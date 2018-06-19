@@ -50,7 +50,7 @@
         android:id="@+id/lout3"
         android:layout_below="@+id/lout2"
         android:layout_width="match_parent"
-        android:layout_height="65dp"
+        android:layout_height="55dp"
         android:background="@color/colorYellow">
         <TextView
             android:layout_marginLeft="10dp"
@@ -58,13 +58,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="公告栏"
-            android:textSize="18dp"
+            android:textSize="15sp"
             android:ems="1"/>
         <View
             android:layout_width="2px"
             android:layout_height="fill_parent"
             android:background="@color/colorqianhui">
         </View>
+
         <ViewFlipper
             android:layout_marginLeft="10dp"
             android:layout_gravity="center_vertical"

@@ -90,7 +90,7 @@
                             android:layout_width="20dp"
                             android:layout_height="20dp"
                             android:textColor="@color/colorwhite"
-                            android:background="@color/colorblack"
+                            android:background="@color/color_hui"
                             android:textSize="15sp"
                             android:layout_alignParentBottom="true"
                             android:layout_alignParentRight="true"/>

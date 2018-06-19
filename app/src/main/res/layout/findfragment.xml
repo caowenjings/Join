@@ -40,7 +40,7 @@
       <LinearLayout
           android:id="@+id/find_information"
          style="@style/FindLinerloayout"
-          android:layout_marginLeft="40dp">
+          android:layout_marginLeft="60dp">
       <ImageView
           android:layout_width="32dp"
           android:layout_height="32dp"
