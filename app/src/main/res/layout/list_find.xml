@@ -47,14 +47,18 @@
             </LinearLayout>
         </LinearLayout>
 
+        <View
+            android:layout_marginTop="4dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#FFF4B735"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:divider="@drawable/line"
             android:orientation="vertical"
-            android:layout_margin="10dp"
-            android:background="@drawable/stadium_biankuang">
+            android:layout_margin="10dp">
 
             <TextView
                 android:id="@+id/stadium_name"

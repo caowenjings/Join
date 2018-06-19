@@ -14,7 +14,6 @@
             android:layout_marginRight="10dp"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
-            android:background="@drawable/gonggao_background"
             android:src="@drawable/gonggaolan_information"
             android:layout_gravity="center_vertical"/>
         <TextView
