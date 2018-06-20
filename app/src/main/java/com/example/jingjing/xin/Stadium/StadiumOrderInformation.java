@@ -122,8 +122,6 @@ public class StadiumOrderInformation extends AppCompatActivity implements RadioG
 
     }
 
-
-
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
         switch (checkedId){

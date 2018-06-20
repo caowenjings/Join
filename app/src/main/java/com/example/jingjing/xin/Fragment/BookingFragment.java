@@ -71,13 +71,8 @@ import static com.example.jingjing.xin.constant.Conatant.URL_SPORTSTYPE;
  */
 public class  BookingFragment extends BaseFragment {
 
-    private Banner banner;
     private ArrayList bannerLists= new ArrayList<>();;
-
     private BGABanner  mContentBanner;
-
-
-
 
     private ViewPager viewPager;
     private List<View> mViewList;
@@ -109,7 +104,6 @@ public class  BookingFragment extends BaseFragment {
     @Override
     protected View initView() {
         View view = View.inflate(mContext, R.layout.bookingfrgment, null);
-       // banner = (Banner) view.findViewById(R.id.banner);
         mContentBanner = (BGABanner)view.findViewById(R.id.bgabanner);
         viewPager = (ViewPager) view.findViewById(R.id.viewpager);
         mDots = (LinearLayout) view.findViewById(R.id.dots);
@@ -126,8 +120,7 @@ public class  BookingFragment extends BaseFragment {
     @Override
     protected void initData() {
         user = (User) getActivity().getIntent().getSerializableExtra("user");
-       // setBanner();//轮播图
-        setBGAbanner();
+        setBGAbanner();//轮播图
         LoadingGongGao();//下载公告
         LoadingCitys();//获取选择处的城市
         LoadingSportsApp();//获取spotrs图标
@@ -188,6 +181,7 @@ public class  BookingFragment extends BaseFragment {
     });
     }
 
+    /*
     public void setDots() {
         for (int i = 0; i < pageCount; i++) {
             mDots.addView(inflater.inflate(R.layout.dots, null));//加载布局
@@ -213,7 +207,7 @@ public class  BookingFragment extends BaseFragment {
             }
         });
     }
-
+*/
 
     private void LoadingCitys() {//获取城市
         String url = URL_CITY;
@@ -312,6 +306,7 @@ public class  BookingFragment extends BaseFragment {
                         app.setIcon(URL_SPORTSTYPE + js.getString("sportsicon"));
                         mDatas.add(app);
                     }
+
                     pageCount = (int) Math.ceil(mDatas.size() * 1.0 / pageSize);
                     mViewList = new ArrayList<>();
                     for (int a = 0; a < pageCount; a++) {
@@ -342,6 +337,7 @@ public class  BookingFragment extends BaseFragment {
                     for (int i = 0; i < pageCount; i++) {
                         mDots.addView(LayoutInflater.from(getContext()).inflate(R.layout.dots,null));//加载布局
                     }
+
                     mDots.getChildAt(0).findViewById(R.id.v_dot)  // 默认显示第一页
                             .setBackgroundResource(R.drawable.selecet);
 

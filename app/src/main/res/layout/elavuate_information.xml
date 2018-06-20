@@ -24,8 +24,7 @@
             android:gravity="center_horizontal"
             android:paddingTop="5dp"
             android:textStyle="bold"
-            android:textColor="@drawable/btn_radio_txt"
-            android:background="@drawable/btn_radio"/>
+            android:textColor="@drawable/btn_radio_txt" />
         <RadioButton
             android:id="@+id/rb_pastuser"
             android:layout_weight="1"
@@ -37,8 +36,7 @@
             android:gravity="center_horizontal"
             android:paddingTop="5dp"
             android:textStyle="bold"
-            android:textColor="@drawable/btn_radio_txt"
-            android:background="@drawable/btn_radio"/>
+            android:textColor="@drawable/btn_radio_txt" />
     </RadioGroup>
 
     <android.support.v4.view.ViewPager

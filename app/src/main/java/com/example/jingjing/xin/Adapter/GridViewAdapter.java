@@ -44,7 +44,6 @@ public class GridViewAdapter extends BaseAdapter {
     @Override
     public int getCount() {
         return mDatas.size() > (curIndex + 1) * pageSize ? pageSize : (mDatas.size() - curIndex * pageSize);
-
     }
 
     @Override

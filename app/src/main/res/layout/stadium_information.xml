@@ -22,7 +22,7 @@
             android:id="@+id/tv_stadiumname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="25dp"
+            android:textSize="22sp"
             android:textColor="@color/colorwhite"
             android:gravity="center"
             android:layout_gravity="center_vertical"/>
@@ -38,7 +38,8 @@
 
         <ImageView
             android:id="@+id/btn_share"
-            android:layout_margin="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:layout_width="32dp"
             android:layout_height="wrap_content"
             android:src="@drawable/stadium_share"
@@ -304,7 +305,6 @@
                 android:id="@+id/tv_number"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
                 android:background="@color/colorblue"
                 android:gravity="center_horizontal"
                 android:textSize="15sp"
