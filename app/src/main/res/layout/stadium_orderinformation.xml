@@ -11,7 +11,7 @@
         android:id="@+id/rg_userorder"
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="25dp">
+        android:layout_height="50dp">
 
         <RadioButton
             android:id="@+id/rb_userorder"
@@ -21,10 +21,10 @@
             android:button="@null"
             android:text="未过期"
             android:textSize="15sp"
-            android:paddingTop="5dp"
             android:gravity="center"
             android:textStyle="bold"
-            android:textColor="@drawable/btn_radio_txt" />
+            android:textColor="@drawable/btn_radio_txt"
+            android:background="@drawable/btn_radio"/>
 
         <RadioButton
             android:id="@+id/rb_pastuser"
@@ -34,10 +34,10 @@
             android:button="@null"
             android:text="已过期"
             android:textSize="15sp"
-            android:gravity="center_horizontal"
-            android:paddingTop="5dp"
+            android:gravity="center"
             android:textStyle="bold"
-            android:textColor="@drawable/btn_radio_txt"/>
+            android:textColor="@drawable/btn_radio_txt"
+            android:background="@drawable/btn_radio"/>
     </RadioGroup>
 
 
