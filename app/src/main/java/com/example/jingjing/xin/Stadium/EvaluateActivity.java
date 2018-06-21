@@ -116,7 +116,6 @@ public class EvaluateActivity extends AppCompatActivity implements View.OnClickL
                 String content = et_evaluate.getText().toString();
                 String evaluatetime = myear+"年"+mmonth+"月"+mday+"日";
                 evaluate(book.getStadiumId(),grade,book.getBookingId(),content,book.getUserId(),evaluatetime);
-
                 break;
                 default:
                     break;
@@ -230,8 +229,4 @@ public class EvaluateActivity extends AppCompatActivity implements View.OnClickL
         String orderURL = URL_EVALUATESTADIUM;
         new EvaluateStadiumAsyncTask().execute(orderURL,String.valueOf(stadiumId), String.valueOf(grade), String.valueOf(bookingid),content,String.valueOf(userId),time);
     }
-
-
-
-
  */

@@ -20,17 +20,81 @@
   </LinearLayout>
 
 
-   <!--轮播图banner-->
-   <com.youth.banner.Banner
-       android:id="@+id/baner_find"
-       android:layout_width="match_parent"
-       android:layout_height="180dp"
-       app:indicator_width="10dp"
-       app:indicator_height="10dp"
-       android:layout_margin="4dp"
-       app:indicator_drawable_unselected="@color/colorwhite"
-       app:indicator_drawable_selected="@color/colorblue">
-   </com.youth.banner.Banner>
+
+    <EditText
+        android:hint="请输入城市名称"
+        android:id="@+id/main_editView"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+
+    <Button
+        android:id="@+id/main_button"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:text="查询" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="180dp">
+
+        <RelativeLayout
+            android:layout_marginTop="40dp"
+            android:layout_width="match_parent"
+            android:layout_height="40dp">
+            <TextView
+                android:id="@+id/main11"
+                android:layout_width="80dp"
+                android:layout_height="40dp"
+                android:text="天气："
+                android:textSize="20sp"/>
+            <TextView
+                android:id="@+id/main_tianqi"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_toRightOf="@id/main11"
+                android:textSize="20sp"/>
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_marginTop="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="40dp">
+            <TextView
+                android:id="@+id/main22"
+                android:layout_width="80dp"
+                android:layout_height="40dp"
+                android:text="温度："
+                android:textSize="20sp"/>
+            <TextView
+                android:id="@+id/main_wendu"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_toRightOf="@id/main22"
+                android:textSize="20sp" />
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_marginTop="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="40dp">
+            <TextView
+                android:id="@+id/main33"
+                android:layout_width="80dp"
+                android:layout_height="40dp"
+                android:text="风力："
+                android:textSize="20sp" />
+            <TextView
+                android:id="@+id/main_fengli"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_toRightOf="@id/main33"
+                android:textSize="20sp" />
+        </RelativeLayout>
+    </LinearLayout>
+
 
 
    <LinearLayout

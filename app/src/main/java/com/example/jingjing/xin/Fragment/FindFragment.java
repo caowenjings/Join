@@ -13,6 +13,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -45,7 +47,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -66,8 +74,9 @@ import static com.example.jingjing.xin.constant.Conatant.URL_PROFLIE;
 
 public class FindFragment extends BaseFragment  implements OnBannerListener{
 
-    private Banner find_banner;
+   // private Banner find_banner;
     private ArrayList findlists;
+
     private LinearLayout add_sport;
     private LinearLayout find_soprt;
     private LinearLayout find_information;
@@ -78,7 +87,15 @@ public class FindFragment extends BaseFragment  implements OnBannerListener{
     private User user;
     private Need need;
     private String city;
-    private LocationClient mLocationClient;
+   // private LocationClient mLocationClient;
+
+    private EditText editText;
+    private Button button;
+    private TextView tv_tianqi;
+    private TextView tv_wendu;
+    private TextView tv_fengli;
+    private String API = "https://free-api.heweather.com/s6/weather/now?key=11e895a6b3854f0fb49508eea65df6ca&location=";
+
 
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
@@ -86,7 +103,14 @@ public class FindFragment extends BaseFragment  implements OnBannerListener{
     protected View initView() {
 
         View view = View.inflate(mContext, R.layout.findfragment, null);
-        find_banner = (Banner) view.findViewById(R.id.baner_find);
+       // find_banner = (Banner) view.findViewById(R.id.baner_find);
+
+        tv_tianqi =(TextView) view.findViewById(R.id.main_tianqi);
+        tv_fengli = (TextView)view.findViewById(R.id.main_fengli);
+        tv_wendu =(TextView) view.findViewById(R.id.main_wendu);
+        editText = (EditText) view.findViewById(R.id.main_editView);
+        button = (Button) view.findViewById(R.id.main_button);
+
         add_sport = (LinearLayout) view.findViewById(R.id.add_sport);
         find_soprt=(LinearLayout)view.findViewById(R.id.find_sport);
         find_information=(LinearLayout)view.findViewById(R.id.find_information);
@@ -94,17 +118,26 @@ public class FindFragment extends BaseFragment  implements OnBannerListener{
         swipeRefresh=(SwipeRefreshLayout)view.findViewById(R.id.swipe);
         tv_nofind=(TextView)view.findViewById(R.id.tv_nofind);
         layoutManager=new LinearLayoutManager(getContext());
+
         return  view;
     }
 
     @Override
     protected void initData() {
-        setfindBanner();//轮播图
+       // setfindBanner();//轮播图
 
         user = (User) getActivity().getIntent().getSerializableExtra("user");
         need = (Need) getActivity().getIntent().getSerializableExtra("need");
 
 
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String city = editText.getText().toString();
+                new MyWeather().execute(API + city);
+
+            }
+        });
 
         add_sport.setOnClickListener(new View.OnClickListener() {//发布需求
             @Override
@@ -150,25 +183,9 @@ public class FindFragment extends BaseFragment  implements OnBannerListener{
                 swipeRefresh.setRefreshing(false);
             }
         });
-
     }
 
-    //banner轮播图
-    private void setfindBanner() {
-        findlists = new ArrayList<>();
-        findlists.add(R.drawable.find_one);
-        findlists.add(R.drawable.find_two);
-        findlists.add(R.drawable.find_three);
 
-        find_banner.setDelayTime(3000);//图片间隔时间
-        find_banner.setImages(findlists);//加载图片集合
-        find_banner.setImageLoader(new MyLoader());
-        find_banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);//设置格式
-        find_banner.isAutoPlay(true);//自动加载
-        find_banner.setIndicatorGravity(BannerConfig.CIRCLE_INDICATOR);//设置指示器的位置，小点点，左中右
-        find_banner.start(); //开始
-        find_banner.setOnBannerListener(this);
-    }
     @Override
     public void OnBannerClick(int position) {
     }
@@ -253,4 +270,96 @@ public class FindFragment extends BaseFragment  implements OnBannerListener{
             }
         }
     }
+
+
+    class MyWeather extends AsyncTask<String, String, String> {
+        @Override
+        protected String doInBackground(String... strings) {
+            StringBuffer stringBuffer = null;
+            try {
+                URL url = new URL(strings[0]);
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                InputStream inputStream = null;
+                if (httpURLConnection.getResponseCode() == 200) {
+                    inputStream = httpURLConnection.getInputStream();//检测网络异常
+                } else {
+                    return "11";
+                }
+                InputStreamReader reader = new InputStreamReader(inputStream, "UTF-8");
+                BufferedReader bufferedReader = new BufferedReader(reader);
+                stringBuffer = new StringBuffer();
+                String timp = null;
+                while ((timp = bufferedReader.readLine()) != null) {
+                    stringBuffer.append(timp);
+                }
+                inputStream.close();
+                reader.close();
+                bufferedReader.close();
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return stringBuffer.toString();
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            if (!s.equals("11")) {
+                try {
+                    JSONObject object = new JSONObject(s);
+                    JSONObject object1 = object.getJSONArray("HeWeather6").getJSONObject(0);
+                    JSONObject basic = object1.getJSONObject("basic");
+                    JSONObject now = object1.getJSONObject("now");
+                    String city = basic.getString("location");
+                    String tianqi = now.getString("cond_txt");
+                    String wendu = now.getString("tmp");
+                    String fengli = now.getString("wind_dir");
+                    String qiangdu = now.getString("wind_sc");
+                    tv_tianqi.setText("今天是" + "“" + tianqi + "”" + "哦，主人");
+                    tv_wendu.setText(wendu + "℃");
+                    tv_fengli.setText(fengli + qiangdu + "级");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                Toast.makeText(getContext(), "网络异常", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
 }
+
+/*
+ <!--轮播图banner-->
+    <com.youth.banner.Banner
+        android:id="@+id/baner_find"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        app:indicator_width="10dp"
+        app:indicator_height="10dp"
+        android:layout_margin="4dp"
+        app:indicator_drawable_unselected="@color/colorwhite"
+        app:indicator_drawable_selected="@color/colorblue">
+    </com.youth.banner.Banner>
+
+
+
+     //banner轮播图
+    private void setfindBanner() {
+        findlists = new ArrayList<>();
+        findlists.add(R.drawable.find_one);
+        findlists.add(R.drawable.find_two);
+        findlists.add(R.drawable.find_three);
+
+        find_banner.setDelayTime(3000);//图片间隔时间
+        find_banner.setImages(findlists);//加载图片集合
+        find_banner.setImageLoader(new MyLoader());
+        find_banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);//设置格式
+        find_banner.isAutoPlay(true);//自动加载
+        find_banner.setIndicatorGravity(BannerConfig.CIRCLE_INDICATOR);//设置指示器的位置，小点点，左中右
+        find_banner.start(); //开始
+        find_banner.setOnBannerListener(this);
+    }
+ */

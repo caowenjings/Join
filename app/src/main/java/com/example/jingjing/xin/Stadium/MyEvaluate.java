@@ -42,7 +42,7 @@ public class MyEvaluate extends AppCompatActivity {
 
     private TextView tv_stadiumname;
     private ImageView iv_stadiumpicture;
-    private EditText et_evaluate;
+    private TextView et_evaluate;
     private RatingBar rb_ratbar;
     private TextView tv_grade;
     private double grade;
@@ -72,7 +72,7 @@ public class MyEvaluate extends AppCompatActivity {
         tv_title.setText("评价");
 
         rb_ratbar=(RatingBar)findViewById(R.id.rb_ratbar);
-        et_evaluate= (EditText) findViewById(R.id.et_evaluate);
+        et_evaluate= ( TextView) findViewById(R.id.et_evaluate);
         tv_stadiumname= (TextView) findViewById(R.id.tv_stadiumname);
         iv_stadiumpicture= (ImageView) findViewById(R.id.iv_stadiumpicture);
         tv_grade= (TextView) findViewById(R.id.tv_grade);
