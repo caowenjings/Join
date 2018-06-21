@@ -1,17 +1,29 @@
 package com.example.jingjing.xin.User;
 
 import android.app.ActionBar;
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.ContentResolver;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,6 +55,9 @@ public class UserInformationActivity extends AppCompatActivity implements View.O
     private ImageView icon_back;
     private ImageView btn_update;
     private String userId;
+
+    private LinearLayout imageView;
+    private Bitmap bitmap;
 
 
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
@@ -79,6 +94,7 @@ public class UserInformationActivity extends AppCompatActivity implements View.O
         getWindow().setStatusBarColor(Color.parseColor("#FF029ACC"));
 
 
+        imageView=(LinearLayout)findViewById(R.id.backgrund);
     }
 
     private void initData() {
@@ -95,6 +111,14 @@ public class UserInformationActivity extends AppCompatActivity implements View.O
 
         btn_update.setOnClickListener(this);
 
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                intent.setType("image/*");
+                startActivityForResult(intent, 0001);
+            }
+        });
     }
 
     private void RefrshUser(String userId) {
@@ -179,5 +203,94 @@ public class UserInformationActivity extends AppCompatActivity implements View.O
            default:
                break;
         }
+    }
+
+/*
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, final Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 0001 && resultCode == Activity.RESULT_OK && data != null) {
+
+            final AlertDialog.Builder dialog = new AlertDialog.Builder(UserInformationActivity.this);
+            dialog.setTitle("更换背景");
+            dialog.setMessage("确定更换背景吗？");
+            dialog.setCancelable(false);
+            dialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    Uri selectedImage = data.getData();//返回的是uri
+                    String [] filePathColumn = {MediaStore.Images.Media.DATA};
+                    Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+                    cursor.moveToFirst();
+                    int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                    String path = cursor.getString(columnIndex);
+                    bitmap = BitmapFactory.decodeFile(path);
+                   //imageView.setImageBitmap(bitmap);
+                    imageView.setBackground(new BitmapDrawable(bitmap));
+                }
+            });
+            dialog.setNegativeButton("Cancal", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                }
+            });
+            dialog.show();
+
+        }
+    }
+
+*/
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(data==null){
+            Toast.makeText(UserInformationActivity.this,"没有选择图片",Toast.LENGTH_SHORT).show();
+        }else{
+            if(requestCode==1)
+            {
+                //获得图片的uri
+                Uri uri = data.getData();
+                //外界的程序访问ContentProvider所提供数据 可以通过ContentResolver接口
+                ContentResolver cr = this.getContentResolver();
+                Bitmap bitmap;
+                //Bitmap bm; //这是一种方式去读取图片
+                try
+                {
+                    //bm = MediaStore.Images.Media.getBitmap(cr, uri);
+                    //pic.setImageBitmap(bm);
+                    bitmap = BitmapFactory.decodeStream(cr.openInputStream(uri));
+                    System.out.println("GOOD");
+                    //第一种方式去读取路径
+                    //String[] proj = {MediaStore.Images.Media.DATA};
+                /*
+                 //好像是android多媒体数据库的封装接口，具体的看Android文档
+                Cursor cursor = managedQuery(uri, proj, null, null, null);
+                //按我个人理解 这个是获得用户选择的图片的索引值
+                int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+              //将光标移至开头 ，这个很重要，不小心很容易引起越界
+                cursor.moveToFirst();
+                //最后根据索引值获取图片路径
+                String path = cursor.getString(column_index);
+                System.out.println(path);
+                   */
+                    // imageView.setImageBitmap(bitmap);
+                    imageView.setBackground(new BitmapDrawable(bitmap));
+                    //第二种方式去读取路径
+                    Cursor cursor =this.getContentResolver().query(uri, null, null, null, null);
+                    int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+                    cursor.moveToFirst();
+                    String path = cursor.getString(column_index);
+                    System.out.println(path);
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                    System.out.println("BAD");
+                }
+
+            }
+        }
+
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

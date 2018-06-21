@@ -32,6 +32,7 @@
 
 
     <LinearLayout
+        android:id="@+id/backgrund"
         android:gravity="center"
         android:orientation="vertical"
         android:layout_width="match_parent"
