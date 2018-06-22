@@ -187,7 +187,6 @@ public class PostNeedFalot extends AppCompatActivity implements View.OnClickList
 
     }
 
-
     public void setNumClick(View v) {
         SetNumDialog std = new SetNumDialog();
         std.show(getFragmentManager(), "numPicker");

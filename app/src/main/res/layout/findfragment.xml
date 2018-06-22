@@ -19,57 +19,49 @@
          android:text="发 现"/>
   </LinearLayout>
 
-
-
-    <EditText
-        android:hint="请输入城市名称"
-        android:id="@+id/main_editView"
-        android:layout_width="match_parent"
-        android:layout_height="50dp" />
-
-    <Button
-        android:id="@+id/main_button"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:text="查询" />
-
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="180dp"
         android:background="@drawable/weather">
-
         <TextView
-            android:text="22"
             android:layout_gravity="center_horizontal"
             android:id="@+id/mian_city"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
-            android:textSize="20sp"/>
+            android:textSize="20sp"
+            android:textColor="@color/colorwhite"/>
+        <TextView
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/main_pm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:textColor="@color/colorwhite"/>
 
         <LinearLayout
             android:orientation="vertical"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="30dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
-                android:text="22"
                 android:id="@+id/main_tianqi"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="20sp"/>
+                android:textSize="20sp"
+                android:textColor="@color/colorwhite"/>
             <TextView
-                android:text="22"
                 android:id="@+id/main_wendu"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                android:textColor="@color/colorwhite"/>
             <TextView
-                android:text="22"
                 android:id="@+id/main_fengli"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                android:textColor="@color/colorwhite"/>
         </LinearLayout>
 
     </LinearLayout>
@@ -91,7 +83,7 @@
       <TextView
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:text="消息"/>
+          android:text="天气"/>
       </LinearLayout>
 
 

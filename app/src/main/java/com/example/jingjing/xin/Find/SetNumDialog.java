@@ -63,7 +63,7 @@ public class SetNumDialog extends DialogFragment implements  NumberPicker.OnValu
     public interface SetNumListener {//设置接口
         void onSetNumComplete(int num);
 
-        void onSetStadiumComplete(Stadium stadium);
+     //   void onSetStadiumComplete(Stadium stadium);
     }
 
 

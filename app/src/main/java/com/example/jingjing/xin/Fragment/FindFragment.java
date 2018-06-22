@@ -1,46 +1,31 @@
 package com.example.jingjing.xin.Fragment;
 
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.baidu.location.BDLocation;
-import com.baidu.location.BDLocationListener;
-import com.baidu.location.LocationClient;
-import com.baidu.location.LocationClientOption;
 import com.example.jingjing.xin.Activity.LoginActivity;
-import com.example.jingjing.xin.Activity.MainActivity;
 import com.example.jingjing.xin.Adapter.FindAdapter;
-import com.example.jingjing.xin.Adapter.PostNeedAdapter;
-import com.example.jingjing.xin.Banner.MyLoader;
 import com.example.jingjing.xin.Base.BaseFragment;
 import com.example.jingjing.xin.Bean.Need;
 import com.example.jingjing.xin.Bean.User;
 import com.example.jingjing.xin.Find.FindSport;
 import com.example.jingjing.xin.Find.MyFindinformation;
-import com.example.jingjing.xin.Find.PostNeed;
 import com.example.jingjing.xin.Find.PostNeedFalot;
+import com.example.jingjing.xin.Find.SetNumDialog;
 import com.example.jingjing.xin.R;
-import com.youth.banner.Banner;
-import com.youth.banner.BannerConfig;
 import com.youth.banner.listener.OnBannerListener;
 
 import org.json.JSONArray;
@@ -55,9 +40,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -72,10 +55,7 @@ import static com.example.jingjing.xin.constant.Conatant.URL_PROFLIE;
  * Created by jingjing on 2018/4/24.
  */
 
-public class FindFragment extends BaseFragment  implements OnBannerListener{
-
-   // private Banner find_banner;
-    private ArrayList findlists;
+public class FindFragment extends BaseFragment{
 
     private LinearLayout add_sport;
     private LinearLayout find_soprt;
@@ -87,16 +67,16 @@ public class FindFragment extends BaseFragment  implements OnBannerListener{
     private User user;
     private Need need;
     private String city;
-   // private LocationClient mLocationClient;
 
-    private EditText editText;
-    private Button button;
     private TextView tv_tianqi;
     private TextView tv_wendu;
     private TextView tv_fengli;
     private TextView tv_city;
-    private String API = "https://free-api.heweather.com/s6/weather/now?key=11e895a6b3854f0fb49508eea65df6ca&location=";
+    private TextView tv_pm;
 
+
+    //利用和风天气
+    private String API = "https://free-api.heweather.com/s6/weather/now?key=11e895a6b3854f0fb49508eea65df6ca&location=";
 
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
@@ -104,15 +84,11 @@ public class FindFragment extends BaseFragment  implements OnBannerListener{
     protected View initView() {
 
         View view = View.inflate(mContext, R.layout.findfragment, null);
-       // find_banner = (Banner) view.findViewById(R.id.baner_find);
-
         tv_city =(TextView) view.findViewById(R.id.mian_city);
         tv_tianqi =(TextView) view.findViewById(R.id.main_tianqi);
         tv_fengli = (TextView)view.findViewById(R.id.main_fengli);
         tv_wendu =(TextView) view.findViewById(R.id.main_wendu);
-        editText = (EditText) view.findViewById(R.id.main_editView);
-        button = (Button) view.findViewById(R.id.main_button);
-
+        tv_pm =(TextView) view.findViewById(R.id.main_pm);
         add_sport = (LinearLayout) view.findViewById(R.id.add_sport);
         find_soprt=(LinearLayout)view.findViewById(R.id.find_sport);
         find_information=(LinearLayout)view.findViewById(R.id.find_information);
@@ -120,26 +96,12 @@ public class FindFragment extends BaseFragment  implements OnBannerListener{
         swipeRefresh=(SwipeRefreshLayout)view.findViewById(R.id.swipe);
         tv_nofind=(TextView)view.findViewById(R.id.tv_nofind);
         layoutManager=new LinearLayoutManager(getContext());
-
         return  view;
     }
-
     @Override
     protected void initData() {
-       // setfindBanner();//轮播图
-
         user = (User) getActivity().getIntent().getSerializableExtra("user");
         need = (Need) getActivity().getIntent().getSerializableExtra("need");
-
-
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String city = editText.getText().toString();
-                new MyWeather().execute(API + city);
-
-            }
-        });
 
         add_sport.setOnClickListener(new View.OnClickListener() {//发布需求
             @Override
@@ -167,12 +129,7 @@ public class FindFragment extends BaseFragment  implements OnBannerListener{
         find_information.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(), MyFindinformation.class);
-                Bundle mbundle = new Bundle();
-                mbundle.putSerializable("user",user);
-                mbundle.putSerializable("need",need);
-                intent.putExtras(mbundle);
-                startActivity(intent);
+                new MyWeather().execute(API + BookingFragment.city);
             }
         });
 
@@ -186,12 +143,6 @@ public class FindFragment extends BaseFragment  implements OnBannerListener{
             }
         });
     }
-
-
-    @Override
-    public void OnBannerClick(int position) {
-    }
-
 
     private void findInformation(User user,String city) {//服务器
         String loadingUrl = URL_FINDINFORMATION;
@@ -246,7 +197,7 @@ public class FindFragment extends BaseFragment  implements OnBannerListener{
                         need.setTime(js.getString("time"));
                         need.setNum(js.getInt("num"));
                         need.setNum_join(js.getInt("num_join"));
-                        //need.setProflie(URL_PROFLIE+js.optString("userproflie"));
+                        need.setProflie(URL_PROFLIE+js.optString("userproflie"));
                         need.setRemark(js.getString("remark"));
                         need.setReleasetime(js.optString("releasetime"));
                         mData.add(need);
@@ -272,7 +223,6 @@ public class FindFragment extends BaseFragment  implements OnBannerListener{
             }
         }
     }
-
 
     class MyWeather extends AsyncTask<String, String, String> {
         @Override
@@ -310,59 +260,29 @@ public class FindFragment extends BaseFragment  implements OnBannerListener{
             super.onPostExecute(s);
             if (!s.equals("11")) {
                 try {
-                    JSONObject object = new JSONObject(s);
-                    JSONObject object1 = object.getJSONArray("HeWeather6").getJSONObject(0);
+                    JSONObject object = new JSONObject(s);//解析得到数据
+                    JSONObject object1 = object.getJSONArray("HeWeather6").getJSONObject(0);//取出
                     JSONObject basic = object1.getJSONObject("basic");
                     JSONObject now = object1.getJSONObject("now");
-                    String city = basic.getString("location");
+                    String city = basic.getString("location");//根据对应的键，得到对应的值
                     String tianqi = now.getString("cond_txt");
                     String wendu = now.getString("tmp");
                     String fengli = now.getString("wind_dir");
                     String qiangdu = now.getString("wind_sc");
+                    //String pm = now.getString("pm25");
                     tv_city.setText(city);
                     tv_tianqi.setText("今天是" + "“" + tianqi + "”" + "哦，主人");
                     tv_wendu.setText(wendu + "℃");
                     tv_fengli.setText(fengli + qiangdu + "级");
+                    //tv_pm.setText("PM:"+pm);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-            } else {
+            }else {
                 Toast.makeText(getContext(), "网络异常", Toast.LENGTH_SHORT).show();
             }
+
         }
-    }
 
+    }
 }
-
-/*
- <!--轮播图banner-->
-    <com.youth.banner.Banner
-        android:id="@+id/baner_find"
-        android:layout_width="match_parent"
-        android:layout_height="180dp"
-        app:indicator_width="10dp"
-        app:indicator_height="10dp"
-        android:layout_margin="4dp"
-        app:indicator_drawable_unselected="@color/colorwhite"
-        app:indicator_drawable_selected="@color/colorblue">
-    </com.youth.banner.Banner>
-
-
-
-     //banner轮播图
-    private void setfindBanner() {
-        findlists = new ArrayList<>();
-        findlists.add(R.drawable.find_one);
-        findlists.add(R.drawable.find_two);
-        findlists.add(R.drawable.find_three);
-
-        find_banner.setDelayTime(3000);//图片间隔时间
-        find_banner.setImages(findlists);//加载图片集合
-        find_banner.setImageLoader(new MyLoader());
-        find_banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);//设置格式
-        find_banner.isAutoPlay(true);//自动加载
-        find_banner.setIndicatorGravity(BannerConfig.CIRCLE_INDICATOR);//设置指示器的位置，小点点，左中右
-        find_banner.start(); //开始
-        find_banner.setOnBannerListener(this);
-    }
- */

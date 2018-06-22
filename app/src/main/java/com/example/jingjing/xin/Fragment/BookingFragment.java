@@ -29,7 +29,6 @@ import com.bumptech.glide.Glide;
 import com.example.jingjing.xin.Adapter.GridViewAdapter;
 import com.example.jingjing.xin.Adapter.MyPagerAdapter;
 import com.example.jingjing.xin.Adapter.StadiumAdapter;
-import com.example.jingjing.xin.Banner.MyLoader;
 import com.example.jingjing.xin.Base.BaseFragment;
 import com.example.jingjing.xin.Bean.App;
 import com.example.jingjing.xin.Bean.Notice;

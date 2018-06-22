@@ -66,7 +66,7 @@ public class UserInformationActivity extends AppCompatActivity implements View.O
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        android.support.v7.app.ActionBar actionBar=getSupportActionBar();
+        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
         setContentView(R.layout.userinformatoin);
         initView();
@@ -88,17 +88,17 @@ public class UserInformationActivity extends AppCompatActivity implements View.O
         tv_realname = (TextView) findViewById(R.id.tv_realname);
         tv_sex = (TextView) findViewById(R.id.tv_sex);
         tv_tel = (TextView) findViewById(R.id.tv_tel);
-        tv_back=(ImageView)findViewById(R.id.tv_back);
+        tv_back = (ImageView) findViewById(R.id.tv_back);
 
         btn_update = (ImageView) findViewById(R.id.update_information);
         getWindow().setStatusBarColor(Color.parseColor("#FF029ACC"));
 
 
-        imageView=(LinearLayout)findViewById(R.id.backgrund);
+        imageView = (LinearLayout) findViewById(R.id.backgrund);
     }
 
     private void initData() {
-       user = (User) getIntent().getSerializableExtra("user");
+        user = (User) getIntent().getSerializableExtra("user");
         userId = String.valueOf(user.getUserId());
         RefrshUser(userId);
 
@@ -194,103 +194,17 @@ public class UserInformationActivity extends AppCompatActivity implements View.O
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.update_information:
-                Intent intent = new Intent(UserInformationActivity.this,Updateinformation.class);
+                Intent intent = new Intent(UserInformationActivity.this, Updateinformation.class);
                 Bundle mBundle = new Bundle();
                 mBundle.putSerializable("user", user);
                 intent.putExtras(mBundle);
                 startActivity(intent);
                 break;
-           default:
-               break;
+            default:
+                break;
         }
     }
 
-/*
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, final Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 0001 && resultCode == Activity.RESULT_OK && data != null) {
 
-            final AlertDialog.Builder dialog = new AlertDialog.Builder(UserInformationActivity.this);
-            dialog.setTitle("更换背景");
-            dialog.setMessage("确定更换背景吗？");
-            dialog.setCancelable(false);
-            dialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    Uri selectedImage = data.getData();//返回的是uri
-                    String [] filePathColumn = {MediaStore.Images.Media.DATA};
-                    Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
-                    cursor.moveToFirst();
-                    int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                    String path = cursor.getString(columnIndex);
-                    bitmap = BitmapFactory.decodeFile(path);
-                   //imageView.setImageBitmap(bitmap);
-                    imageView.setBackground(new BitmapDrawable(bitmap));
-                }
-            });
-            dialog.setNegativeButton("Cancal", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                }
-            });
-            dialog.show();
 
-        }
-    }
-
-*/
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(data==null){
-            Toast.makeText(UserInformationActivity.this,"没有选择图片",Toast.LENGTH_SHORT).show();
-        }else{
-            if(requestCode==1)
-            {
-                //获得图片的uri
-                Uri uri = data.getData();
-                //外界的程序访问ContentProvider所提供数据 可以通过ContentResolver接口
-                ContentResolver cr = this.getContentResolver();
-                Bitmap bitmap;
-                //Bitmap bm; //这是一种方式去读取图片
-                try
-                {
-                    //bm = MediaStore.Images.Media.getBitmap(cr, uri);
-                    //pic.setImageBitmap(bm);
-                    bitmap = BitmapFactory.decodeStream(cr.openInputStream(uri));
-                    System.out.println("GOOD");
-                    //第一种方式去读取路径
-                    //String[] proj = {MediaStore.Images.Media.DATA};
-                /*
-                 //好像是android多媒体数据库的封装接口，具体的看Android文档
-                Cursor cursor = managedQuery(uri, proj, null, null, null);
-                //按我个人理解 这个是获得用户选择的图片的索引值
-                int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-              //将光标移至开头 ，这个很重要，不小心很容易引起越界
-                cursor.moveToFirst();
-                //最后根据索引值获取图片路径
-                String path = cursor.getString(column_index);
-                System.out.println(path);
-                   */
-                    // imageView.setImageBitmap(bitmap);
-                    imageView.setBackground(new BitmapDrawable(bitmap));
-                    //第二种方式去读取路径
-                    Cursor cursor =this.getContentResolver().query(uri, null, null, null, null);
-                    int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-                    cursor.moveToFirst();
-                    String path = cursor.getString(column_index);
-                    System.out.println(path);
-                }
-                catch (Exception e)
-                {
-                    e.printStackTrace();
-                    System.out.println("BAD");
-                }
-
-            }
-        }
-
-        super.onActivityResult(requestCode, resultCode, data);
-    }
 }

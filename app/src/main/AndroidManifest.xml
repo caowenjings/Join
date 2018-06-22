@@ -57,7 +57,6 @@
         <activity android:name=".Find.FindActivity"></activity>
         <activity android:name=".Find.PostNeedFlaotInformation"></activity>
         <activity android:name=".Find.PostNeedFalot"></activity>
-        <activity android:name=".Find.PostNeed"></activity>
         <activity android:name=".Stadium.StadiumOrderInformation"></activity>
         <activity android:name=".Stadium.StadiumOrder"></activity>
         <activity android:name=".Stadium.StadiumCollection"></activity>

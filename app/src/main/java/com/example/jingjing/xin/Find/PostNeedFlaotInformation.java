@@ -118,6 +118,7 @@ public class PostNeedFlaotInformation extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
         myposrneed(user);
 
         swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);//刷新
