@@ -94,6 +94,7 @@ public class FindFragment extends BaseFragment  implements OnBannerListener{
     private TextView tv_tianqi;
     private TextView tv_wendu;
     private TextView tv_fengli;
+    private TextView tv_city;
     private String API = "https://free-api.heweather.com/s6/weather/now?key=11e895a6b3854f0fb49508eea65df6ca&location=";
 
 
@@ -105,6 +106,7 @@ public class FindFragment extends BaseFragment  implements OnBannerListener{
         View view = View.inflate(mContext, R.layout.findfragment, null);
        // find_banner = (Banner) view.findViewById(R.id.baner_find);
 
+        tv_city =(TextView) view.findViewById(R.id.mian_city);
         tv_tianqi =(TextView) view.findViewById(R.id.main_tianqi);
         tv_fengli = (TextView)view.findViewById(R.id.main_fengli);
         tv_wendu =(TextView) view.findViewById(R.id.main_wendu);
@@ -317,6 +319,7 @@ public class FindFragment extends BaseFragment  implements OnBannerListener{
                     String wendu = now.getString("tmp");
                     String fengli = now.getString("wind_dir");
                     String qiangdu = now.getString("wind_sc");
+                    tv_city.setText(city);
                     tv_tianqi.setText("今天是" + "“" + tianqi + "”" + "哦，主人");
                     tv_wendu.setText(wendu + "℃");
                     tv_fengli.setText(fengli + qiangdu + "级");
