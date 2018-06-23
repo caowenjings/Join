@@ -24,7 +24,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
+import com.baidu.location.BDLocation;
+import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
+import com.baidu.location.LocationClientOption;
 import com.bumptech.glide.Glide;
 import com.example.jingjing.xin.Adapter.GridViewAdapter;
 import com.example.jingjing.xin.Adapter.MyPagerAdapter;
@@ -113,6 +116,8 @@ public class  BookingFragment extends BaseFragment {
         swipeRefreshLayout=(SwipeRefreshLayout)view.findViewById(R.id.sr_booking);
         recyclerView = (RecyclerView)view.findViewById(R.id.rv_stadium);
         linearLayoutManager=new LinearLayoutManager(mContext);
+        mLocationClient = new LocationClient(mContext);
+
         return view;
     }
 
@@ -123,16 +128,13 @@ public class  BookingFragment extends BaseFragment {
         LoadingGongGao();//下载公告
         LoadingCitys();//获取选择处的城市
         LoadingSportsApp();//获取spotrs图标
-        //  requestLocation();//定位
-        // mLocationClient = new LocationClient(getContext());
-        // mLocationClient.registerLocationListener(new MyLocationListener());
-
+        requestLocation();//定位
+        mLocationClient.registerLocationListener(new MyLocationListener());
 
         tv_city.setOnClickListener(new View.OnClickListener() {//选择城市
             @Override
             public void onClick(View v) {
                 doSelect(v);
-
             }
         });
         iv_city.setOnClickListener(new View.OnClickListener() {//选择城市按钮
@@ -180,38 +182,9 @@ public class  BookingFragment extends BaseFragment {
     });
     }
 
-    /*
-    public void setDots() {
-        for (int i = 0; i < pageCount; i++) {
-            mDots.addView(inflater.inflate(R.layout.dots, null));//加载布局
-        }
-        mDots.getChildAt(0).findViewById(R.id.v_dot)  // 默认显示第一页
-                .setBackgroundResource(R.drawable.selecet);
-
-        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {//viewpager的点击事件
-            public void onPageSelected(int position) {
-
-                mDots.getChildAt(curIndex)  // 取消圆点选中
-                        .findViewById(R.id.v_dot)
-                        .setBackgroundResource(R.drawable.unselecet);
-
-                mDots.getChildAt(position) // 圆点选中
-                        .findViewById(R.id.v_dot)
-                        .setBackgroundResource(R.drawable.selecet);
-                curIndex = position;
-            }
-            public void onPageScrolled(int arg0, float arg1, int arg2) {
-            }
-            public void onPageScrollStateChanged(int arg0) {
-            }
-        });
-    }
-*/
-
     private void LoadingCitys() {//获取城市
         String url = URL_CITY;
         new CitysAsyncTask().execute(url);
-
     }
     private class CitysAsyncTask extends AsyncTask<String, Integer, String> {
         public CitysAsyncTask() {
@@ -549,6 +522,22 @@ public class  BookingFragment extends BaseFragment {
             }
         }
     }
+
+    private void requestLocation(){//定位
+        initLocation();
+        mLocationClient.start();
+
+    }
+
+    private void initLocation(){
+        LocationClientOption option = new LocationClientOption();
+        option.setIsNeedAddress(true);
+        option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy); //可选，默认高精度，设置定位模式，高精度，低功耗，仅设备
+        // option.setScanSpan(5000);//设置更新的间隔,5秒更新一下当前的位置
+        mLocationClient.setLocOption(option);
+    }
+
+
     public void doSelect(View view){//搜索列表选项
         SerachSelectDialog.Builder alert = new SerachSelectDialog.Builder(mContext);
         alert.setListData(mCity);
@@ -577,26 +566,6 @@ public class  BookingFragment extends BaseFragment {
         mDialog.setDialogWindowAttr(0.9,0.9,getActivity());
     }
 
-/*
-    private void requestLocation(){//定位
-        initLocation();
-     mLocationClient.start();
-
- }
-
-   private void initLocation(){
-       LocationClientOption option = new LocationClientOption();
-       option.setIsNeedAddress(true);
-       option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy); //可选，默认高精度，设置定位模式，高精度，低功耗，仅设备
-       option.setScanSpan(5000);//设置更新的间隔,5秒更新一下当前的位置
-       mLocationClient.setLocOption(option);
-       //mLocationClient.setLocOption(localLocationClientOption);
-   }
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        mLocationClient.stop();//停止定位
-    }
 
     private class MyLocationListener implements BDLocationListener
     {
@@ -610,20 +579,51 @@ public class  BookingFragment extends BaseFragment {
                 public void run()
                 {
                     System.out.println("12" + BDLocation.getCity());
-                    if (BDLocation.getCity().equals("")) {
+                    if ("".equals(BDLocation.getCity())) {
                         tv_city.setText("城市名");
-                    }
-                    for (;;)
-                    {
+                    }else {
                         tv_city.setText(BDLocation.getCity());
+                        city=tv_city.getText().toString();//得到选择的城市
                         Loading(tv_city.getText().toString());
                         mLocationClient.stop();
-
                         return;
                     }
                 }
             });
         }
-    }*/
+    }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mLocationClient.stop();//停止定位
+    }
 }
+
+ /*
+    public void setDots() {
+        for (int i = 0; i < pageCount; i++) {
+            mDots.addView(inflater.inflate(R.layout.dots, null));//加载布局
+        }
+        mDots.getChildAt(0).findViewById(R.id.v_dot)  // 默认显示第一页
+                .setBackgroundResource(R.drawable.selecet);
+
+        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {//viewpager的点击事件
+            public void onPageSelected(int position) {
+
+                mDots.getChildAt(curIndex)  // 取消圆点选中
+                        .findViewById(R.id.v_dot)
+                        .setBackgroundResource(R.drawable.unselecet);
+
+                mDots.getChildAt(position) // 圆点选中
+                        .findViewById(R.id.v_dot)
+                        .setBackgroundResource(R.drawable.selecet);
+                curIndex = position;
+            }
+            public void onPageScrolled(int arg0, float arg1, int arg2) {
+            }
+            public void onPageScrollStateChanged(int arg0) {
+            }
+        });
+    }
+*/

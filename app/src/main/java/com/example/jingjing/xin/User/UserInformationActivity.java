@@ -189,7 +189,6 @@ public class UserInformationActivity extends AppCompatActivity implements View.O
         }
     }
 
-
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -204,7 +203,4 @@ public class UserInformationActivity extends AppCompatActivity implements View.O
                 break;
         }
     }
-
-
-
 }

@@ -88,7 +88,6 @@ public class FindFragment extends BaseFragment{
         tv_tianqi =(TextView) view.findViewById(R.id.main_tianqi);
         tv_fengli = (TextView)view.findViewById(R.id.main_fengli);
         tv_wendu =(TextView) view.findViewById(R.id.main_wendu);
-        tv_pm =(TextView) view.findViewById(R.id.main_pm);
         add_sport = (LinearLayout) view.findViewById(R.id.add_sport);
         find_soprt=(LinearLayout)view.findViewById(R.id.find_sport);
         find_information=(LinearLayout)view.findViewById(R.id.find_information);

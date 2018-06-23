@@ -13,7 +13,7 @@
          android:layout_width="match_parent"
          android:layout_height="wrap_content"
          android:textColor="@color/colorwhite"
-         android:textSize="30dp"
+         android:textSize="25dp"
          android:layout_gravity="center_vertical"
          android:gravity="center_horizontal"
          android:text="发 现"/>
@@ -30,18 +30,13 @@
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:textSize="20sp"
-            android:textColor="@color/colorwhite"/>
-        <TextView
-            android:layout_gravity="center_horizontal"
-            android:id="@+id/main_pm"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:textColor="@color/colorwhite"/>
+            android:textColor="@color/colorwhite"
+            android:layout_marginTop="15dp"/>
 
         <LinearLayout
             android:orientation="vertical"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
