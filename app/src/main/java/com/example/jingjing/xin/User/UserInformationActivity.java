@@ -20,15 +20,22 @@ import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.jingjing.xin.Activity.LoginActivity;
 import com.example.jingjing.xin.Bean.User;
 import com.example.jingjing.xin.R;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -41,6 +48,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
+import static com.example.jingjing.xin.constant.Conatant.URL_PROFLIE;
 import static com.example.jingjing.xin.constant.Conatant.URL_SELECTUSERBYUSERID;
 
 
@@ -50,14 +58,12 @@ public class UserInformationActivity extends AppCompatActivity implements View.O
     private TextView tv_sex;
     private TextView tv_tel;
     private ImageView tv_back;
+    private ImageView iv_touxiang;
 
     private User user;
     private ImageView icon_back;
     private ImageView btn_update;
     private String userId;
-
-    private LinearLayout imageView;
-    private Bitmap bitmap;
 
 
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
@@ -89,12 +95,10 @@ public class UserInformationActivity extends AppCompatActivity implements View.O
         tv_sex = (TextView) findViewById(R.id.tv_sex);
         tv_tel = (TextView) findViewById(R.id.tv_tel);
         tv_back = (ImageView) findViewById(R.id.tv_back);
+        iv_touxiang =(ImageView) findViewById(R.id.iv_touxiang);
 
         btn_update = (ImageView) findViewById(R.id.update_information);
         getWindow().setStatusBarColor(Color.parseColor("#FF029ACC"));
-
-
-        imageView = (LinearLayout) findViewById(R.id.backgrund);
     }
 
     private void initData() {
@@ -102,24 +106,34 @@ public class UserInformationActivity extends AppCompatActivity implements View.O
         userId = String.valueOf(user.getUserId());
         RefrshUser(userId);
 
-        tv_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-
+        tv_back.setOnClickListener(this);
         btn_update.setOnClickListener(this);
+        iv_touxiang.setOnClickListener(this);
 
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                intent.setType("image/*");
-                startActivityForResult(intent, 0001);
-            }
-        });
     }
+
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.update_information:
+                Intent intent = new Intent(UserInformationActivity.this, Updateinformation.class);
+                Bundle mBundle = new Bundle();
+                mBundle.putSerializable("user", user);
+                intent.putExtras(mBundle);
+                startActivity(intent);
+                break;
+            case R.id.tv_back:
+                finish();
+                break;
+            case R.id.iv_touxiang:
+               showDialog();
+                break;
+            default:
+                break;
+        }
+    }
+
 
     private void RefrshUser(String userId) {
         String loginUrl = URL_SELECTUSERBYUSERID;
@@ -171,11 +185,21 @@ public class UserInformationActivity extends AppCompatActivity implements View.O
                         user.setSex(results.getString("sex"));
                         user.setTel(results.getString("tel"));
                         user.setMyright(results.getString("myRight"));
-
+                      // user.setProflie(URL_PROFLIE+results.getString("proflie"));
                         tv_username.setText(user.getUsername());
                         tv_realname.setText(user.getRealname());
                         tv_sex.setText(user.getSex());
                         tv_tel.setText(user.getTel());
+                        ImageLoaderConfiguration configuration = ImageLoaderConfiguration.createDefault(UserInformationActivity.this);
+                        ImageLoader imageLoader = ImageLoader.getInstance();
+                        ImageLoader.getInstance().init(configuration);
+                        DisplayImageOptions options = new DisplayImageOptions.Builder()
+                                .showImageOnFail(R.drawable.error) // 设置图片加载或解码过程中发生错误显示的图片
+                                .showImageOnLoading(R.drawable.loading)
+                                .resetViewBeforeLoading(false)  // default 设置图片在加载前是否重置、复位
+                                .delayBeforeLoading(0)  // 下载前的延迟时间
+                                .build();
+                        ImageLoader.getInstance().displayImage(user.getProflie(),iv_touxiang, options);
                     } else {
                     }
                 } catch (JSONException e) {
@@ -189,18 +213,39 @@ public class UserInformationActivity extends AppCompatActivity implements View.O
         }
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.update_information:
-                Intent intent = new Intent(UserInformationActivity.this, Updateinformation.class);
-                Bundle mBundle = new Bundle();
-                mBundle.putSerializable("user", user);
-                intent.putExtras(mBundle);
+    private void showDialog() {//选择图片
+        user = (User) getIntent().getSerializableExtra("user");
+
+        final android.support.v7.app.AlertDialog mDialog = new android.support.v7.app.AlertDialog.Builder(this).create();
+        mDialog.show();
+        Window window = mDialog.getWindow();
+        window.setGravity(Gravity.BOTTOM);
+        window.setWindowAnimations(R.style.popupAnimation);
+
+        View view = View.inflate(this, R.layout.forgive_password, null);
+        final TextView find_password = (TextView) view.findViewById(R.id.tv_find_password);
+        final TextView cancel = (TextView) view.findViewById(R.id.tv_cancel);
+        find_password.setText("选择图片");
+
+        find_password.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(UserInformationActivity.this,UpdateProflie.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("user",user);
+                intent.putExtras(bundle);
                 startActivity(intent);
-                break;
-            default:
-                break;
-        }
+            }
+        });
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDialog.dismiss();//关闭对话框
+            }
+        });
+        window.setContentView(view);
+        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);//设置横向全屏
+        mDialog.setCanceledOnTouchOutside(true);
+        mDialog.setCancelable(true);
     }
 }

@@ -6,6 +6,7 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.jingjing.xin.Adapter.OrderInfromationAdapter;
@@ -37,6 +38,7 @@ public class NouserorderFragment extends BaseFragment {
     private User user;
     private LinearLayoutManager layoutManager;
     private SwipeRefreshLayout swipe;
+    private ImageView iv_imageview;
 
 
     private static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
@@ -47,6 +49,8 @@ public class NouserorderFragment extends BaseFragment {
         recyclerView = (RecyclerView)view.findViewById(R.id.recycler_view);
         tv_nouser = (TextView)view.findViewById(R.id.tv_nouser);
         swipe = (SwipeRefreshLayout)view.findViewById(R.id.swipe) ;
+        iv_imageview=(ImageView) view.findViewById(R.id.iv_image);
+        iv_imageview.setVisibility(View.GONE);//区别于评论
         layoutManager = new LinearLayoutManager(getContext());
         return view;
     }

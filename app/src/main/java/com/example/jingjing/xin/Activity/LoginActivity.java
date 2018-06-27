@@ -281,40 +281,42 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void showDialog() {//忘记密码
-        user = (User) getIntent().getSerializableExtra("user");
+    user = (User) getIntent().getSerializableExtra("user");
 
-        final AlertDialog mDialog = new AlertDialog.Builder(this).create();
-        mDialog.show();
-        Window window = mDialog.getWindow();
-        window.setGravity(Gravity.BOTTOM);
-        window.setWindowAnimations(R.style.popupAnimation);
+    final AlertDialog mDialog = new AlertDialog.Builder(this).create();
+    mDialog.show();
+    Window window = mDialog.getWindow();
+    window.setGravity(Gravity.BOTTOM);
+    window.setWindowAnimations(R.style.popupAnimation);
 
-        View view = View.inflate(this, R.layout.forgive_password, null);
-        final TextView find_password = (TextView) view.findViewById(R.id.tv_find_password);
-        final TextView cancel = (TextView) view.findViewById(R.id.tv_cancel);
+    View view = View.inflate(this, R.layout.forgive_password, null);
+    final TextView find_password = (TextView) view.findViewById(R.id.tv_find_password);
+    final TextView cancel = (TextView) view.findViewById(R.id.tv_cancel);
 
-        find_password.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-               Intent intent = new Intent(LoginActivity.this, ForgivePassword.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("user",user);
-                intent.putExtras(bundle);
-                startActivity(intent);
-                finish();
-            }
-        });
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mDialog.dismiss();//关闭对话框
-            }
-        });
+    find_password.setText("找回密码");
 
-        window.setContentView(view);
-        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);//设置横向全屏
+    find_password.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(LoginActivity.this, ForgivePassword.class);
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("user",user);
+            intent.putExtras(bundle);
+            startActivity(intent);
+            finish();
+        }
+    });
+    cancel.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            mDialog.dismiss();//关闭对话框
+        }
+    });
 
-        mDialog.setCanceledOnTouchOutside(true);
-        mDialog.setCancelable(true);
-    }
+    window.setContentView(view);
+    window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);//设置横向全屏
+
+    mDialog.setCanceledOnTouchOutside(true);
+    mDialog.setCancelable(true);
+}
 }

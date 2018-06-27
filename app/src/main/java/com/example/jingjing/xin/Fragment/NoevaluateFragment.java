@@ -6,6 +6,7 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.example.jingjing.xin.Adapter.EvaluatePastAdapter;
@@ -29,7 +30,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 import static com.example.jingjing.xin.constant.Conatant.URL_EVALUATEINFORMATION;
-
+//已经评论的
 public class NoevaluateFragment extends BaseFragment {
 
     private RecyclerView recyclerView;
@@ -37,6 +38,9 @@ public class NoevaluateFragment extends BaseFragment {
     private User user;
     private LinearLayoutManager layoutManager;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private FrameLayout frame_one;
+    private FrameLayout frame_wu;
+    private FrameLayout frame_you;
 
     private static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
@@ -44,9 +48,24 @@ public class NoevaluateFragment extends BaseFragment {
     protected View initView() {
         View view = View.inflate(mContext, R.layout.nouserorder_fragment, null);
         recyclerView = (RecyclerView)view.findViewById(R.id.recycler_view);
-        tv_noevaluate = (TextView)view.findViewById(R.id.tv_noevaluate);
+        tv_noevaluate = (TextView)view.findViewById(R.id.tv_nouser);
         swipeRefreshLayout =(SwipeRefreshLayout)view.findViewById(R.id.swipe);
+        frame_one=(FrameLayout)view.findViewById(R.id.frame_one);
+        frame_wu=(FrameLayout)view.findViewById(R.id.frame_wu);
+        frame_you=(FrameLayout)view.findViewById(R.id.frame_you);
         layoutManager = new LinearLayoutManager(getContext());
+
+        frame_one.removeView(frame_wu);
+        frame_one.removeView(frame_you);//移除
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                frame_one.removeView(frame_wu);
+                frame_one.removeView(frame_you);
+                evaluatefragment(user);
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
         return view;
     }
 
@@ -55,14 +74,6 @@ public class NoevaluateFragment extends BaseFragment {
         user = (User) getActivity().getIntent().getSerializableExtra("user");
         evaluatefragment(user);
 
-
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                evaluatefragment(user);
-                swipeRefreshLayout.setRefreshing(false);
-            }
-        });
 
     }
 
@@ -104,7 +115,7 @@ public class NoevaluateFragment extends BaseFragment {
         protected void onPostExecute(String s) {
             System.out.println(s);
             List<Book> mDate = new ArrayList<>();
-            if(!s.equals("")){
+            if(!"null".equals(s)){
                 try {
                     JSONArray jsonArray = new JSONArray(s);//定义一个JSON数组
                     for (int i=0;i<jsonArray.length();i++){
@@ -119,6 +130,7 @@ public class NoevaluateFragment extends BaseFragment {
                         book.setStadiumpicture(js.getString("mainpicture"));
                         mDate.add(book);
                     }
+                    frame_one.addView(frame_you);//添加布局
                     recyclerView.setLayoutManager(layoutManager);
                     EvaluatePastAdapter adapter = new   EvaluatePastAdapter(getContext(),mDate);
                     recyclerView.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL));
@@ -133,7 +145,7 @@ public class NoevaluateFragment extends BaseFragment {
             }else {
                 System.out.println("结果为空");
                 List<Book> mDate2 = new ArrayList<>();
-                tv_noevaluate.setVisibility(View.VISIBLE);
+                frame_one.addView(frame_wu);//添加布局
                 tv_noevaluate.setText("当前没有已评论的预约订单");
                 recyclerView.setLayoutManager(layoutManager);
                 EvaluatePastAdapter adapter = new   EvaluatePastAdapter(getContext(),mDate);

@@ -44,6 +44,7 @@
             android:enabled="true"
             android:process=":remote" />
 
+        <activity android:name=".User.UpdateProflie"></activity>
         <activity android:name=".Find.MyFindinformation"></activity>
         <activity android:name=".Stadium.StadiumPicture"></activity>
         <activity android:name=".Stadium.MyEvaluate"></activity>

@@ -107,7 +107,7 @@ public class EvaluateActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.tv_back:
+            case R.id.iv_back:
                 finish();
                 break;
             case R.id.tv_fabu:

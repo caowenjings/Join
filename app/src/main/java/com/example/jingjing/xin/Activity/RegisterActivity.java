@@ -47,7 +47,6 @@ import static com.example.jingjing.xin.constant.Conatant.URL_Register;
 
 public class RegisterActivity extends AppCompatActivity {
 
-
     private TextView tv_title;
     private ImageView iv_title;
     private RelativeLayout tv_back;
