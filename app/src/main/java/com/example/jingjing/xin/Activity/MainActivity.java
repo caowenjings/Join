@@ -1,6 +1,8 @@
 package com.example.jingjing.xin.Activity;
 
+import android.graphics.Color;
 import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -34,15 +36,18 @@ public class MainActivity extends AppCompatActivity {
     private BookingFragment bookingFragment;
     private FindFragment findFragment;
     private MyFragment myFragment;
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        final ActionBar actionBar  = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.hide();
-        }
+        android.support.v7.app.ActionBar actionBar =getSupportActionBar();
+        actionBar.hide();
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);//取消设置透明状态栏
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        getWindow().setStatusBarColor(Color.BLACK);//设置颜色
         setContentView(R.layout.activity_main);
+
             viewPager = (ViewPager) findViewById(R.id.view_fragment);
             bottomNavigationBar = (BottomNavigationBar) findViewById(R.id.bottomnavigation);
             linearLayout = (LinearLayout) findViewById(R.id.fragment);

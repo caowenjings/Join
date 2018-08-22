@@ -131,6 +131,7 @@ public class EvaluateFragment extends BaseFragment {
                         book.setPlaceName(js.getString("placename"));
                         book.setTime(js.getString("time"));
                         book.setTime_order(js.getString("time_order"));
+                        book.setStadiumId(js.getInt("stadiumId"));
                         book.setStadiumname(js.getString("stadiumname"));
                         book.setStadiumpicture(js.getString("mainpicture"));
                         mDate.add(book);

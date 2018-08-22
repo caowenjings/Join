@@ -38,6 +38,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 import static com.example.jingjing.xin.constant.Conatant.URL_FINDINFORMATION;
+import static com.example.jingjing.xin.constant.Conatant.URL_PROFLIE;
 
 /**
  * Created by jingjing on 2018/6/4.
@@ -156,7 +157,7 @@ public class FindSport extends AppCompatActivity {
                         need.setTime(js.getString("time"));
                         need.setNum(js.getInt("num"));
                         need.setNum_join(js.getInt("num_join"));
-                        //need.setProflie(URL_PROFLIE+js.optString("userproflie"));
+                        need.setProflie(URL_PROFLIE+js.optString("userproflie"));
                         need.setRemark(js.getString("remark"));
                         need.setReleasetime(js.optString("releasetime"));
                         mData.add(need);

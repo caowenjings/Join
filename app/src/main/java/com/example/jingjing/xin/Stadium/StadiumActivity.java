@@ -448,7 +448,7 @@ public class StadiumActivity extends AppCompatActivity  implements View.OnClickL
                         Evaluation evaluation = new Evaluation();
                         evaluation.setUsername(js.getString("username"));
                         evaluation.setContent(js.getString("content"));
-                       // evaluation.setIcon(URL_PROFLIE+js.getString("proflie"));
+                        evaluation.setIcon(URL_PROFLIE+js.getString("proflie"));
                         evaluation.setGrade(js.getDouble("grade"));
                         evaluation.setEvaluatetime(js.getString("evaluatetime"));
                         mData.add(evaluation);

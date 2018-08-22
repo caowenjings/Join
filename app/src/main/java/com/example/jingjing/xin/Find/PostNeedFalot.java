@@ -127,6 +127,7 @@ public class PostNeedFalot extends AppCompatActivity implements View.OnClickList
         switch (v.getId()) {
             case R.id.tv_back:
                 finish();
+                break;
             case R.id.btn_stadiumname:
                 setPlaceClick(v);
                 break;
@@ -149,7 +150,7 @@ public class PostNeedFalot extends AppCompatActivity implements View.OnClickList
                     String thistime = myear + "年" + mmonth + "月" + mday + "日";
                     String releasetime =  myear + "年" + mmonth + "月" + mday + "日";
                     InsertNeed(user.getUserId(),set_stadium.getStadiumId(),
-                            time_xuanze,set_num,set_stadium.getStadiumtype(),remark,releasetime);
+                            time_xuanze,set_num,set_stadium.getStadiumtype(),remark,releasetime,user.getTel());
 
                 } else {
                     Toast.makeText(PostNeedFalot.this, "有选项没有选哟！", Toast.LENGTH_LONG).show();
@@ -246,9 +247,9 @@ public class PostNeedFalot extends AppCompatActivity implements View.OnClickList
     }
 
 
-    private void InsertNeed(int userId, int stadiumId, String time, String num, String stadiumtype, String remark,String releasetime) {
+    private void InsertNeed(int userId, int stadiumId, String time, String num, String stadiumtype, String remark,String releasetime,String tel) {
         String orderURL = URL_INSERTNEED;
-        new InsertNeedAsyncTask().execute(orderURL, String.valueOf(userId), String.valueOf(stadiumId), time, num, stadiumtype, remark,releasetime);
+        new InsertNeedAsyncTask().execute(orderURL, String.valueOf(userId), String.valueOf(stadiumId), time, num, stadiumtype, remark,releasetime,tel);
     }
 
 
@@ -266,6 +267,7 @@ public class PostNeedFalot extends AppCompatActivity implements View.OnClickList
                 json.put("stadiumtype", params[5]);
                 json.put("remark", params[6]);
                 json.put("releasetime", params[7]);
+                json.put("tel",params[8]);
                 OkHttpClient okHttpClient = new OkHttpClient();
                 RequestBody requestBody = RequestBody.create(JSON, String.valueOf(json));
                 Request request = new Request.Builder()

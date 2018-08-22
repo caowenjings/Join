@@ -41,6 +41,7 @@ import okhttp3.Response;
 
 import static com.example.jingjing.xin.constant.Conatant.URL_FINDINFORMATION;
 import static com.example.jingjing.xin.constant.Conatant.URL_NEEDINFORMATION;
+import static com.example.jingjing.xin.constant.Conatant.URL_PROFLIE;
 
 /**
  * Created by jingjing on 2018/6/3.
@@ -146,6 +147,7 @@ public class JoinNeedInformation extends AppCompatActivity {
                         need.setTime(js.getString("time"));
                         need.setNum(js.getInt("num"));
                         need.setNum_join(js.getInt("num_join"));
+                        need.setProflie(URL_PROFLIE+js.optString("userproflie"));
                         need.setRemark(js.getString("remark"));
                         mData.add(need);
                     }

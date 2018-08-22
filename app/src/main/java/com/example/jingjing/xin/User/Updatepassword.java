@@ -67,10 +67,11 @@ public class Updatepassword extends AppCompatActivity  {
         @Override
         public void onCreate( Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
-            getWindow().setStatusBarColor(Color.TRANSPARENT);
             android.support.v7.app.ActionBar actionBar =getSupportActionBar();
             actionBar.hide();
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);//取消设置透明状态栏
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            getWindow().setStatusBarColor(Color.BLACK);//设置颜色
             setContentView(R.layout.update_password);
 
             initView();

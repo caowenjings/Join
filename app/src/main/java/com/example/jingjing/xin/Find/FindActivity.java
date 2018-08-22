@@ -15,6 +15,9 @@ import android.widget.Toast;
 import com.example.jingjing.xin.Bean.Need;
 import com.example.jingjing.xin.Bean.User;
 import com.example.jingjing.xin.R;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -47,6 +50,7 @@ public class FindActivity  extends AppCompatActivity implements View.OnClickList
     private TextView tv_num_join;
     private TextView tv_remark;
     private Button btn_join;
+    private ImageView iv_touxiang;
 
     private User user;
     private Need need;
@@ -80,6 +84,7 @@ public class FindActivity  extends AppCompatActivity implements View.OnClickList
         tv_num_join=(TextView)findViewById(R.id.tv_num_join);
         tv_remark=(TextView)findViewById(R.id.tv_remark);
         btn_join=(Button)findViewById(R.id.btn_join);
+        iv_touxiang=(ImageView)findViewById(R.id.iv_touxiang);
 
 
     }
@@ -93,7 +98,15 @@ public class FindActivity  extends AppCompatActivity implements View.OnClickList
         tv_num.setText("召集人数："+String.valueOf(need.getNum()));
         tv_num_join.setText("已加入人数："+String.valueOf(need.getNum_join()));
         tv_remark.setText("备注："+need.getRemark());
-
+        ImageLoaderConfiguration configuration = ImageLoaderConfiguration.createDefault(this);
+        ImageLoader.getInstance().init(configuration);
+        DisplayImageOptions options = new DisplayImageOptions.Builder()
+                .showImageOnFail(R.drawable.error) // 设置图片加载或解码过程中发生错误显示的图片
+                .showImageOnLoading(R.drawable.loading)
+                .resetViewBeforeLoading(false)  // default 设置图片在加载前是否重置、复位
+                .delayBeforeLoading(100)  // 下载前的延迟时间
+                .build();
+        ImageLoader.getInstance().displayImage(need.getProflie(),iv_touxiang,options);
         tv_back.setOnClickListener(this);
         btn_join.setOnClickListener(this);
 

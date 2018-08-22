@@ -5,6 +5,7 @@
     android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/btn_informatoin"
         android:background="@color/colorblue"
         android:layout_width="match_parent"
         android:layout_height="70dp">
@@ -27,7 +28,6 @@
                 android:textSize="25sp"/>
 
         <ImageView
-            android:id="@+id/btn_informatoin"
             android:src="@drawable/back_right_white"
             android:layout_gravity="center_vertical"
             android:layout_width="40dp"

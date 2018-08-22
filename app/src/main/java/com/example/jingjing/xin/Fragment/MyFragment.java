@@ -45,7 +45,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
     private User  user ;
 
     private LinearLayout btn_exit;
-    private ImageView btn_information;
+    private LinearLayout btn_information;
     private LinearLayout btn_order;
     private LinearLayout btn_need;
     private LinearLayout btn_collect;
@@ -62,7 +62,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
         View view = View.inflate(mContext, R.layout.myfragment, null);
         tv_username = (TextView) view.findViewById(R.id.tv_username);
         btn_exit= (LinearLayout) view.findViewById(R.id.btn_exit);
-        btn_information = (ImageView) view.findViewById(R.id.btn_informatoin);
+        btn_information = (LinearLayout) view.findViewById(R.id.btn_informatoin);
         btn_order = (LinearLayout) view.findViewById(R.id.btn_order);
         btn_need= (LinearLayout) view.findViewById(R.id.btn_need);
         btn_collect = (LinearLayout) view.findViewById(R.id.btn_collect);

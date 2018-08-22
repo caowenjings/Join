@@ -29,7 +29,7 @@ public class WelcomeActivity extends AppCompatActivity {
         actionBar.hide();
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.welcome);
-       welcome=(TextView)findViewById(R.id.text_welcome);
+        welcome=(TextView)findViewById(R.id.text_welcome);
         imageView=(ImageView)findViewById(R.id.image_welcome) ;
         yanchi();
     }

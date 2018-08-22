@@ -73,7 +73,10 @@ public class UserInformationActivity extends AppCompatActivity implements View.O
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
-        actionBar.hide();
+        actionBar.hide();//隐藏actionBar
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);//取消设置透明状态栏
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        getWindow().setStatusBarColor(Color.BLACK);//设置颜色
         setContentView(R.layout.userinformatoin);
         initView();
         initData();
@@ -185,7 +188,7 @@ public class UserInformationActivity extends AppCompatActivity implements View.O
                         user.setSex(results.getString("sex"));
                         user.setTel(results.getString("tel"));
                         user.setMyright(results.getString("myRight"));
-                      // user.setProflie(URL_PROFLIE+results.getString("proflie"));
+                        user.setProflie(URL_PROFLIE+results.getString("proflie"));
                         tv_username.setText(user.getUsername());
                         tv_realname.setText(user.getRealname());
                         tv_sex.setText(user.getSex());

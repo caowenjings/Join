@@ -211,6 +211,7 @@ public class SearchStadium extends AppCompatActivity {
                         stadium.setNum(js.getString("num"));
                         stadium.setOpentime(js.getString("opentime"));
                         stadium.setClosetime(js.getString("closetime"));
+                        stadium.setStadiumtel(js.optString("stadiumtel"));//没有就设置为null
                         stadium.setGrade((float)js.getDouble("grade"));
                         stadium.setIconnum(js.getInt("iconnum"));
                         mData.add(stadium);
