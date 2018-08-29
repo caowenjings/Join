@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.example.jingjing.xin.Base.BaseFragment;
+import com.example.jingjing.xin.Fragment.BookingFragment;
 
 import java.util.List;
 

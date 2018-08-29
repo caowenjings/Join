@@ -4,13 +4,9 @@ import android.graphics.Color;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
@@ -27,108 +23,88 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    private ViewPager viewPager;
-    private List<Fragment> fragmentLists;
+        private ViewPager viewPager;
+        private List<Fragment> fragmentList;
 
-    private LinearLayout linearLayout;
-    private BottomNavigationBar bottomNavigationBar;
-    private BottomNavigationItem bottomNavigationItem;
-    private BookingFragment bookingFragment;
-    private FindFragment findFragment;
-    private MyFragment myFragment;
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        android.support.v7.app.ActionBar actionBar =getSupportActionBar();
-        actionBar.hide();
-        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);//取消设置透明状态栏
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        getWindow().setStatusBarColor(Color.BLACK);//设置颜色
-        setContentView(R.layout.activity_main);
+        private LinearLayout linearLayout;
+        private BottomNavigationBar bottomNavigationBar;
+        private BottomNavigationItem bottomNavigationItem;
+        private BookingFragment bookingFragment;
+        private FindFragment findFragment;
+        private MyFragment myFragment;
+        @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            requestWindowFeature(Window.FEATURE_NO_TITLE);
+            android.support.v7.app.ActionBar actionBar =getSupportActionBar();
+            actionBar.hide();
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);//取消设置透明状态栏
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            getWindow().setStatusBarColor(Color.BLACK);//设置颜色
+            setContentView(R.layout.activity_main);
 
             viewPager = (ViewPager) findViewById(R.id.view_fragment);
             bottomNavigationBar = (BottomNavigationBar) findViewById(R.id.bottomnavigation);
             linearLayout = (LinearLayout) findViewById(R.id.fragment);
-            //添加碎片
-            List<Fragment> fragmentLists = new ArrayList<>();
-            fragmentLists.add(new BookingFragment());
-            fragmentLists.add(new FindFragment());
-            fragmentLists.add(new MyFragment());
-            //关联适配器
-
-            FragmentAdapter fragmentAdapter = new FragmentAdapter(getSupportFragmentManager(),fragmentLists);
-            viewPager.setAdapter(fragmentAdapter);
-            viewPager.setOffscreenPageLimit(2);
-            setBottomNavigationItem(bottomNavigationBar, 6, 60, 50);
-            setdefaultFragment();
+            initBottomNavigationItem();
+            initFragment();
 
         }
 
-    //设置默认
-    public void setdefaultFragment(){
-        FragmentManager fm=getSupportFragmentManager();
-        FragmentTransaction transaction=fm.beginTransaction();
-        BookingFragment bookingFragment=new BookingFragment();
-        transaction.replace(R.id.fragment,bookingFragment);
-        transaction.commit();
-    }
-    public void setBottomNavigationItem(BottomNavigationBar bottomNavigationBar ,int space,int imageLen,int textsize){
-        bottomNavigationBar
-                .setMode(BottomNavigationBar.MODE_DEFAULT)
-                .setInActiveColor(R.color.colorred)
-                .setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_DEFAULT);
+      public void initFragment(){
+          //添加碎片
+          fragmentList = new ArrayList<>();
+          fragmentList.add(new BookingFragment());
+          fragmentList.add(new FindFragment());
+          fragmentList.add(new MyFragment());
+          //关联适配器
+          FragmentAdapter fragmentAdapter = new FragmentAdapter(getSupportFragmentManager(),fragmentList);
+          viewPager.setAdapter(fragmentAdapter);
+//          viewPager.setOffscreenPageLimit(2);
+          viewPager.setCurrentItem(0);
 
-//给Fragment填充内容
-        bottomNavigationBar
-                .addItem(new BottomNavigationItem(R.drawable.booking,"预定")).setActiveColor(R.color.colorblue)
-                .addItem(new BottomNavigationItem(R.drawable.finding,"发现")).setActiveColor(R.color.colorblue)
-                .addItem(new BottomNavigationItem(R.drawable.my,"我的")).setActiveColor(R.color.colorblue)
-                .initialise();
-        //添加监听事件
-        bottomNavigationBar.setTabSelectedListener(new BottomNavigationBar.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(int position) {//未选中到选中
-                //开启一个事物
-                FragmentManager fm=getSupportFragmentManager();
-                FragmentTransaction transaction=fm.beginTransaction();
-                //添加碎片在里面
-                switch (position){
-                    case 0:
-                        if(bookingFragment == null){
-                           bookingFragment=new BookingFragment();
-                        }
-                        transaction.replace(R.id.fragment,bookingFragment);
-                        getSupportActionBar().setTitle("预定");
-                        break;
-                    case  1:
-                        if(findFragment == null){
-                            findFragment=new FindFragment();
-                        }
-                        transaction.replace(R.id.fragment,findFragment);
-                        getSupportActionBar().setTitle("发现");
-                        break;
-                    case 2:
-                        if(myFragment == null){
-                            myFragment= new MyFragment();
-                        }
-                        transaction.replace(R.id.fragment,myFragment);
-                        getSupportActionBar().setTitle("我的");
-                        break;
-                    default:
-                        break;
+          viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+              @Override
+              public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+              }
+              @Override
+              public void onPageSelected(int position) {
+                  bottomNavigationBar.selectTab(position);
+              }
+              @Override
+              public void onPageScrollStateChanged(int state) {
+
+              }
+          });
+      }
+
+        public void initBottomNavigationItem(){
+            bottomNavigationBar
+                    .setMode(BottomNavigationBar.MODE_DEFAULT)
+                    .setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_DEFAULT)
+                    .setActiveColor(R.color.colorblue) //设置选中的颜色
+                    .setInActiveColor(R.color.colorhui);//未选中颜色;
+            bottomNavigationBar
+                    .addItem(new BottomNavigationItem(R.drawable.booking,"预定"))
+                    .addItem(new BottomNavigationItem(R.drawable.finding,"发现"))
+                    .addItem(new BottomNavigationItem(R.drawable.my,"我的"))
+                    .setFirstSelectedPosition(0)//默认位置是0
+                    .initialise();
+            //添加监听事件
+            bottomNavigationBar.setTabSelectedListener(new BottomNavigationBar.OnTabSelectedListener() {
+                @Override
+                public void onTabSelected(int position) {//未选中到选中
+                    viewPager.setCurrentItem(position);
                 }
-                transaction.commit();
-            }
-            @Override
-            public void onTabUnselected(int position) {//选中到未选中
-            }
+                @Override
+                public void onTabUnselected(int position) {//选中到未选中
+                }
+                @Override
+                public void onTabReselected(int position) {//选中到选中
 
-            @Override
-            public void onTabReselected(int position) {//选中到选中
-
-            }
-        });
+                }
+            });
+        }
     }
-}

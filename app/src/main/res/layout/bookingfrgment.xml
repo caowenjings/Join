@@ -16,36 +16,36 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="城市名"
-            android:textSize="20dp"
+            android:textSize="20sp"
+            android:layout_marginLeft="10dp"
             android:textColor="@color/colorwhite"
             android:layout_gravity="center_vertical"/>
         <ImageView
             android:id="@+id/iv_city"
             android:layout_width="30dp"
+            android:layout_marginLeft="5dp"
             android:layout_height="wrap_content"
             android:src="@drawable/back_bottom"/>
-
 
         <LinearLayout
             android:id="@+id/tv_search"
             android:layout_marginLeft="15dp"
             android:layout_width="wrap_content"
-            android:layout_height="35dp"
+            android:layout_height="40dp"
             android:layout_gravity="center_vertical"
             android:background="@drawable/sousuo_biankuang">
 
             <ImageView
-                android:layout_marginLeft="10dp"
-                android:layout_width="40dp"
+                android:layout_marginLeft="15dp"
+                android:layout_width="35dp"
                 android:layout_height="wrap_content"
                 android:src="@drawable/bookingfragment_search"/>
-
             <TextView
                 android:layout_marginLeft="20dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="请输入场馆名"
-                android:textSize="18dp"
+                android:textSize="16sp"
                 android:textColor="@color/colorblack"
                 android:layout_gravity="center_vertical"/>
 

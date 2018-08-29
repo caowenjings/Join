@@ -56,6 +56,4 @@ dependencies {
     compile 'com.zhy:okhttputils:2.6.2'
     //Xutils网络请求
     compile  'org.xutils:xutils:3.5.0'
-
-
 }
