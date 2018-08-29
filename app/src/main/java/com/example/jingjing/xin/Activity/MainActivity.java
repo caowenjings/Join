@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
-    //默认
+    //设置默认
     public void setdefaultFragment(){
         FragmentManager fm=getSupportFragmentManager();
         FragmentTransaction transaction=fm.beginTransaction();
@@ -80,7 +80,6 @@ public class MainActivity extends AppCompatActivity {
                 .setInActiveColor(R.color.colorred)
                 .setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_DEFAULT);
 
-
 //给Fragment填充内容
         bottomNavigationBar
                 .addItem(new BottomNavigationItem(R.drawable.booking,"预定")).setActiveColor(R.color.colorblue)
@@ -90,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
         //添加监听事件
         bottomNavigationBar.setTabSelectedListener(new BottomNavigationBar.OnTabSelectedListener() {
             @Override
-            public void onTabSelected(int position) {
+            public void onTabSelected(int position) {//未选中到选中
                 //开启一个事物
                 FragmentManager fm=getSupportFragmentManager();
                 FragmentTransaction transaction=fm.beginTransaction();
@@ -98,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
                 switch (position){
                     case 0:
                         if(bookingFragment == null){
-                            bookingFragment=new BookingFragment();
+                           bookingFragment=new BookingFragment();
                         }
                         transaction.replace(R.id.fragment,bookingFragment);
                         getSupportActionBar().setTitle("预定");
@@ -123,11 +122,11 @@ public class MainActivity extends AppCompatActivity {
                 transaction.commit();
             }
             @Override
-            public void onTabUnselected(int position) {
+            public void onTabUnselected(int position) {//选中到未选中
             }
 
             @Override
-            public void onTabReselected(int position) {
+            public void onTabReselected(int position) {//选中到选中
 
             }
         });

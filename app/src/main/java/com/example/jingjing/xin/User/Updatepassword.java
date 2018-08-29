@@ -103,9 +103,9 @@ public class Updatepassword extends AppCompatActivity  {
             user = (User) getIntent().getSerializableExtra("user");
             method = (int) getIntent().getSerializableExtra("method");
 
-            if(method == 1){
+            if(method == 1){//忘记密码所要用到的
                 et_old_password.setText(user.getPassword());
-                ll_old_password.setVisibility(View.GONE);
+                ll_old_password.setVisibility(View.GONE);//隐藏
                 tv_back.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -125,29 +125,14 @@ public class Updatepassword extends AppCompatActivity  {
                         if (user.getPassword().equals(oldpassword)){
                             if (newpassword.equals(confrimpassword)) {
                                 updatepassword(userId, newpassword);
-                                new Handler(new Handler.Callback() {
-                                    //处理接收到的消息的方法，防止堵塞主线程
-                                    @Override
-                                    public boolean handleMessage(Message arg0) {
-                                        //实现页面跳转
-                                        Intent intent=new Intent(getApplicationContext(), LoginActivity.class);
-                                        Bundle bundle = new Bundle();
-                                        bundle.putSerializable("user",user);
-                                        intent.putExtras(bundle);
-                                        startActivity(intent);
-                                        finish();
-                                        Toast.makeText(Updatepassword.this, "身份过期了，请重新输入密码登录", Toast.LENGTH_SHORT).show();
-                                        return false;
-                                    }
-                                }).sendEmptyMessageDelayed(0, 2000);
                             } else {
                                 et_comfirm_password.setText("");
                                 Toast.makeText(Updatepassword.this, "两次输入密码不一致，请重新输入", Toast.LENGTH_SHORT).show();
                             }
                         } else {
+                            et_old_password.setText("");
                             Toast.makeText(Updatepassword.this, "旧密码输入错误.请重新输入", Toast.LENGTH_SHORT).show();
                         }
-
                     } else {
                         Toast.makeText(Updatepassword.this, "每项不能为空", Toast.LENGTH_SHORT).show();
                     }
@@ -155,13 +140,11 @@ public class Updatepassword extends AppCompatActivity  {
             });
         }
 
-
     private void getEditString(){
             oldpassword = et_old_password.getText().toString();
             newpassword = et_new_password.getText().toString();
            confrimpassword= et_comfirm_password.getText().toString();
     }
-
 
     private void updatepassword(String userId, String password) {
         String loginUrl = URL_UPDATEPASSWORD;
@@ -207,7 +190,21 @@ public class Updatepassword extends AppCompatActivity  {
                     System.out.println(loginresult);
                     if (!"0".equals(loginresult)) {
                         Toast.makeText(Updatepassword.this, "修改成功", Toast.LENGTH_SHORT).show();
-
+                        new Handler(new Handler.Callback() {
+                            //处理接收到的消息的方法，防止堵塞主线程
+                            @Override
+                            public boolean handleMessage(Message arg0) {
+                                //实现页面跳转
+                                Intent intent=new Intent(getApplicationContext(), LoginActivity.class);
+                                Bundle bundle = new Bundle();
+                                bundle.putSerializable("user",user);
+                                intent.putExtras(bundle);
+                                startActivity(intent);
+                                finish();
+                                Toast.makeText(Updatepassword.this, "身份过期了，请重新输入密码登录", Toast.LENGTH_SHORT).show();
+                                return false;
+                            }
+                        }).sendEmptyMessageDelayed(0, 2000);
                     } else {
                         Toast.makeText(Updatepassword.this, "修改失败", Toast.LENGTH_SHORT).show();
                     }

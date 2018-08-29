@@ -67,8 +67,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private ImageView lv_delete_one;
     private User user;
 
-    private SharedPreferences.Editor editor;
     private SharedPreferences preferences;
+    private SharedPreferences.Editor editor;
 
 
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
@@ -86,7 +86,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         initView();
         initData();
-
     }
 
     private void initView() {
@@ -100,7 +99,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         lv_delete = (ImageView)findViewById(R.id.iv_delete);
         lv_delete_one = (ImageView)findViewById(R.id.iv_delete_one);
 
-        preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);//获取SharedPreferences对象
         boolean isRemember =preferences.getBoolean("remember_password",false);//获取这个键对应的值，默认flase，当选中时时ture
         if(isRemember){
             String username = preferences.getString("username","");//读取值
@@ -118,47 +117,85 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         lv_delete_one.setOnClickListener(this);
         lv_delete.setOnClickListener(this);
 
-        et_username.addTextChangedListener(new TextWatcher() {
+        getEditString();
+        et_username.setOnFocusChangeListener(new View.OnFocusChangeListener() {//推断是否有焦点
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {//文本框改变之前
-            }
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-            @Override
-            public void afterTextChanged(Editable s) {
-                if(s.length() == 0){
-                    lv_delete.setVisibility(View.GONE);//隐藏
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus){
+                    if(TextUtils.isEmpty(username)){
+                        lv_delete.setVisibility(View.GONE);//隐藏
+                        et_username.addTextChangedListener(new EditChangedListener());
+                    }else {
+                        lv_delete.setVisibility(View.VISIBLE);
+                        et_username.addTextChangedListener(new EditChangedListener());
+                    }
                 }else {
-                    lv_delete.setVisibility(View.VISIBLE);
+                    lv_delete.setVisibility(View.GONE);//隐藏
                 }
             }
         });
 
-        et_password.addTextChangedListener(new TextWatcher() {
+        et_password.setOnFocusChangeListener(new View.OnFocusChangeListener() {//推断是否有焦点
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if(s.length() == 0){
-                    lv_delete_one.setVisibility(View.GONE);//隐藏
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus){
+                    if(TextUtils.isEmpty(username)){
+                        lv_delete_one.setVisibility(View.GONE);//隐藏
+                        et_password.addTextChangedListener(new EditChangedListener_one());
+                    }else {
+                        lv_delete_one.setVisibility(View.VISIBLE);
+                        et_password.addTextChangedListener(new EditChangedListener_one());
+                    }
                 }else {
-                    lv_delete_one.setVisibility(View.VISIBLE);
+                    lv_delete_one.setVisibility(View.GONE);//隐藏
                 }
             }
         });
     }
 
-    public void getEditString(){
+    public void getEditString(){//获取用户输入信息
         username=et_username.getText().toString();
         password=et_password.getText().toString();
     }
 
+   private class EditChangedListener implements TextWatcher{//文本监视器监听用户输入状态
+       @Override
+       public void beforeTextChanged(CharSequence s, int start, int count, int after) {//文本框改变之前
+       }
+       @Override
+       public void onTextChanged(CharSequence s, int start, int before, int count) {
+           if(s.length() == 0){
+               lv_delete.setVisibility(View.GONE);//隐藏
+           }else {
+               lv_delete.setVisibility(View.VISIBLE);
+           }
+       }
+       @Override
+       public void afterTextChanged(Editable s) {
+       }
+   }
+
+   private class  EditChangedListener_one implements TextWatcher{
+
+       @Override
+       public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+       }
+
+       @Override
+       public void onTextChanged(CharSequence s, int start, int before, int count) {
+           if(s.length() == 0){
+               lv_delete_one.setVisibility(View.GONE);//隐藏
+           }else {
+               lv_delete_one.setVisibility(View.VISIBLE);
+           }
+       }
+
+       @Override
+       public void afterTextChanged(Editable s) {
+
+       }
+   }
     @Override
     public void onClick(View v) {
         getEditString();
@@ -185,20 +222,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 break;
             default:
                 break;
-
         }
     }
 
 
     private void Login(String username, String password) {
         String loginUrl = URL_LOGIN;
-        new LoginAsyncTask().execute(loginUrl, username, password);
+        new LoginAsyncTask().execute(loginUrl, username, password);////启动任务
     }
 
     private class LoginAsyncTask extends AsyncTask<String, Integer, String> {
         public LoginAsyncTask() {
         }
-
         @Override
         protected String doInBackground(String... params) {//后台执行具体的下载逻辑
             Response response = null;
@@ -209,7 +244,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 json.put("password", params[2]);
                 OkHttpClient okHttpClient = new OkHttpClient();//发送网络请求
                 RequestBody requestBody = RequestBody.create(JSON, String.valueOf(json));
-                Request request = new Request.Builder()//断点下载从哪个字节开始下载
+                Request request = new Request.Builder()
                         .url(params[0])
                         .post(requestBody)
                         .build();
@@ -225,16 +260,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
 
         @Override
-        protected void onPostExecute(String s) {//通知最后的下载结果
+        protected void onPostExecute(String s) {
             System.out.println(s);
             if (s != null) {
                 try {
-                    JSONObject results = new JSONObject(s);
+                    JSONObject results = new JSONObject(s);//解析json数据,获取返回的值
                     String loginresult = results.getString("result");
+                    System.out.println(loginresult);
                     final User user = new User();
                     if (!"0".equals(loginresult)) {
-
-                        editor = preferences.edit();//存储值
+                        editor = preferences.edit();//获取一个sharedPreFerences.Editord对象
                         if(rememberpass.isChecked()){//检查复选框是否被选中了
                             editor.putBoolean("remember_password",true);//将flase改为true
                             editor.putString("username",username);
@@ -285,17 +320,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     user = (User) getIntent().getSerializableExtra("user");
 
     final AlertDialog mDialog = new AlertDialog.Builder(this).create();
-    mDialog.show();
-    Window window = mDialog.getWindow();
-    window.setGravity(Gravity.BOTTOM);
-    window.setWindowAnimations(R.style.popupAnimation);
-
-    View view = View.inflate(this, R.layout.forgive_password, null);
+    mDialog.show();//显示对话框
+    View view = View.inflate(this, R.layout.forgive_password, null);//布局
     final TextView find_password = (TextView) view.findViewById(R.id.tv_find_password);
     final TextView cancel = (TextView) view.findViewById(R.id.tv_cancel);
 
     find_password.setText("找回密码");
-
     find_password.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -314,10 +344,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
     });
 
+    Window window = mDialog.getWindow();//获取当前所在窗体，然后从底部弹出
+    window.setGravity(Gravity.BOTTOM);
+    window.setWindowAnimations(R.style.popupAnimation);//设置窗体样式
     window.setContentView(view);
     window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);//设置横向全屏
-
-    mDialog.setCanceledOnTouchOutside(true);
-    mDialog.setCancelable(true);
-}
+    mDialog.setCanceledOnTouchOutside(false);//点击区域外不消失
+    mDialog.setCancelable(false);//
+    }
 }

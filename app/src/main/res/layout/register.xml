@@ -13,96 +13,65 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="20dp"
-            android:text="昵 称："
-            android:textColor="@color/colorblack"/>
+            style="@style/registerText"
+            android:text="昵 称：" />
         <EditText
             android:id="@+id/et_username_register"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:hint="请输入你的昵称"/>
     </LinearLayout>
 
     <LinearLayout
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginLeft="30dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        style="@style/registerLinearLayout">
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="20dp"
-            android:text="真实姓名："
-            android:textColor="@color/colorblack"/>
+            style="@style/registerText"
+            android:text="真实姓名：" />
         <EditText
             android:id="@+id/et_realname_register"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:hint="请输入你的真实姓名"/>
     </LinearLayout>
 
     <LinearLayout
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginLeft="30dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        style="@style/registerLinearLayout">
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="20dp"
-            android:text="密 码："
-            android:textColor="@color/colorblack"/>
+            style="@style/registerText"
+            android:text="密 码：" />
         <EditText
             android:id="@+id/et_password_register"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:maxLength="11"
             android:inputType="textPassword"
             android:hint="6-11位数字或字母"/>
     </LinearLayout>
+
     <LinearLayout
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginLeft="30dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        style="@style/registerLinearLayout">
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="20dp"
-            android:text="确认密码："
-            android:textColor="@color/colorblack"/>
+            style="@style/registerText"
+            android:text="确认密码："/>
         <EditText
             android:id="@+id/et_confirmpwd_register"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:inputType="textPassword"
             android:maxLength="11"
             android:hint="6-11位数字或字母"/>
     </LinearLayout>
 
-
     <LinearLayout
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginLeft="30dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        style="@style/registerLinearLayout">
         <TextView
             android:id="@+id/tv_sex"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/registerText"
             android:layout_gravity="center"
-            android:textColor="@color/colorblack"
-            android:textSize="20dp"
             android:text="性  别 :" />
         <RadioGroup
             android:layout_marginLeft="10dp"
@@ -127,22 +96,15 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginLeft="30dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        style="@style/registerLinearLayout">
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="20dp"
-            android:text="电话号码："
-            android:textColor="@color/colorblack"/>
+            style="@style/registerText"
+            android:text="电话号码：" />
         <EditText
             android:id="@+id/et_tel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:maxLength="11"
             android:hint="输入11位手机号"/>
     </LinearLayout>
@@ -152,8 +114,7 @@
         android:layout_marginTop="30dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:background="@color/colorblue"
         android:text="注 册"/>
-
 </LinearLayout>

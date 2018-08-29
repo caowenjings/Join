@@ -48,7 +48,7 @@ import static com.example.jingjing.xin.constant.Conatant.URL_Register;
 public class RegisterActivity extends AppCompatActivity {
 
     private TextView tv_title;
-    private ImageView iv_title;
+    private ImageView iv_btn;
     private RelativeLayout tv_back;
 
     private EditText et_username;
@@ -78,16 +78,14 @@ public class RegisterActivity extends AppCompatActivity {
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);//取消设置透明状态栏
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         getWindow().setStatusBarColor(Color.BLACK);//设置颜色
-
         setContentView(R.layout.register);//布局
         initView();
         initData();
-
     }
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void initView() {
         tv_title=(TextView)findViewById(R.id.tv_title);
-        iv_title=(ImageView)findViewById(R.id.iv_title);
+        iv_btn=(ImageView)findViewById(R.id.iv_title);
         tv_back=(RelativeLayout)findViewById(R.id.tv_back);
         tv_title.setText("注 册");
 
@@ -100,21 +98,20 @@ public class RegisterActivity extends AppCompatActivity {
         rg_sex = (RadioGroup) findViewById(R.id.rg_sex);
         rb_male = (RadioButton) findViewById(R.id.rb_male);
         rb_female = (RadioButton) findViewById(R.id.rb_female);
-        getWindow().setStatusBarColor(Color.parseColor("#FF029ACC"));
     }
 
     private void initData() {
 
-        iv_title.setOnClickListener(new View.OnClickListener() {//返回按钮
+        iv_btn.setOnClickListener(new View.OnClickListener() {//返回按钮
             @Override
             public void onClick(View v) {
-                RegisterActivity.this.finish();
+                finish();// 或RegisterActivity.this.finish();
             }
         });
 
         rg_sex.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {//选择性别
             @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
+            public void onCheckedChanged(RadioGroup group, int checkedId) {//选择性别
                 switch (checkedId) {
                     case R.id.rb_male:
                         sex = rb_male.getText().toString();
@@ -127,7 +124,6 @@ public class RegisterActivity extends AppCompatActivity {
         });
 
         btn_register.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 getEditString();//获取用户输入的信息
@@ -135,7 +131,7 @@ public class RegisterActivity extends AppCompatActivity {
                     Toast.makeText(RegisterActivity.this, "请输入你的用户名", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if (TextUtils.isEmpty(password)) {
+                if (TextUtils.isEmpty(password)|| (password.length()<6)) {
                     Toast.makeText(RegisterActivity.this, "请输入你的密码", Toast.LENGTH_SHORT).show();
                     return;
                 }if (!password.equals(confirmmpwd)) {
@@ -150,7 +146,7 @@ public class RegisterActivity extends AppCompatActivity {
                     return;
                 }if (TextUtils.isEmpty(tel) ) {
                     Toast.makeText(RegisterActivity.this, "请输入你的电话号码", Toast.LENGTH_SHORT).show();
-                } if(isTelNum(tel)==false){
+                }if(isTelNum(tel)==false){
                     Toast.makeText(RegisterActivity.this, "请输入正确的手机号", Toast.LENGTH_SHORT).show();
                 }
                 else {
@@ -161,11 +157,10 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     public static boolean isTelNum(String tel ){//手机号格式判断是否正确
-        Pattern p = Pattern.compile("^((13[0-9])|(15[^4,\\D])|(14[0-9])|(17[0-9])|(18[0-9]))\\d{8}$");
+        Pattern p = Pattern.compile("^((13[0-9])|(14[5,7])|(15[0-3,5-9])|(166)|(17[0,3,5-8])|(18[0-9])|(19[89]))\\d{8}$");
         Matcher m = p.matcher(tel);
         return m.matches();
     }
-
     public void getEditString(){//得到用户输入信息
         username=et_username.getText().toString();
         password=et_password.getText().toString();
@@ -182,7 +177,6 @@ public class RegisterActivity extends AppCompatActivity {
     private class RegisterAsyncTask extends AsyncTask<String, Integer, String> {//异步消息处理
         public RegisterAsyncTask() {
         }
-
         @Override
         protected String doInBackground(String... params) {//执行耗时操作，带参post请求（Params是传入的参数）
             Response response = null;
@@ -217,8 +211,8 @@ public class RegisterActivity extends AppCompatActivity {
             System.out.println(s);
             if (!TextUtils.isEmpty(s)) {
                 try {
-                    JSONObject results = new JSONObject(s);//s转化为JsonObject类型
-                    String loginresult = results.getString("result");//获取到信息
+                    JSONObject results = new JSONObject(s);
+                    String loginresult = results.getString("result");//调用getString获取到信息
                     if (loginresult.equals("1")) {
                         Toast.makeText(RegisterActivity.this, "注册成功", Toast.LENGTH_LONG).show();
                        new Handler(new Handler.Callback() {
@@ -227,9 +221,9 @@ public class RegisterActivity extends AppCompatActivity {
                            public boolean handleMessage(Message arg0) {
                                 //实现页面跳转
                                 Intent intent=new Intent(getApplicationContext(), LoginActivity.class);
-                              // Bundle bundle = new Bundle();
-                                //bundle.putSerializable("user",user);
-                               //intent.putExtras(bundle);
+                                 Bundle bundle = new Bundle();
+                                bundle.putSerializable("user",user);
+                                intent.putExtras(bundle);
                                 startActivity(intent);
                                 finish();
                                 return false;

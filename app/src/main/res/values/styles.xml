@@ -18,6 +18,23 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <!--注册界面text -->
+    <style name="registerText">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/colorblack</item>
+    </style>
+
+    <!--注册界面LinearLayout -->
+    <style name="registerLinearLayout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_marginRight">30dp</item>
+        <item name="android:layout_marginLeft">30dp</item>
+    </style>
+
     <!-- alertDialog animation 样式 -->
     <style name="popupAnimation" parent="android:Animation">
         <item name="android:windowEnterAnimation">@anim/dialog_in</item>
@@ -103,6 +120,13 @@
         <item name="android:textSize">15sp</item>
         <item name="android:layout_marginLeft">100dp</item>
         <item name="android:layout_marginTop">5dp</item>
+    </style>
+    <!--忘记密码里面的textview-->
+    <style name="tv_forgive">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/colorblack</item>
+        <item name="android:textSize">15sp</item>
     </style>
 
      <!--忘记密码里面的editview-->

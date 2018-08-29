@@ -24,17 +24,16 @@ public class WelcomeActivity extends AppCompatActivity {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         android.support.v7.app.ActionBar actionBar =getSupportActionBar();
-        actionBar.hide();
+        actionBar.hide();//隐藏标题栏
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.welcome);
+
         welcome=(TextView)findViewById(R.id.text_welcome);
         imageView=(ImageView)findViewById(R.id.image_welcome) ;
         yanchi();
     }
    private void yanchi(){
-       Timer timer=new Timer();
        TimerTask task=new TimerTask() {//定时器延期执行
            @Override
            public void run() {
@@ -43,7 +42,7 @@ public class WelcomeActivity extends AppCompatActivity {
                finish();
            }
        };
+       Timer timer=new Timer();
        timer.schedule(task,3000);
-
    }
 }

@@ -12,6 +12,6 @@
         android:right="0.5dp"
         android:top="0dp"></padding>
     //角度
-    <corners android:radius="40dp"></corners>
+    <corners android:radius="10dp"></corners>
 
 </shape>

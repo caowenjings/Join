@@ -114,7 +114,7 @@ public class ForgivePassword extends AppCompatActivity {
         });
     }
 
-    private void getEditString(){
+    private void getEditString(){//获取输入信息
         musername = et_username.getText().toString();
         mtel = et_tel.getText().toString();
         mrealname = et_reaname.getText().toString();
@@ -161,7 +161,7 @@ public class ForgivePassword extends AppCompatActivity {
             if (s != null) {
                 try {
                     JSONObject results = new JSONObject(s);
-                    String loginresult = results.getString("result");
+                    String loginresult = results.getString("result");//json解析
                     System.out.println(loginresult);
                     if (!"0".equals(loginresult)) {
                         final User user = new User();
@@ -178,7 +178,7 @@ public class ForgivePassword extends AppCompatActivity {
                                 Intent intent=new Intent(ForgivePassword.this, Updatepassword.class);
                                 Bundle mBundle = new Bundle();
                                 mBundle.putSerializable("user", user);
-                                mBundle.putSerializable("method",1);
+                                mBundle.putSerializable("method",1);//用于界面
                                 intent.putExtras(mBundle);
                                 startActivity(intent);
                                 finish();
