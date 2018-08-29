@@ -22,6 +22,9 @@ import com.example.jingjing.xin.Stadium.StadiumCollection;
 import com.example.jingjing.xin.Stadium.StadiumOrderInformation;
 import com.example.jingjing.xin.User.SettingActivity;
 import com.example.jingjing.xin.User.UserInformationActivity;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -34,6 +37,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
+import static com.example.jingjing.xin.constant.Conatant.URL_PROFLIE;
 import static com.example.jingjing.xin.constant.Conatant.URL_SELECTUSERBYUSERID;
 
 /**
@@ -42,6 +46,7 @@ import static com.example.jingjing.xin.constant.Conatant.URL_SELECTUSERBYUSERID;
 
 public class MyFragment extends BaseFragment implements View.OnClickListener {
     private TextView tv_username;
+    private ImageView iv_userhead;
     private User  user ;
 
     private LinearLayout btn_exit;
@@ -61,6 +66,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
 
         View view = View.inflate(mContext, R.layout.myfragment, null);
         tv_username = (TextView) view.findViewById(R.id.tv_username);
+        iv_userhead = (ImageView)view.findViewById(R.id.iv_userhead);
         btn_exit= (LinearLayout) view.findViewById(R.id.btn_exit);
         btn_information = (LinearLayout) view.findViewById(R.id.btn_informatoin);
         btn_order = (LinearLayout) view.findViewById(R.id.btn_order);
@@ -77,7 +83,6 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
     public void onResume() {
         super.onResume();
         RefrshUser(userId);
-
     }
 
     @Override
@@ -93,7 +98,6 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
         btn_setting.setOnClickListener(this);
         btn_evaluate.setOnClickListener(this);
         RefrshUser(userId);//更新
-
 
     }
 
@@ -136,8 +140,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
             if (s != null){
                 try {
                     JSONObject results = new JSONObject(s);
-                    String loginresult = results.getString("result");
-                    System.out.println("22");
+                    String loginresult = results.getString("result");//json解析
                     System.out.println(loginresult);
                     user = new User();
                     if(!"0".equals(loginresult)){
@@ -148,7 +151,17 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
                         user.setSex(results.getString("sex"));
                         user.setTel(results.getString("tel"));
                         user.setMyright(results.getString("myRight"));
-
+                        user.setProflie(URL_PROFLIE+results.getString("proflie"));
+                        ImageLoaderConfiguration configuration = ImageLoaderConfiguration.createDefault(getContext());
+                        ImageLoader imageLoader = ImageLoader.getInstance();
+                        ImageLoader.getInstance().init(configuration);
+                        DisplayImageOptions options = new DisplayImageOptions.Builder()
+                                .showImageOnFail(R.drawable.error) // 设置图片加载或解码过程中发生错误显示的图片
+                                .showImageOnLoading(R.drawable.loading)
+                                .resetViewBeforeLoading(false)  // default 设置图片在加载前是否重置、复位
+                                .delayBeforeLoading(0)  // 下载前的延迟时间
+                                .build();
+                        ImageLoader.getInstance().displayImage(user.getProflie(),iv_userhead, options);
                         tv_username.setText(user.getUsername());//用户名
 
                     }else{

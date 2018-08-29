@@ -112,9 +112,11 @@
     <Button
         android:id="@+id/btn_register"
         android:layout_marginTop="30dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="20sp"
-        android:background="@color/colorblue"
+        android:background="@drawable/forgive_button_biankuang"
         android:text="注 册"/>
 </LinearLayout>

@@ -99,7 +99,7 @@ public class Updateinformation extends AppCompatActivity {
     private void initData(){
         user = (User) getIntent().getSerializableExtra("user");
         userId = String.valueOf(user.getUserId());
-        et_username.setText(user.getUsername());
+        et_username.setText(user.getUsername());//一进界面就有值
         lastname = user.getUsername();
         et_realname.setText(user.getRealname());
         et_tel.setText(user.getTel());
@@ -160,7 +160,7 @@ public class Updateinformation extends AppCompatActivity {
     }
 
     public static boolean isTelNum(String tel ){//手机号格式判断是否正确
-        Pattern p = Pattern.compile("^((13[0-9])|(15[^4,\\D])|(14[0-9])|(17[0-9])|(18[0-9]))\\d{8}$");
+        Pattern p = Pattern.compile("^((13[0-9])|(14[5,7])|(15[0-3,5-9])|(166)|(17[0,3,5-8])|(18[0-9])|(19[89]))\\d{8}$");
         Matcher m = p.matcher(tel);
         return m.matches();
     }
@@ -243,11 +243,9 @@ public class Updateinformation extends AppCompatActivity {
                                 return false;
                             }
                         }).sendEmptyMessageDelayed(0, 2000);
-
                     }else {
                         Toast.makeText(Updateinformation.this,"用户名已经有人注册了",Toast.LENGTH_LONG).show();
                     }
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

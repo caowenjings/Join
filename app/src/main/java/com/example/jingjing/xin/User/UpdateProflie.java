@@ -58,7 +58,13 @@ public class UpdateProflie extends AppCompatActivity  {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();//隐藏actionBar
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);//取消设置透明状态栏
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        getWindow().setStatusBarColor(Color.BLACK);//设置颜色
         setContentView(R.layout.update_prodlie);
+
         initView();
         initData();
     }
@@ -72,7 +78,6 @@ public class UpdateProflie extends AppCompatActivity  {
        // tv_progress.setVisibility(View.GONE);
         icon_choice = (ImageView) findViewById(R.id.iv_prodlie);
        // progressBar = (ProgressBar) findViewById(R.id.progress);
-        getWindow().setStatusBarColor(Color.parseColor("#FF029ACC"));
 
     }
 
@@ -177,9 +182,8 @@ public class UpdateProflie extends AppCompatActivity  {
              //   progressBar.setVisibility(View.GONE);
               //  tv_progress.setVisibility(View.GONE);
                 Toast.makeText(UpdateProflie.this, "上传成功", Toast.LENGTH_SHORT).show();
-
+                Intent intent = new Intent(getApplicationContext(),UserInformationActivity.class);
             }
-
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
 

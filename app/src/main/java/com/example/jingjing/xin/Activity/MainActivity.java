@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
       public void initFragment(){
-          //添加碎片
+          //数据源添加碎片
           fragmentList = new ArrayList<>();
           fragmentList.add(new BookingFragment());
           fragmentList.add(new FindFragment());
@@ -61,16 +61,13 @@ public class MainActivity extends AppCompatActivity {
           //关联适配器
           FragmentAdapter fragmentAdapter = new FragmentAdapter(getSupportFragmentManager(),fragmentList);
           viewPager.setAdapter(fragmentAdapter);
-//          viewPager.setOffscreenPageLimit(2);
-          viewPager.setCurrentItem(0);
-
-          viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+          viewPager.setCurrentItem(0);//用来制定初始化的页面
+          viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {//点击上面的tab直接setCurrentItem）
               @Override
               public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
               }
               @Override
-              public void onPageSelected(int position) {
+              public void onPageSelected(int position) {//代表哪个页面被选中
                   bottomNavigationBar.selectTab(position);
               }
               @Override

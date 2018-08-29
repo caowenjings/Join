@@ -9,7 +9,8 @@ public class Conatant {
    //public static String URL = "http://192.168.1.105:8080/"; //连寝室wifi IP地址
 
 //   public static String URL = "http://192.168.43.252:8080/";
- public static String URL = "http://10.0.2.2:8080/"; //手机热点IP地址(8080是端口号)
+   public static String URL = "http://192.168.1.100:8080/";
+// public static String URL = "http://10.0.2.2:8080/"; //手机热点IP地址(8080是端口号)
     public static String URL_LOGIN  = URL+"Login_Servlet";//登录
     public static String URL_Register = URL+"Register_Servlet";//注册
     public static String URL_UpdateUser = URL+"UpdateUser_Servlet";//修改信息

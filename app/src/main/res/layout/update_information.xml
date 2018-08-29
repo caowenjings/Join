@@ -4,14 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
     <RelativeLayout
         android:background="@color/colorblue"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize">
         <ImageView
             android:id="@+id/tv_back"
-            android:layout_width="wrap_content"
+            android:layout_width="40dp"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:src="@drawable/go_dack_selector" />
@@ -20,7 +19,7 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:layout_centerInParent="true"
-            android:textSize="25dp"
+            android:textSize="20sp"
             android:text="修改个人信息" />
         <Button
             android:id="@+id/btn_baocun"
@@ -28,14 +27,14 @@
             android:layout_centerVertical="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="25dp"
+            android:textSize="20sp"
             android:text="保存"
             android:textColor="@color/colorwhite"
             android:background="#00000000"/>
     </RelativeLayout>
 
     <LinearLayout
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         android:layout_marginRight="30dp"
         android:layout_marginLeft="30dp"
         android:layout_width="match_parent"
@@ -43,14 +42,13 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="20dp"
+            android:textSize="18sp"
             android:text="昵 称："
             android:textColor="@color/colorblack"/>
         <EditText
             android:id="@+id/et_username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="20dp"
             android:hint="请输入你的昵称"/>
     </LinearLayout>
 
@@ -63,14 +61,13 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="20dp"
+            android:textSize="18sp"
             android:text="真实姓名："
             android:textColor="@color/colorblack"/>
         <EditText
             android:id="@+id/et_realname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="20dp"
             android:hint="请输入你的真实姓名"/>
     </LinearLayout>
 
@@ -87,7 +84,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:textColor="@color/colorblack"
-            android:textSize="20dp"
+            android:textSize="18sp"
             android:text="性  别 :" />
         <RadioGroup
             android:layout_marginLeft="10dp"
@@ -120,14 +117,13 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="20dp"
+            android:textSize="18sp"
             android:text="电话号码："
             android:textColor="@color/colorblack"/>
         <EditText
             android:id="@+id/et_tel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="20dp"
             android:maxLength="11"
             android:hint="输入11位手机号"/>
     </LinearLayout>

@@ -89,6 +89,7 @@ public class UserInformationActivity extends AppCompatActivity implements View.O
         super.onResume();
         initView();
         initData();
+        RefrshUser(userId);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -99,22 +100,22 @@ public class UserInformationActivity extends AppCompatActivity implements View.O
         tv_tel = (TextView) findViewById(R.id.tv_tel);
         tv_back = (ImageView) findViewById(R.id.tv_back);
         iv_touxiang =(ImageView) findViewById(R.id.iv_touxiang);
-
         btn_update = (ImageView) findViewById(R.id.update_information);
-        getWindow().setStatusBarColor(Color.parseColor("#FF029ACC"));
     }
 
     private void initData() {
         user = (User) getIntent().getSerializableExtra("user");
         userId = String.valueOf(user.getUserId());
-        RefrshUser(userId);
+        tv_username.setText(user.getUsername());
+        tv_realname.setText(user.getRealname());
+        tv_sex.setText(user.getSex());
+        tv_tel.setText(user.getTel());
+//        RefrshUser(userId);
 
         tv_back.setOnClickListener(this);
         btn_update.setOnClickListener(this);
         iv_touxiang.setOnClickListener(this);
-
     }
-
 
     @Override
     public void onClick(View v) {
@@ -189,10 +190,6 @@ public class UserInformationActivity extends AppCompatActivity implements View.O
                         user.setTel(results.getString("tel"));
                         user.setMyright(results.getString("myRight"));
                         user.setProflie(URL_PROFLIE+results.getString("proflie"));
-                        tv_username.setText(user.getUsername());
-                        tv_realname.setText(user.getRealname());
-                        tv_sex.setText(user.getSex());
-                        tv_tel.setText(user.getTel());
                         ImageLoaderConfiguration configuration = ImageLoaderConfiguration.createDefault(UserInformationActivity.this);
                         ImageLoader imageLoader = ImageLoader.getInstance();
                         ImageLoader.getInstance().init(configuration);
@@ -211,7 +208,6 @@ public class UserInformationActivity extends AppCompatActivity implements View.O
             } else {
                 System.out.println("结果为空");
                 Toast.makeText(UserInformationActivity.this, "网络未连接", Toast.LENGTH_LONG).show();
-
             }
         }
     }
@@ -248,7 +244,7 @@ public class UserInformationActivity extends AppCompatActivity implements View.O
         });
         window.setContentView(view);
         window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);//设置横向全屏
-        mDialog.setCanceledOnTouchOutside(true);
-        mDialog.setCancelable(true);
+        mDialog.setCanceledOnTouchOutside(false);
+        mDialog.setCancelable(false);
     }
 }

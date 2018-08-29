@@ -27,8 +27,8 @@
 
     <ImageView
         android:id="@+id/iv_prodlie"
+        android:layout_marginTop="20dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:src="@drawable/welcome"/>
+        android:layout_height="wrap_content"/>
 
 </LinearLayout>

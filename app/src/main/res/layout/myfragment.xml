@@ -8,11 +8,11 @@
         android:id="@+id/btn_informatoin"
         android:background="@color/colorblue"
         android:layout_width="match_parent"
-        android:layout_height="70dp">
+        android:layout_height="80dp">
             <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/img_userhead"
+                android:id="@+id/iv_userhead"
                 android:layout_gravity="center"
-                android:layout_width="90dp"
+                android:layout_width="75dp"
                 android:layout_height="wrap_content"
                 android:src="@drawable/myfragment_head"
                 android:layout_marginLeft="10dp"/>
