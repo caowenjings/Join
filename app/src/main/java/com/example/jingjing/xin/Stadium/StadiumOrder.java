@@ -11,6 +11,7 @@ import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageView;
@@ -76,11 +77,16 @@ public class StadiumOrder extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        android.support.v7.app.ActionBar actionBar =getSupportActionBar();
+        actionBar.hide();//隐藏
+//        getWindow().setStatusBarColor(Color.BLUE);标题栏
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);//取消设置透明状态栏
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        getWindow().setStatusBarColor(Color.BLACK);//设置颜色
         setContentView(R.layout.stadium_order);
         initView();
         initData();
         getCalender();
-
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -99,8 +105,6 @@ public class StadiumOrder extends AppCompatActivity implements View.OnClickListe
         tv_time = (TextView) findViewById(R.id.tv_time);
         tv_place = (TextView) findViewById(R.id.tv_place);
         btn_sure = (Button) findViewById(R.id.btn_sure);
-        getWindow().setStatusBarColor(Color.parseColor("#FF029ACC"));
-
 
     }
 
@@ -128,7 +132,7 @@ public class StadiumOrder extends AppCompatActivity implements View.OnClickListe
     }
 
     public void setPlaceClick(View v) {
-        time_order=date+time;
+        time_order=date+":"+time;
         SetPlaceDialog std = new SetPlaceDialog(stadium, time_order);
         std.show(getSupportFragmentManager(), "placePicker");
     }
@@ -188,9 +192,8 @@ public class StadiumOrder extends AppCompatActivity implements View.OnClickListe
         mday = cal.get(java.util.Calendar.DAY_OF_MONTH);//当月多少天
         mhour = cal.get(java.util.Calendar.HOUR_OF_DAY);//当天多少时
         mminute = cal.get(java.util.Calendar.MINUTE);
-        setTitle(myear + "_" + mmonth + "_" + mday + "_" + mhour + ":" + mminute);
+//        setTitle(myear + "_" + mmonth + "_" + mday + "_" + mhour + ":" + mminute);
     }
-
 
     private void gerEditString() {
         date = tv_date.getText().toString();
@@ -200,8 +203,8 @@ public class StadiumOrder extends AppCompatActivity implements View.OnClickListe
 
 
     private void showDataDialog() {// 显示日期对话框
+        //日期选择器对话框监听
         DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
-
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 // 根据对话框的调整，设置日历

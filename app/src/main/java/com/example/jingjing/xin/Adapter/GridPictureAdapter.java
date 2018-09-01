@@ -12,6 +12,7 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
+import java.security.CryptoPrimitive;
 import java.util.List;
 
 public class GridPictureAdapter extends BaseAdapter {
@@ -25,12 +26,12 @@ public class GridPictureAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return mlist.size();
+        return mlist.size();//加载数据总条目
     }
 
     @Override
     public Object getItem(int position) {
-        return mlist.get(position);
+        return mlist.get(position);//获取每一个选项
     }
 
     @Override
@@ -39,11 +40,11 @@ public class GridPictureAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {//创建View,然后对控件进行赋值
+    public View getView(int position, View convertView, ViewGroup parent) {//为每一个选项生成视图（ImageView）
         ViewHolder holder = null;
         if(convertView == null){
             holder = new ViewHolder();
-            convertView = View.inflate(mcontext,R.layout.list_picture,null);
+            convertView = View.inflate(mcontext,R.layout.list_picture,null);//item的布局
             holder.imageView=(ImageView)convertView.findViewById(R.id.iv_stadiumpicture);
             convertView.setTag(holder);
         }else {
@@ -61,7 +62,6 @@ public class GridPictureAdapter extends BaseAdapter {
         ImageLoader.getInstance().displayImage(mlist.get(pos), holder.imageView,options);
         return convertView;
     }
-
     final class ViewHolder{//定义内部类
         private ImageView imageView;
     }

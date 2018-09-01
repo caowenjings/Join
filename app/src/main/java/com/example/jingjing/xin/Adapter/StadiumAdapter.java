@@ -16,6 +16,7 @@ import com.example.jingjing.xin.Bean.User;
 import com.example.jingjing.xin.R;
 import com.example.jingjing.xin.Stadium.StadiumActivity;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
@@ -93,7 +94,7 @@ public class StadiumAdapter extends RecyclerView.Adapter<StadiumAdapter.ViewHold
 
         holder.stadiumname.setText(stadium.getStadiumname());
         holder.stadiumadress.setText(stadium.getAdress());
-        holder.stadiumtype.setText( stadium.getStadiumtype());
+        holder.stadiumtype.setText(stadium.getStadiumtype());
         holder.ratingBar.setRating(stadium.getGrade());
         holder.ratingBar.setIsIndicator(true);
 

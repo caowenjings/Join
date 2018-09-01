@@ -1,8 +1,11 @@
 package com.example.jingjing.xin.Stadium;
 
+import android.graphics.Color;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.WindowManager;
@@ -41,18 +44,22 @@ public class StadiumPicture extends AppCompatActivity {
     private RelativeLayout tv_back;
 
     private Stadium stadium;
+    private int stadiumId;
     private GridView gridView;
     private List<String> mData;
 
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         android.support.v7.app.ActionBar actionBar =getSupportActionBar();
         actionBar.hide();
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);//取消设置透明状态栏
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        getWindow().setStatusBarColor(Color.BLACK);//设置颜色
         setContentView(R.layout.stadium_picture);
 
         initView();
@@ -72,6 +79,7 @@ public class StadiumPicture extends AppCompatActivity {
     private void initDate(){
 
         stadium = (Stadium) getIntent().getSerializableExtra("stadium");
+        stadiumId = stadium.getStadiumId();
 
         tv_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,13 +87,12 @@ public class StadiumPicture extends AppCompatActivity {
                 finish();
             }
         });
-        stadiumpicture(stadium.getStadiumId());
+        stadiumpicture(stadiumId);
     }
 
     private void stadiumpicture(int stadiumId){
         String loginurl = URL_LOADINGICON;
         new StadiumPictureAsyncTask().execute(loginurl,String.valueOf(stadiumId));
-
     }
 
     private class StadiumPictureAsyncTask  extends AsyncTask<String,Integer,String>{

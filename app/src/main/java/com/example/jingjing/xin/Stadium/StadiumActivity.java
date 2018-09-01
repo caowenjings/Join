@@ -20,6 +20,7 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -92,7 +93,7 @@ public class StadiumActivity extends AppCompatActivity  implements View.OnClickL
     private Button btn_order;
     private User user;
     private boolean firstcollect = true;
-    private boolean deletecollect = true;
+    private boolean secondcollect = true;
     private ToggleButton btn_collection;
     private String userId, stadiumId;
    // public static final String PACKEGE_BAIDU="com.baidu.BaiduMap";//百度地图安装包
@@ -107,12 +108,14 @@ public class StadiumActivity extends AppCompatActivity  implements View.OnClickL
 
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);//取消设置透明状态栏
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        getWindow().setStatusBarColor(Color.BLACK);//设置颜色
         setContentView(R.layout.stadium_information);
         initview();
         initdata();
 
     }
-
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void initview() {
@@ -141,26 +144,25 @@ public class StadiumActivity extends AppCompatActivity  implements View.OnClickL
 
     }
 
-
     private void initdata() {
         stadium = (Stadium) getIntent().getSerializableExtra("stadium");
         user = (User) getIntent().getSerializableExtra("user");
         stadiumId = String.valueOf(stadium.getStadiumId());
         userId = String.valueOf(user.getUserId());
-        iscollection(stadium.getStadiumId(),user.getUserId());//调用方法
-        evaluate(stadium.getStadiumId());
+        iscollection(stadium.getStadiumId(),user.getUserId());//调用记住收藏方法
+        loadingevaluate(stadium.getStadiumId());//评论
 
         System.out.println("userId:" + user.getUserId());
         tv_stadiumname.setText(stadium.getStadiumname());
         tv_stadiumname1.setText(stadium.getStadiumname());
         tv_stadiumtype.setText(stadium.getStadiumtype());
+        ratingBar.setRating(stadium.getGrade());
+        ratingBar.setIsIndicator(true);
+        tv_stadiumtel.setText(stadium.getStadiumtel());
         tv_area.setText(stadium.getArea() + "平方米");
         tv_num.setText(stadium.getNum() + "人");
         tv_picture_num.setText(String.valueOf(stadium.getIconnum()));//强制转换
         tv_opentime.setText(stadium.getOpentime());
-        ratingBar.setRating(stadium.getGrade());
-        ratingBar.setIsIndicator(true);
-        tv_stadiumtel.setText(stadium.getStadiumtel());
         if (stadium.getIndoor() == 1) {
             tv_indoor.setText(" 是");
         } else {
@@ -187,16 +189,14 @@ public class StadiumActivity extends AppCompatActivity  implements View.OnClickL
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 btn_collection.setBackgroundResource(isChecked ? R.drawable.stadium_collection1 :R.drawable.stadium_collection);
-                if (buttonView.isChecked()) {
+                if (buttonView.isChecked()) {//返回是否被选中
                     if (firstcollect) {
                         collection(stadium.getStadiumId(), user.getUserId(), true);
-                     //   Toast.makeText(StadiumActivity.this, "收藏成功", Toast.LENGTH_LONG).show();
                     } else {
                     }
                 } else {
-                    if (deletecollect) {
+                    if (secondcollect) {
                         collection(stadium.getStadiumId(), user.getUserId(), false);
-                     //   Toast.makeText(StadiumActivity.this, "取消收藏", Toast.LENGTH_LONG).show();
                     } else {
 
                     }
@@ -237,7 +237,7 @@ public class StadiumActivity extends AppCompatActivity  implements View.OnClickL
                 // shareImg("分享场馆","热点",stadium.getStadiumname(),stadium.getMainpicture());
                 break;
 
-            case R.id.iv_stadiumpicture:
+            case R.id.icon_stadium:
                 Intent intent1 = new Intent(StadiumActivity.this, StadiumPicture.class);
                 Bundle mBundle1 = new Bundle();
                 mBundle1.putSerializable("user", user);
@@ -248,10 +248,6 @@ public class StadiumActivity extends AppCompatActivity  implements View.OnClickL
 
             case R.id.iv_tel:
                 showPasswordSetDailog();
-                break;
-
-            case R.id.iv_back:
-                finish();
                 break;
 
             case R.id.tv_stadiumaddress:
@@ -265,12 +261,15 @@ public class StadiumActivity extends AppCompatActivity  implements View.OnClickL
                     }
                 } else{//未安装
                     //market为路径，id为包名
-                    //显示手机上所有的market商店
                     Toast.makeText(StadiumActivity.this, "您尚未安装百度地图", Toast.LENGTH_LONG).show();
                     Uri uri = Uri.parse("market://details?id=com.baidu.BaiduMap");
-                    Intent   intent3 = new Intent(Intent.ACTION_VIEW, uri);
+                    Intent intent3 = new Intent(Intent.ACTION_VIEW, uri);
                     startActivity(intent3); //启动调用
                 }
+                break;
+
+            case R.id.iv_back:
+                finish();
                 break;
                 default:
                     break;
@@ -345,8 +344,6 @@ public class StadiumActivity extends AppCompatActivity  implements View.OnClickL
         }
     }
 
-
-
     private  void iscollection(int stadiumId, int userId){//记住收藏的状态
         String SearchUrl = URL_ISCOLLECTED;
         new IscollectionAsyncTask().execute(SearchUrl,String.valueOf(stadiumId),String.valueOf(userId));
@@ -388,9 +385,9 @@ public class StadiumActivity extends AppCompatActivity  implements View.OnClickL
                try {
                    JSONObject result = new JSONObject(s);
                    String js = result.getString("result");
-                   if(js.equals("1")){
+                   if(js.equals("1")){//收藏
                        btn_collection.setChecked(false);
-                   }else {
+                   }else {//取消收藏
                        btn_collection.setChecked(true);
                    }
                } catch (JSONException e) {
@@ -405,7 +402,7 @@ public class StadiumActivity extends AppCompatActivity  implements View.OnClickL
 
 
 
-    private void evaluate(int stadiumId){//评论
+    private void loadingevaluate(int stadiumId){//评论
         String loginUrl = URL_GETEVALUATEINFORMATION;
         new EvaluateAsyncTask().execute(loginUrl,String.valueOf(stadiumId));
     }
@@ -414,7 +411,6 @@ public class StadiumActivity extends AppCompatActivity  implements View.OnClickL
 
         @Override
         protected String doInBackground(String... params) {
-            Response response = null;
             String results = null;
             JSONObject json = new JSONObject();
             try {
@@ -425,7 +421,7 @@ public class StadiumActivity extends AppCompatActivity  implements View.OnClickL
                         .url(params[0])
                         .post(requestBody)
                         .build();
-                response = okHttpClient.newCall(request).execute();
+                Response response = okHttpClient.newCall(request).execute();
                 results = response.body().string();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -437,12 +433,11 @@ public class StadiumActivity extends AppCompatActivity  implements View.OnClickL
 
         @Override
         protected void onPostExecute(String s) {
-            System.out.println("返回的数据：" + s);
+            System.out.println("数据：" + s);
             List<Evaluation> mData = new ArrayList<>();
             if (!"null".equals(s)) {
                 try {
                     JSONArray results = new JSONArray(s);
-                    //循环拿出接受的数据并赋值给stadium对象
                     for (int i = 0; i < results.length(); i++) {
                         JSONObject js = results.getJSONObject(i);
                         Evaluation evaluation = new Evaluation();

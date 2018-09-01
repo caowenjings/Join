@@ -14,8 +14,7 @@
             android:layout_weight="1"
             android:id="@+id/btn_select"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="选择图片"/>
+            android:layout_height="wrap_content" />
 
         <Button
             android:layout_weight="1"
@@ -29,6 +28,29 @@
         android:id="@+id/iv_prodlie"
         android:layout_marginTop="20dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="200dp"
+        android:src="@drawable/background"/>
 
+    <LinearLayout
+        android:id="@+id/ll_progress"
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tv_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textColor="@color/colorblack"
+            android:text="进度："
+            android:layout_gravity="center_vertical"/>
+        <ProgressBar
+            android:id="@+id/progress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:max="100"
+            android:progress="0"
+            android:layout_gravity="center_vertical"/>
+    </LinearLayout>
 </LinearLayout>

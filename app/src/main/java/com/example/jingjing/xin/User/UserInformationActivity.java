@@ -89,7 +89,7 @@ public class UserInformationActivity extends AppCompatActivity implements View.O
         super.onResume();
         initView();
         initData();
-        RefrshUser(userId);
+//        RefrshUser(userId);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -110,8 +110,8 @@ public class UserInformationActivity extends AppCompatActivity implements View.O
         tv_realname.setText(user.getRealname());
         tv_sex.setText(user.getSex());
         tv_tel.setText(user.getTel());
-//        RefrshUser(userId);
 
+        RefrshUser(userId);
         tv_back.setOnClickListener(this);
         btn_update.setOnClickListener(this);
         iv_touxiang.setOnClickListener(this);
@@ -224,12 +224,26 @@ public class UserInformationActivity extends AppCompatActivity implements View.O
         View view = View.inflate(this, R.layout.forgive_password, null);
         final TextView find_password = (TextView) view.findViewById(R.id.tv_find_password);
         final TextView cancel = (TextView) view.findViewById(R.id.tv_cancel);
+        final LinearLayout ll_photo = (LinearLayout)view.findViewById(R.id.ll_photot);
+        final TextView tv_photo =(TextView) view.findViewById(R.id.tv_photo);
+        ll_photo.setVisibility(View.VISIBLE);
+
         find_password.setText("选择图片");
 
         find_password.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(UserInformationActivity.this,UpdateProflie.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("user",user);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
+        tv_photo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(UserInformationActivity.this,UpdateProflieone.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("user",user);
                 intent.putExtras(bundle);

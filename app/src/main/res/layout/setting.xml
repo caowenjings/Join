@@ -18,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/colorblack"
-            android:textSize="20dp"
+            android:textSize="18sp"
             android:text="修改密码"
             android:padding="10dp" />
         <ImageView
@@ -39,7 +39,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/colorblack"
-            android:textSize="20dp"
+            android:textSize="18sp"
             android:text="关于Join"
             android:padding="10dp" />
         <ImageView

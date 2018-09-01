@@ -27,6 +27,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,6 +47,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
+import static android.view.View.VISIBLE;
 import static android.view.WindowManager.LayoutParams.FLAG_FULLSCREEN;
 import static com.example.jingjing.xin.constant.Conatant.URL_LOGIN;
 import static com.example.jingjing.xin.constant.Conatant.URL_PROFLIE;
@@ -79,9 +81,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         android.support.v7.app.ActionBar actionBar =getSupportActionBar();
         actionBar.hide();//隐藏
-       getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);//取消设置透明状态栏
-       getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-       getWindow().setStatusBarColor(Color.BLACK);//设置颜色
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);//取消设置透明状态栏
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        getWindow().setStatusBarColor(Color.BLACK);//设置颜色
         setContentView(R.layout.login);
 
         initView();
@@ -114,19 +116,19 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         btn_login.setOnClickListener(this);
         btn_register.setOnClickListener(this);
         btn_forgive.setOnClickListener(this);
-        lv_delete_one.setOnClickListener(this);
         lv_delete.setOnClickListener(this);
+        lv_delete_one.setOnClickListener(this);
 
         getEditString();
         et_username.setOnFocusChangeListener(new View.OnFocusChangeListener() {//推断是否有焦点
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if(hasFocus){
-                    if(TextUtils.isEmpty(username)){
-                        lv_delete.setVisibility(View.GONE);//隐藏
+                    if(!username.equals("")){
+                        lv_delete.setVisibility(VISIBLE);
                         et_username.addTextChangedListener(new EditChangedListener());
                     }else {
-                        lv_delete.setVisibility(View.VISIBLE);
+                        lv_delete.setVisibility(View.GONE);
                         et_username.addTextChangedListener(new EditChangedListener());
                     }
                 }else {
@@ -139,11 +141,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if(hasFocus){
-                    if(TextUtils.isEmpty(username)){
-                        lv_delete_one.setVisibility(View.GONE);//隐藏
+                    if(!password.equals("")){
+                        lv_delete_one.setVisibility(View.VISIBLE);
                         et_password.addTextChangedListener(new EditChangedListener_one());
                     }else {
-                        lv_delete_one.setVisibility(View.VISIBLE);
+                        lv_delete_one.setVisibility(View.GONE);//隐藏
                         et_password.addTextChangedListener(new EditChangedListener_one());
                     }
                 }else {
@@ -164,10 +166,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
        }
        @Override
        public void onTextChanged(CharSequence s, int start, int before, int count) {
-           if(s.length() == 0){
-               lv_delete.setVisibility(View.GONE);//隐藏
-           }else {
+           if(!"".equals(s.toString())){
                lv_delete.setVisibility(View.VISIBLE);
+           }else {
+               lv_delete.setVisibility(View.GONE);//隐藏
            }
        }
        @Override
@@ -175,8 +177,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
        }
    }
 
-   private class  EditChangedListener_one implements TextWatcher{
 
+   private class  EditChangedListener_one implements TextWatcher{
        @Override
        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -184,10 +186,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
        @Override
        public void onTextChanged(CharSequence s, int start, int before, int count) {
-           if(s.length() == 0){
-               lv_delete_one.setVisibility(View.GONE);//隐藏
-           }else {
+           if(s.length()!= 0){
                lv_delete_one.setVisibility(View.VISIBLE);
+
+           }else {
+               lv_delete_one.setVisibility(View.GONE);//隐藏
            }
        }
 
@@ -216,9 +219,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 break;
             case R.id.iv_delete:
                 et_username.setText("");
+                lv_delete.setVisibility(View.GONE);
                 break;
             case R.id.iv_delete_one:
                 et_password.setText("");
+                lv_delete_one.setVisibility(View.GONE);
                 break;
             default:
                 break;
@@ -324,8 +329,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     View view = View.inflate(this, R.layout.forgive_password, null);//布局
     final TextView find_password = (TextView) view.findViewById(R.id.tv_find_password);
     final TextView cancel = (TextView) view.findViewById(R.id.tv_cancel);
-
+    final LinearLayout ll_photo = (LinearLayout)view.findViewById(R.id.ll_photot);
+    ll_photo.setVisibility(View.GONE);
     find_password.setText("找回密码");
+
     find_password.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {

@@ -13,7 +13,7 @@
          android:layout_width="match_parent"
          android:layout_height="wrap_content"
          android:textColor="@color/colorwhite"
-         android:textSize="25dp"
+         android:textSize="20sp"
          android:layout_gravity="center_vertical"
          android:gravity="center_horizontal"
          android:text="发 现"/>

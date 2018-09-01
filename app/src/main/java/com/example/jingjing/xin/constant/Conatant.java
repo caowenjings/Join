@@ -6,17 +6,16 @@ package com.example.jingjing.xin.constant;
 
 public class Conatant {
 
-   //public static String URL = "http://192.168.1.105:8080/"; //连寝室wifi IP地址
+   public static String URL = "http://192.168.1.103:8080/"; //连寝室wifi IP地址
 
 //   public static String URL = "http://192.168.43.252:8080/";
-   public static String URL = "http://192.168.1.100:8080/";
 // public static String URL = "http://10.0.2.2:8080/"; //手机热点IP地址(8080是端口号)
     public static String URL_LOGIN  = URL+"Login_Servlet";//登录
     public static String URL_Register = URL+"Register_Servlet";//注册
     public static String URL_UpdateUser = URL+"UpdateUser_Servlet";//修改信息
     public static String URL_SELECTUSERBYUSERID = URL+"SelectUserByUserId_Servlet";//用户信息
     public static String URL_LOADINGORDER = URL+"LoadingOrder_Servlet";
-    public static String URL_PICTURE = URL+"picture/";
+    public static String URL_PICTURE = URL+"picture/";//图片
     public static String URL_NOTICE = URL+"Notice_Servlet";//公告栏
     public static String URL_SEARCHSTADIUM = URL+"SearchStadiumByName_Servlet";//寻找场地
     public static String URL_ORDERSTADIUM = URL+"OrderStadium_Servlet";//预约场地
@@ -38,8 +37,8 @@ public class Conatant {
 
     public static String URL_SPORTSTYPE = URL+"SportsIcon/";
     public static String URL_PROFLIE = URL+"Proflie/";//上传头像
-    public static String URL_EVALUATEINFORMATION = URL+"EvaluateInformation_Servlet";
-    public static String URL_EVALUATESTADIUM = URL+"EvaluateStadium_Servlet";
+    public static String URL_EVALUATEINFORMATION = URL+"EvaluateInformation_Servlet";//评价信息
+    public static String URL_EVALUATESTADIUM = URL+"EvaluateStadium_Servlet";//评价场馆
     public static String URL_SELECTEVALUATION = URL+"SelectEvaluation_Servlet";
     public static String URL_SPORTS = URL+"LoadingSports_Servlet";
     public static String URL_CITY = URL+"LoadingCity_Servlet";
@@ -47,5 +46,5 @@ public class Conatant {
     public static String URL_GETEVALUATEINFORMATION = URL+"GetEvaluateInformation_Servlet";
     public static String URL_JOINEDUSERINFORMATION = URL+"JoinedUserInformation_Servlet";
     public static String URL_UPDATEPROFILE = URL+"UpdateProfile_Servlet";
-    public static String URL_GETPASSWORD = URL+"ForgetPassword_Servlet";
+    public static String URL_GETPASSWORD = URL+"ForgetPassword_Servlet";//忘记密码
 }

@@ -67,7 +67,7 @@ public class StadiumEvaluateAdapter extends RecyclerView.Adapter<StadiumEvaluate
         holder.tv_grade.setText("评分："+evaluation.getGrade());
         holder.tv_content.setText("评价:"+evaluation.getContent());
         holder.tv_evaluatetime.setText(evaluation.getEvaluatetime());
-/*
+
         ImageLoaderConfiguration configuration = ImageLoaderConfiguration.createDefault(mcontext);
         ImageLoader.getInstance().init(configuration);
         DisplayImageOptions options = new DisplayImageOptions.Builder()
@@ -77,7 +77,7 @@ public class StadiumEvaluateAdapter extends RecyclerView.Adapter<StadiumEvaluate
                 .delayBeforeLoading(0)  // 下载前的延迟时间
                 .build();
         ImageLoader.getInstance().displayImage(evaluation.getIcon(), holder.iv_profile,options);
-      */
+
     }
 
     @Override

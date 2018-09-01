@@ -20,7 +20,6 @@
         android:background="@color/colorblue"></View>
 
     <TextView
-        android:text="111"
         android:id="@+id/tv_telnumber"
         android:layout_width="match_parent"
         android:layout_height="70dp"

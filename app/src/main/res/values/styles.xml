@@ -54,7 +54,14 @@
         <item name="android:windowBackground">@color/transparent</item>
     </style>
 
-    <!-- stadium里面的 -->
+    <!-- stadium里面的textview展示信息 -->
+    <style name="stadiumtext">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_marginLeft">30dp</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+    <!-- stadium里面的textview展示信息 -->
     <style name="stadiuminformation">
         <item name="android:layout_margin">5dp</item>
         <item name="android:layout_width">match_parent</item>
@@ -69,7 +76,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:background">@color/colorblue</item>
         <item name="android:layout_margin">2dp</item>
-        <item name="android:textSize">20sp</item>
+        <item name="android:textSize">18sp</item>
     </style>
 
     <!-- 选择场地 -->
@@ -148,7 +155,30 @@
         <item name="android:layout_marginRight">30dp</item>
         <item name="android:layout_marginLeft">30dp</item>
     </style>
+    <!--myfragment里面的linerlayout-->
+    <style name="myfragmentlayout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:paddingBottom">5dp</item>
+        <item name="android:background">@drawable/myfragment_border</item>
+    </style>
 
+    <!--myfragment里面的textview-->
+    <style name="myfragmenttext">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:layout_marginLeft">30dp</item>
+    </style>
+    <!--myfragment里面的imageview-->
+    <style name="myfragmentimage">
+        <item name="android:layout_height">30dp</item>
+        <item name="android:layout_width">30dp</item>
+        <item name="android:src">@drawable/back_right</item>
+    </style>
 
 
 </resources>

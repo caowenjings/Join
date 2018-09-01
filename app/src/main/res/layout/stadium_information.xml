@@ -8,13 +8,14 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="5dp"
         android:background="@color/colorblue">
 
         <ImageView
             android:id="@+id/iv_back"
             android:layout_gravity="center"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:src="@drawable/go_back_selected" />
 
         <TextView
@@ -22,15 +23,15 @@
             android:id="@+id/tv_stadiumname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="22sp"
+            android:textSize="20sp"
             android:textColor="@color/colorwhite"
             android:gravity="center"
             android:layout_gravity="center_vertical"/>
 
         <ToggleButton
             android:id="@+id/btn_collection"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:background="@drawable/stadium_collection"
             android:layout_gravity="center_vertical"
             android:textOn=""
@@ -40,8 +41,8 @@
             android:id="@+id/btn_share"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:layout_width="32dp"
-            android:layout_height="wrap_content"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:src="@drawable/stadium_share"
             android:layout_gravity="center_vertical"/>
     </LinearLayout>
@@ -71,12 +72,10 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
-
                     <RelativeLayout
                         android:layout_weight="1"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content">
-
                     <ImageView
                         android:layout_marginTop="5dp"
                         android:id="@+id/icon_stadium"
@@ -85,14 +84,14 @@
                         android:layout_margin="10dp"
                         android:scaleType="fitXY" />
                     <!--不保持原图大小，拉伸填充满-->
-
                         <TextView
                             android:id="@+id/tv_picture_num"
                             android:layout_width="20dp"
                             android:layout_height="20dp"
                             android:textColor="@color/colorwhite"
-                            android:background="@color/color_hui"
+                            android:background="@color/colorhui"
                             android:textSize="15sp"
+                            android:gravity="center"
                             android:layout_alignParentBottom="true"
                             android:layout_alignParentRight="true"/>
                     </RelativeLayout>
@@ -112,9 +111,14 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
                             android:textColor="@color/colorblack"
-                            android:textSize="15sp"
+                            android:textSize="17sp"
                             android:textStyle="bold" />
-
+                        <TextView
+                            android:id="@+id/tv_stadiumtype"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:textSize="15sp" />
                         <RatingBar
                             android:id="@+id/rb_ratbar"
                             style="@style/bookingRatingBar"
@@ -123,15 +127,7 @@
                             android:layout_marginTop="10dp"
                             android:background="#00000000"
                             android:isIndicator="true"
-                            android:numStars="5"
-                            android:rating="3.5" />
-
-                        <TextView
-                            android:id="@+id/tv_stadiumtype"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:textSize="15sp" />
+                            android:numStars="5" />
 
                         <LinearLayout
                             android:layout_marginTop="10dp"
@@ -160,20 +156,17 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
-
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="end">
-
                         <ImageView
                             android:layout_width="20dp"
                             android:layout_height="wrap_content"
                             android:layout_margin="5dp"
                             android:src="@drawable/stadium_address" />
                     </LinearLayout>
-
                     <TextView
                         android:id="@+id/tv_stadiumaddress"
                         android:layout_width="0dp"
@@ -181,12 +174,9 @@
                         android:layout_marginLeft="5dp"
                         android:layout_weight="7"
                         android:gravity="center_vertical"
-                        android:textSize="18dp"
+                        android:textSize="16sp"
                         android:textColor="@color/colorblack"/>
-
-
                 </LinearLayout>
-
 
             </LinearLayout>
 
@@ -203,7 +193,6 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/order_biankuang1"
                 android:orientation="vertical">
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -221,12 +210,8 @@
                     android:layout_height="wrap_content">
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="30dp"
-                        android:gravity="center_vertical"
+                        style="@style/stadiumtext"
                         android:text="场馆面积：" />
-
                     <TextView
                         android:id="@+id/tv_area"
                         style="@style/stadiuminformation" />
@@ -237,12 +222,8 @@
                     android:layout_height="wrap_content">
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="30dp"
-                        android:gravity="center_vertical"
+                        style="@style/stadiumtext"
                         android:text="营业时间：" />
-
                     <TextView
                         android:id="@+id/tv_opentime"
                         style="@style/stadiuminformation" />
@@ -253,12 +234,8 @@
                     android:layout_height="wrap_content">
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="30dp"
-                        android:gravity="center_vertical"
+                        style="@style/stadiumtext"
                         android:text="可容纳的人数：" />
-
                     <TextView
                         android:id="@+id/tv_num"
                         style="@style/stadiuminformation" />
@@ -269,12 +246,8 @@
                     android:layout_height="wrap_content">
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="30dp"
-                        android:gravity="center_vertical"
+                        style="@style/stadiumtext"
                         android:text="是否室内：" />
-
                     <TextView
                         android:id="@+id/tv_indoor"
                         style="@style/stadiuminformation" />
@@ -285,10 +258,7 @@
                     android:layout_height="wrap_content">
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="30dp"
-                        android:gravity="center_vertical"
+                        style="@style/stadiumtext"
                         android:text="是否有空调：" />
                     <TextView
                         android:id="@+id/tv_aircondition"
@@ -317,7 +287,8 @@
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/recycler_view"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
+                        android:layout_height="wrap_content">
+                    </android.support.v7.widget.RecyclerView>
                 </LinearLayout>
 
                 <TextView
@@ -328,11 +299,9 @@
                     android:textSize="18sp"
                     android:layout_marginTop="40dp"
                     android:textColor="@color/colorblack"/>
-
         </LinearLayout>
     </RelativeLayout>
 </ScrollView>
-
 
         <Button
             android:id="@+id/btn_order"
