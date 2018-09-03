@@ -34,7 +34,7 @@ public class SetPlaceAdapter extends RecyclerView.Adapter<SetPlaceAdapter.ViewHo
 
   }
 
-    static  class ViewHolder extends RecyclerView.ViewHolder {
+    static  class ViewHolder extends RecyclerView.ViewHolder {//viewholder容纳视图
         View placeview;
         TextView tv_placename;
         TextView tv_placematerial;
@@ -44,13 +44,11 @@ public class SetPlaceAdapter extends RecyclerView.Adapter<SetPlaceAdapter.ViewHo
             placeview = view;
             tv_placename = (TextView)view.findViewById(R.id.tv_placename);
             tv_placematerial= (TextView)view.findViewById(R.id.tv_placematerial);
-
         }
     }
 
-
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {// onCreateViewHolder创建viewholder实例
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_placedialog,parent,false);
         final ViewHolder holder = new ViewHolder(view);
 
@@ -69,11 +67,10 @@ public class SetPlaceAdapter extends RecyclerView.Adapter<SetPlaceAdapter.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(SetPlaceAdapter.ViewHolder holder, int position) {
-        place = mplace.get(position);
+    public void onBindViewHolder(SetPlaceAdapter.ViewHolder holder, int position) {//onBindViewHolder对子项进行赋值
+        place = mplace.get(position);//子项当前的位置
         holder.tv_placename.setText(place.getPlacename());
         holder.tv_placematerial.setText(place.getMaterial());
-
     }
 
     @Override

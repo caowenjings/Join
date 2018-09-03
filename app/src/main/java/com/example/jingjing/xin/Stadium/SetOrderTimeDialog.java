@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.jingjing.xin.Bean.Place;
 import com.example.jingjing.xin.Bean.Stadium;
@@ -97,29 +98,27 @@ public class SetOrderTimeDialog extends DialogFragment{
         int year = calendar.get(Calendar.YEAR);
         final int month = calendar.get(Calendar.MONTH)+1;
         int day = calendar.get(Calendar.DAY_OF_MONTH);
-        String this_day =(year + "年" + (month + 1) + "月" + day + "日");
+        String this_day =(year + "年" + month + "月" + day + "日");
         int num = 0;
         if(this_day.equals(mDay)){//判断是否是今天
             int this_hour = calendar.get(Calendar.HOUR_OF_DAY);
             if(this_hour<Integer.parseInt(mStadium.getOpentime())){
                 num = Integer.parseInt(mStadium.getOpentime());
-            }else {
-                num = num+1;
-                if(this_hour > Integer.parseInt(mStadium.getClosetime())){
-                    numlist.add("该场馆已经关闭");
-                }else {
-                    for (int i = num; i < Integer.parseInt(mStadium.getClosetime()); i++) {
-                        numlist.add(String.valueOf(i) + ":00--" + String.valueOf(i + 1) + ":00");
-                    }
+                for(int i = num; i< Integer.parseInt(mStadium.getClosetime());i++){
+                    numlist.add(String.valueOf(i)+":00--"+String.valueOf(i+1)+":00");
                 }
-            }
+            }else {
+                num = this_hour+1;
+                for (int i = num; i < Integer.parseInt(mStadium.getClosetime()); i++) {
+                    numlist.add(String.valueOf(i) + ":00--" + String.valueOf(i + 1) + ":00");
+                }
+                }
         }else {
             num = Integer.parseInt(mStadium.getOpentime());
             for(int i = num; i< Integer.parseInt(mStadium.getClosetime());i++){
                 numlist.add(String.valueOf(i)+":00--"+String.valueOf(i+1)+":00");
             }
         }
-
         ep_time.setDataList(numlist);
         ep_time.setOnScrollChangedListener(new EasyPickerView.OnScrollChangedListener() {
             @Override

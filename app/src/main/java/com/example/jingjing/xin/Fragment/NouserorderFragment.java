@@ -1,6 +1,7 @@
 package com.example.jingjing.xin.Fragment;
 
 import android.os.AsyncTask;
+import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -66,6 +67,20 @@ public class NouserorderFragment extends BaseFragment {
             public void onRefresh() {
                 nouserorderfragment(user);
                 swipe.setRefreshing(false);
+            }
+        });
+        setSwipeRefreshLayout(swipe);
+    }
+
+    public void setSwipeRefreshLayout(SwipeRefreshLayout swipeRefreshLayout) {//解决刷新冲突问题
+        swipeRefreshLayout.setOnChildScrollUpCallback(new SwipeRefreshLayout.OnChildScrollUpCallback() {
+            @Override
+            public boolean canChildScrollUp(SwipeRefreshLayout parent, @Nullable View child) {
+                if (recyclerView == null) {
+                    return false;
+                }
+                LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+                return linearLayoutManager.findFirstCompletelyVisibleItemPosition() != 0;
             }
         });
     }

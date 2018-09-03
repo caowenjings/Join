@@ -1,6 +1,7 @@
 package com.example.jingjing.xin.Fragment;
 
 import android.os.AsyncTask;
+import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -47,7 +48,6 @@ public class UserorderFragment extends BaseFragment {
     private FrameLayout frame_wu;
     private FrameLayout frame_you;
     private List<Book> mData = null;
-    Book book = new Book();
     private User user;
 
     private static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
@@ -81,16 +81,28 @@ public class UserorderFragment extends BaseFragment {
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
-
         return view;
     }
-
     @Override
     protected void initData() {
 
         user = (User)getActivity().getIntent().getSerializableExtra("user");
         stadiumOrderInformation(user);
+        setSwipeRefreshLayout(swipeRefreshLayout);
 
+    }
+
+    public void setSwipeRefreshLayout(SwipeRefreshLayout swipeRefreshLayout) {//解决刷新冲突问题
+        swipeRefreshLayout.setOnChildScrollUpCallback(new SwipeRefreshLayout.OnChildScrollUpCallback() {
+            @Override
+            public boolean canChildScrollUp(SwipeRefreshLayout parent, @Nullable View child) {
+                if (recyclerView == null) {
+                    return false;
+                }
+                LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+                return linearLayoutManager.findFirstCompletelyVisibleItemPosition() != 0;
+            }
+        });
     }
 
     private void stadiumOrderInformation(User user) {
@@ -104,7 +116,6 @@ public class UserorderFragment extends BaseFragment {
         public OrderInformationAsyncTask() {
 
         }
-
         @Override
         protected String doInBackground(String... params) {
             Response response = null;

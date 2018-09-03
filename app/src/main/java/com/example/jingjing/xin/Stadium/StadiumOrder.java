@@ -1,13 +1,17 @@
 package com.example.jingjing.xin.Stadium;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
@@ -79,7 +83,6 @@ public class StadiumOrder extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         android.support.v7.app.ActionBar actionBar =getSupportActionBar();
         actionBar.hide();//隐藏
-//        getWindow().setStatusBarColor(Color.BLUE);标题栏
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);//取消设置透明状态栏
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         getWindow().setStatusBarColor(Color.BLACK);//设置颜色
@@ -137,7 +140,6 @@ public class StadiumOrder extends AppCompatActivity implements View.OnClickListe
     }
 
     public void setPlaceClick(View v) {
-        time_order=date+":"+time;
         SetPlaceDialog std = new SetPlaceDialog(stadium, time_order);
         std.show(getSupportFragmentManager(), "placePicker");
     }
@@ -162,10 +164,9 @@ public class StadiumOrder extends AppCompatActivity implements View.OnClickListe
                 if (TextUtils.isEmpty(date)) {
                     Toast.makeText(StadiumOrder.this, "请先选择日期", Toast.LENGTH_SHORT).show();
                 } else {
+                    Calendar calendar = Calendar.getInstance();
                     String this_day = myear + "年" + mmonth + "月" + mday + "日";
-                    if (this_day.equals(tv_date.getText().toString())) {//判断是否今天
-                        System.out.print(this_day.equals(tv_date.getText().toString()));
-                        Calendar calendar = Calendar.getInstance();
+                    if (this_day.equals(date)){//判断是否今天
                         int time_this = calendar.get(Calendar.HOUR_OF_DAY);
                         if ((time_this+1)>= Integer.parseInt(stadium.getClosetime())) {//不能选择了
                             Toast.makeText(StadiumOrder.this, "该场馆今日已休息，请选择其他日期", Toast.LENGTH_SHORT).show();
@@ -203,7 +204,7 @@ public class StadiumOrder extends AppCompatActivity implements View.OnClickListe
         mday = cal.get(java.util.Calendar.DAY_OF_MONTH);//当月多少天
         mhour = cal.get(java.util.Calendar.HOUR_OF_DAY);//当天多少时
         mminute = cal.get(java.util.Calendar.MINUTE);
-//        setTitle(myear + "_" + mmonth + "_" + mday + "_" + mhour + ":" + mminute);
+        setTitle(myear + "_" + mmonth + "_" + mday + "_" + mhour + ":" + mminute);
     }
 
     private void gerEditString() {
@@ -214,44 +215,19 @@ public class StadiumOrder extends AppCompatActivity implements View.OnClickListe
 
 
     private void showDataDialog() {// 显示日期对话框
-        //日期选择器对话框监听
         DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                // 根据对话框的调整，设置日历
-                mCalendar.set(year, monthOfYear, dayOfMonth);
-                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");//设置时间格式
-                tv_date.setText(dateFormat.format(mCalendar.getTime()));// 获取系统当前时间，显示在textview上
-           System.out.print(tv_date);
+            public void onDateSet(DatePicker view, int year, int month, int day) {
+                tv_date.setText(year + "年" + (month + 1) + "月" + day + "日");
             }
         };
         // 创建对话框
         DatePickerDialog datePickerDialog = new DatePickerDialog(StadiumOrder.this, dateSetListener,
                 myear, mmonth, mday);
-
         datePickerDialog.getDatePicker().setMinDate(new Date().getTime());//选定的最小时间,new Date()为获取当前系统时间
         datePickerDialog.getDatePicker().setMaxDate(new Date().getTime() + 3 * 24 * 60 * 60 * 1000);//最大时间
         datePickerDialog.show();
     }
-
-
-//    private void showTimeDialog() {//显示时间对话框
-//        TimePickerDialog.OnTimeSetListener timeSetListener = new TimePickerDialog.OnTimeSetListener() {
-//
-//            @Override
-//            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-//
-//                mCalendar.set(java.util.Calendar.HOUR_OF_DAY, hourOfDay); // 根据时间对话框的调整，设置时和分
-//                mCalendar.set(java.util.Calendar.MINUTE, minute);
-//                tv_time.setText(hourOfDay + ":" + minute);
-//            }
-//        };
-//        // 根据Calendar对象获取到的时、分创建对话框，true表示24小时
-//        TimePickerDialog timePickerDialog = new TimePickerDialog(StadiumOrder.this, timeSetListener,
-//                mhour, mminute, true);
-//        timePickerDialog.show();
-//    }
-
 
     private void OrderStadium(int userId, int stadiumId, String time, String time_order, String placeId, String tel) {
         String orderURL = URL_ORDERSTADIUM;
@@ -311,4 +287,5 @@ public class StadiumOrder extends AppCompatActivity implements View.OnClickListe
             }
         }
     }
+
 }

@@ -159,6 +159,7 @@ public class  BookingFragment extends BaseFragment {
                 return false;
             }
         });
+
         swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent, R.color.colorPrimary, R.color.colorYellow);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override

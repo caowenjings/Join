@@ -1,10 +1,14 @@
 package com.example.jingjing.xin.Stadium;
 
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -29,7 +33,6 @@ import okhttp3.MediaType;
 public class StadiumOrderInformation extends AppCompatActivity implements RadioGroup.OnCheckedChangeListener,ViewPager.OnPageChangeListener{
 
     private TextView tv_title;
-    private ImageView iv_title;
     private RelativeLayout tv_back;
 
     private RadioGroup rg_userorder;
@@ -44,11 +47,15 @@ public class StadiumOrderInformation extends AppCompatActivity implements RadioG
 
     private static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);//取消设置透明状态栏
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        getWindow().setStatusBarColor(Color.BLACK);//设置颜色
         setContentView(R.layout.stadium_orderinformation);
 
         initView();
@@ -60,7 +67,6 @@ public class StadiumOrderInformation extends AppCompatActivity implements RadioG
     private void initView() {
 
         tv_title = (TextView) findViewById(R.id.tv_title);
-        iv_title = (ImageView) findViewById(R.id.iv_title);
         tv_back = (RelativeLayout) findViewById(R.id.tv_back);
         tv_title.setText("我的预约");
 
@@ -80,7 +86,7 @@ public class StadiumOrderInformation extends AppCompatActivity implements RadioG
         });
 
         viewPager.addOnPageChangeListener(this);//ViewPager页面切换监听
-        rg_userorder.setOnCheckedChangeListener(this);//RadioGroup状态改变监听
+        rg_userorder.setOnCheckedChangeListener(this);//RadioGroup状态改变监听,改变viewpager状态
     }
 
     private void initViewPager(){
@@ -101,11 +107,9 @@ public class StadiumOrderInformation extends AppCompatActivity implements RadioG
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
     }
-
     @Override
-    public void onPageSelected(int position) {//ViewPager切换Fragment时，RadioGroup做相应的监听
+    public void onPageSelected(int position) {//ViewPager切换Fragment时,当页面切换完成被选中时,同步 RadioButton 的状态
         switch (position){
             case 0:
                 rg_userorder.check(R.id.rb_userorder);
@@ -122,8 +126,9 @@ public class StadiumOrderInformation extends AppCompatActivity implements RadioG
 
     }
 
+
     @Override
-    public void onCheckedChanged(RadioGroup group, int checkedId) {
+    public void onCheckedChanged(RadioGroup group, int checkedId) {//当 RadioButton 状态变化,同步Viewpager 的选中页面
         switch (checkedId){
             case R.id.rb_userorder:
                 viewPager.setCurrentItem(0,false);//显示第一个Fragment并关闭动画效果

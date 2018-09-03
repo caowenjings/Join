@@ -3,14 +3,12 @@
    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
     <LinearLayout
         android:id="@+id/find_information"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <include layout="@layout/title_top"></include>
     </LinearLayout>
-
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipe"
         android:layout_width="match_parent"
@@ -66,5 +64,6 @@
                     android:layout_height="match_parent"/>
             </FrameLayout>
         </FrameLayout>
+
     </android.support.v4.widget.SwipeRefreshLayout>
 </LinearLayout>

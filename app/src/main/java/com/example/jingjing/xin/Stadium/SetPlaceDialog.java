@@ -61,7 +61,7 @@ public class SetPlaceDialog extends DialogFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
+        getDialog().getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         View view = View.inflate(getContext(), R.layout.list_place, null);//布局
         recyclerView=(RecyclerView)view.findViewById(R.id.rv_place);
         layoutManager = new LinearLayoutManager(getContext());
@@ -77,30 +77,15 @@ public class SetPlaceDialog extends DialogFragment {
     }
 
     @Override
-    public void onStart() {//设置dialog的宽高，背景
-        super.onStart();
-        getDialog().getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-    }
-
-    @Override
     public void onActivityCreated(Bundle savedInstanceState) {//当acvitity中的oncreate返回后，回调用这里方法
         super.onActivityCreated(savedInstanceState);
         getPlace(mStadium,mtime);
     }
 
-    @NonNull
-    @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
-        Dialog dialog = super.onCreateDialog(savedInstanceState);
-        return dialog;
-    }
-
-
     public interface SetPlaceListener {//Fragment与activity的通信，内部回调接口
 
         void onSetPlaceComplete(Place place);//把方法封装在接口中，在activity中需要用到方法的实现这个接口即可
     }
-
 
     @Override
     public void onAttach(Context context) {
@@ -182,7 +167,6 @@ public class SetPlaceDialog extends DialogFragment {
                             onDismiss(getDialog());
                         }
                     });
-
 
                 } catch (JSONException e) {
                     e.printStackTrace();

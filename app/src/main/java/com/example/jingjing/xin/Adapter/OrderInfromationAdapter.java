@@ -132,7 +132,7 @@ public class OrderInfromationAdapter extends RecyclerView.Adapter<OrderInfromati
         builder.show();//显示对话框
     }
 
-    private void deleteorderInformation(Book book) {
+    private void deleteorderInformation(Book book) {//删除
         String loadingUrl = URL_DELETEORDERINFORMATION;
         new CancalOrderAsyncTask().execute(loadingUrl, String.valueOf(book.getBookingId()));
     }

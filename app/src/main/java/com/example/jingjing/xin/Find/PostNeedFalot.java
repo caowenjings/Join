@@ -26,6 +26,7 @@ import com.example.jingjing.xin.Activity.RegisterActivity;
 import com.example.jingjing.xin.Bean.Stadium;
 import com.example.jingjing.xin.Bean.User;
 import com.example.jingjing.xin.R;
+import com.example.jingjing.xin.Stadium.SetOrderTimeDialog;
 import com.example.jingjing.xin.Stadium.StadiumOrder;
 
 import org.json.JSONException;
@@ -49,7 +50,7 @@ import static com.example.jingjing.xin.constant.Conatant.URL_INSERTNEED;
  * Created by jingjing on 2018/5/29.
  */
 
-public class PostNeedFalot extends AppCompatActivity implements View.OnClickListener,SetNumDialog.SetNumListener,SetStadiumDialog.SetStadiumListener {
+public class PostNeedFalot extends AppCompatActivity implements View.OnClickListener,SetNumDialog.SetNumListener,SetStadiumDialog.SetStadiumListener ,SetOrderTimeDialog.SetOrdertime{
 
     private TextView tv_title;
     private ImageView iv_title;
@@ -138,7 +139,24 @@ public class PostNeedFalot extends AppCompatActivity implements View.OnClickList
                 showDataDialog();
                 break;
             case R.id.btn_time:
-                showTimeDialog();
+                getEditString();
+                getCalender();
+                if (TextUtils.isEmpty(dateone)) {
+                    Toast.makeText(PostNeedFalot.this, "请先选择日期", Toast.LENGTH_SHORT).show();
+                } else {
+                    Calendar calendar = Calendar.getInstance();
+                    String this_day = myear + "年" + mmonth + "月" + mday + "日";
+                    if (this_day.equals(dateone)){//判断是否今天
+                        int time_this = calendar.get(Calendar.HOUR_OF_DAY);
+                        if ((time_this+1)>= Integer.parseInt(set_stadium.getClosetime())) {//不能选择了
+                            Toast.makeText(PostNeedFalot.this, "该场馆今日已休息，请选择其他日期", Toast.LENGTH_SHORT).show();
+                        } else {
+                            setTimeClick(v);
+                        }
+                    } else {
+                        setTimeClick(v);
+                    }
+                }
                 break;
             case R.id.btn_num:
                 setNumClick(v);
@@ -148,7 +166,6 @@ public class PostNeedFalot extends AppCompatActivity implements View.OnClickList
                 getCalender();
                 if (!TextUtils.isEmpty(stadiumname) && !TextUtils.isEmpty(dateone)
                         && !TextUtils.isEmpty(timeone) && !TextUtils.isEmpty(numpeople)) {
-
                     time_xuanze = dateone + timeone;
                     String thistime = myear + "年" + mmonth + "月" + mday + "日";
                     String releasetime =  myear + "年" + mmonth + "月" + mday + "日";
@@ -184,6 +201,11 @@ public class PostNeedFalot extends AppCompatActivity implements View.OnClickList
         setTitle(myear + "_" + mmonth + "_" + mday + "_" + mhour + ":" + mminute);
     }
 
+
+    public void setTimeClick(View v) {
+        SetOrderTimeDialog timed = new SetOrderTimeDialog(set_stadium , tv_date.getText().toString());
+        timed.show(getFragmentManager(),"timePicker");
+    }
     @Override
     public void onSetNumComplete(int num) {//选择人数
           set_num = String.valueOf(num);
@@ -211,42 +233,45 @@ public class PostNeedFalot extends AppCompatActivity implements View.OnClickList
         std.show(getSupportFragmentManager(), "adaPicker");
     }
 
+    public void getordertime(String time) {//调用接口
+        tv_time.setText(time);
+    }
+
+//    private void showDataDialog() {// 显示日期对话框
+//        DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
+//
+//            @Override
+//            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+//                // 根据对话框的调整，设置日历
+//                mCalendar.set(year, monthOfYear, dayOfMonth);
+//                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");//设置时间格式
+//                tv_date.setText(dateFormat.format(mCalendar.getTime()));// 获取系统当前时间，显示在textview上
+//            }
+//        };
+//        // 创建对话框
+//        DatePickerDialog datePickerDialog = new DatePickerDialog(PostNeedFalot.this, dateSetListener,
+//                myear, mmonth, mday);
+//
+//        datePickerDialog.getDatePicker().setMinDate(new Date().getTime());//选定的最小时间,new Date()为获取当前系统时间
+//        datePickerDialog.getDatePicker().setMaxDate(new Date().getTime() + 3 * 24 * 60 * 60 * 1000);//最大时间
+//        datePickerDialog.show();
+//    }
+
     private void showDataDialog() {// 显示日期对话框
         DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
-
             @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                // 根据对话框的调整，设置日历
-                mCalendar.set(year, monthOfYear, dayOfMonth);
-                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");//设置时间格式
-                tv_date.setText(dateFormat.format(mCalendar.getTime()));// 获取系统当前时间，显示在textview上
+            public void onDateSet(DatePicker view, int year, int month, int day) {
+                Calendar calendar = Calendar.getInstance();
+                calendar.set(year, month, day);
+                tv_date.setText(year + "年" + (month+1) + "月" + day + "日");
             }
         };
         // 创建对话框
         DatePickerDialog datePickerDialog = new DatePickerDialog(PostNeedFalot.this, dateSetListener,
                 myear, mmonth, mday);
-
         datePickerDialog.getDatePicker().setMinDate(new Date().getTime());//选定的最小时间,new Date()为获取当前系统时间
         datePickerDialog.getDatePicker().setMaxDate(new Date().getTime() + 3 * 24 * 60 * 60 * 1000);//最大时间
         datePickerDialog.show();
-    }
-
-
-    private void showTimeDialog() {//显示时间对话框
-        TimePickerDialog.OnTimeSetListener timeSetListener = new TimePickerDialog.OnTimeSetListener() {
-
-            @Override
-            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-
-                mCalendar.set(java.util.Calendar.HOUR_OF_DAY, hourOfDay); // 根据时间对话框的调整，设置时和分
-                mCalendar.set(java.util.Calendar.MINUTE, minute);
-                tv_time.setText(hourOfDay + ":" + minute);
-            }
-        };
-        // 根据Calendar对象获取到的时、分创建对话框，true表示24小时
-        TimePickerDialog timePickerDialog = new TimePickerDialog(PostNeedFalot.this, timeSetListener,
-                mhour, mminute, true);
-        timePickerDialog.show();
     }
 
 
