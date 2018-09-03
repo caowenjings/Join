@@ -228,7 +228,7 @@ public class RegisterActivity extends AppCompatActivity {
                                 finish();
                                 return false;
                             }
-                        }).sendEmptyMessageDelayed(0, 2000);
+                        }).sendEmptyMessageDelayed(0, 1000);
                     } else {
                         Toast.makeText(RegisterActivity.this, "该用户名已注册", Toast.LENGTH_LONG).show();
                     }

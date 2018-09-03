@@ -2,17 +2,36 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-    <TimePicker
-        android:id="@+id/timepicker"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:timePickerMode="spinner">
-    </TimePicker>
     <Button
-        android:layout_width="wrap_content"
+        android:id="@+id/btn_sure"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="确定"/>
+        android:text="确 定"
+        android:padding="5dp"
+        android:layout_margin="10dp"
+        android:textColor="@color/colorwhite"
+        android:textSize="20sp"
+        android:background="@color/colorAccent"/>
+
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="200dp">
+        <com.example.jingjing.xin.Stadium.EasyPickerView
+            android:id="@+id/ep_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_marginLeft="140dp"
+            custom:epvMaxShowNum="3"
+            custom:epvRecycleMode="false"
+            custom:epvTextColor="#ea8643"
+            custom:epvTextMaxScale="2.0"
+            custom:epvTextMinAlpha="0.35"
+            custom:epvTextPadding="10dp"
+            custom:epvTextSize="15sp" />
+    </LinearLayout>
 </LinearLayout>

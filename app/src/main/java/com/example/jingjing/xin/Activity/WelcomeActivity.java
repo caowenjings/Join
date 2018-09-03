@@ -3,8 +3,10 @@ package com.example.jingjing.xin.Activity;
 import android.app.ActionBar;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -22,6 +24,7 @@ import java.util.TimerTask;
 public class WelcomeActivity extends AppCompatActivity {
     private TextView welcome;
     private ImageView imageView;
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

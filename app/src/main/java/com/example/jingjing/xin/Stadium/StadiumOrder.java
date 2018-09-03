@@ -46,7 +46,7 @@ import static com.example.jingjing.xin.constant.Conatant.URL_ORDERSTADIUM;
  * Created by jingjing on 2018/5/24.
  */
 
-public class StadiumOrder extends AppCompatActivity implements View.OnClickListener, SetPlaceDialog.SetPlaceListener {
+public class StadiumOrder extends AppCompatActivity implements View.OnClickListener, SetPlaceDialog.SetPlaceListener,SetOrderTimeDialog.SetOrdertime {
 
 
     private TextView tv_title;
@@ -131,12 +131,22 @@ public class StadiumOrder extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    public void getordertime(String time) {//调用接口
+        tv_time.setText(time);
+        time_order = tv_date.getText().toString() + tv_time.getText().toString();
+    }
+
     public void setPlaceClick(View v) {
         time_order=date+":"+time;
         SetPlaceDialog std = new SetPlaceDialog(stadium, time_order);
         std.show(getSupportFragmentManager(), "placePicker");
     }
 
+    public void setTimeClick(View v) {
+        SetOrderTimeDialog timed = new SetOrderTimeDialog(stadium , tv_date.getText().toString());
+        timed.show(getFragmentManager(),"timePicker");
+    }
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -148,21 +158,22 @@ public class StadiumOrder extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btn_time:
                 gerEditString();
+                getCalender();
                 if (TextUtils.isEmpty(date)) {
                     Toast.makeText(StadiumOrder.this, "请先选择日期", Toast.LENGTH_SHORT).show();
                 } else {
                     String this_day = myear + "年" + mmonth + "月" + mday + "日";
-                    if (this_day.equals(tv_date.getText().toString())) {
+                    if (this_day.equals(tv_date.getText().toString())) {//判断是否今天
+                        System.out.print(this_day.equals(tv_date.getText().toString()));
                         Calendar calendar = Calendar.getInstance();
                         int time_this = calendar.get(Calendar.HOUR_OF_DAY);
-                        System.out.println(time_this);
-                        if ((time_this+1)>= Integer.parseInt(stadium.getClosetime())) {
+                        if ((time_this+1)>= Integer.parseInt(stadium.getClosetime())) {//不能选择了
                             Toast.makeText(StadiumOrder.this, "该场馆今日已休息，请选择其他日期", Toast.LENGTH_SHORT).show();
                         } else {
-                           showTimeDialog();
+                           setTimeClick(v);
                         }
                     } else {
-                       showTimeDialog();
+                        setTimeClick(v);
                     }
                 }
                 break;
@@ -211,6 +222,7 @@ public class StadiumOrder extends AppCompatActivity implements View.OnClickListe
                 mCalendar.set(year, monthOfYear, dayOfMonth);
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");//设置时间格式
                 tv_date.setText(dateFormat.format(mCalendar.getTime()));// 获取系统当前时间，显示在textview上
+           System.out.print(tv_date);
             }
         };
         // 创建对话框
@@ -223,29 +235,28 @@ public class StadiumOrder extends AppCompatActivity implements View.OnClickListe
     }
 
 
-    private void showTimeDialog() {//显示时间对话框
-        TimePickerDialog.OnTimeSetListener timeSetListener = new TimePickerDialog.OnTimeSetListener() {
-
-            @Override
-            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-
-                mCalendar.set(java.util.Calendar.HOUR_OF_DAY, hourOfDay); // 根据时间对话框的调整，设置时和分
-                mCalendar.set(java.util.Calendar.MINUTE, minute);
-                tv_time.setText(hourOfDay + ":" + minute);
-            }
-        };
-        // 根据Calendar对象获取到的时、分创建对话框，true表示24小时
-        TimePickerDialog timePickerDialog = new TimePickerDialog(StadiumOrder.this, timeSetListener,
-                mhour, mminute, true);
-        timePickerDialog.show();
-    }
+//    private void showTimeDialog() {//显示时间对话框
+//        TimePickerDialog.OnTimeSetListener timeSetListener = new TimePickerDialog.OnTimeSetListener() {
+//
+//            @Override
+//            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+//
+//                mCalendar.set(java.util.Calendar.HOUR_OF_DAY, hourOfDay); // 根据时间对话框的调整，设置时和分
+//                mCalendar.set(java.util.Calendar.MINUTE, minute);
+//                tv_time.setText(hourOfDay + ":" + minute);
+//            }
+//        };
+//        // 根据Calendar对象获取到的时、分创建对话框，true表示24小时
+//        TimePickerDialog timePickerDialog = new TimePickerDialog(StadiumOrder.this, timeSetListener,
+//                mhour, mminute, true);
+//        timePickerDialog.show();
+//    }
 
 
     private void OrderStadium(int userId, int stadiumId, String time, String time_order, String placeId, String tel) {
         String orderURL = URL_ORDERSTADIUM;
         new OrderStadiumAsyncTask().execute(orderURL, String.valueOf(userId), String.valueOf(stadiumId), time, time_order, placeId, tel);
     }
-
 
     private class OrderStadiumAsyncTask extends AsyncTask<String, Integer, String> {
 

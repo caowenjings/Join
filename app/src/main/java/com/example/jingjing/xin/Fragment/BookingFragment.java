@@ -395,9 +395,10 @@ public class  BookingFragment extends BaseFragment {
             List<Notice> testList = new ArrayList<>();
             if (!TextUtils.isEmpty(s)) {
                 try {
-                    final JSONArray results = new JSONArray(s);
-                    for (int i = 0; i < results.length(); i++) {
-                        JSONObject js = results.getJSONObject(i);
+                    JSONObject results = new JSONObject(s);
+                    JSONArray noticeResults = results.getJSONArray("notice");
+                    for (int i = 0; i < noticeResults.length(); i++) {
+                        JSONObject js = noticeResults.getJSONObject(i);
                         Notice notice = new Notice();
                         notice.setContent(js.getString("content"));
                         notice.setTime(js.getString("time"));
@@ -421,6 +422,13 @@ public class  BookingFragment extends BaseFragment {
                             }
                         });
                         flipper.addView(content);
+                    }
+                    mCity = new ArrayList();
+                    JSONArray cityresults = results.getJSONArray("city");
+                    for (int i = 0; i < cityresults.length(); i++) {
+                        JSONObject js = cityresults.getJSONObject(i);
+                        String city = js.getString("cityname");
+                        mCity.add(city);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -484,7 +492,7 @@ public class  BookingFragment extends BaseFragment {
                         stadium.setIndoor(js.getInt("indoor"));
                         stadium.setAircondition(js.getInt("aircondition"));
                         stadium.setCity(js.getString("city"));
-                        stadium.setMainpicture(URL_PICTURE + js.getString("mainpicture"));
+                        stadium.setMainpicture(URL_PICTURE + js.optString("mainpicture"));
                         stadium.setAdress(js.getString("adress"));
                         stadium.setNum(js.getString("num"));
                         stadium.setOpentime(js.getString("opentime"));

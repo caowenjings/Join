@@ -306,7 +306,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 finish();
                                 return false;
                             }
-                        }).sendEmptyMessageDelayed(0, 5000);
+                        }).sendEmptyMessageDelayed(0, 1000);
                     } else {
                         Toast.makeText(LoginActivity.this, "账号或密码错误", Toast.LENGTH_LONG).show();
                     }

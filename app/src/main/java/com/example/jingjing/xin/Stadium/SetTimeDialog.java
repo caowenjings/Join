@@ -52,7 +52,6 @@ public class SetTimeDialog extends DialogFragment {
 
     public interface SetNumListener {//设置接口
         void onSetNumComplete(int num);
-
         void onSetStadiumComplete(Stadium stadium);
     }
 
