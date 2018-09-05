@@ -3,7 +3,7 @@ package com.example.jingjing.xin.Bean;
 public class Place {
     private  int placeId;
     private  int stadiumId;
-    private  String state;
+    private  String state;//价格
     private  String material;
     private  String placename;
 

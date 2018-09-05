@@ -70,7 +70,7 @@ public class SetPlaceAdapter extends RecyclerView.Adapter<SetPlaceAdapter.ViewHo
     public void onBindViewHolder(SetPlaceAdapter.ViewHolder holder, int position) {//onBindViewHolder对子项进行赋值
         place = mplace.get(position);//子项当前的位置
         holder.tv_placename.setText(place.getPlacename());
-        holder.tv_placematerial.setText(place.getMaterial());
+        holder.tv_placematerial.setText("价格："+place.getMaterial()+"元/小时");
     }
 
     @Override

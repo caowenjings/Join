@@ -49,7 +49,6 @@ import static com.example.jingjing.xin.constant.Conatant.URL_NEEDINFORMATION;
 public class PostNeedFlaotInformation extends AppCompatActivity {
 
     private TextView tv_title;
-    private ImageView iv_title;
     private RelativeLayout tv_back;
 
     private FrameLayout frameLayout_one;
@@ -84,7 +83,6 @@ public class PostNeedFlaotInformation extends AppCompatActivity {
     private void initView() {
 
         tv_title = (TextView) findViewById(R.id.tv_title);
-        iv_title = (ImageView) findViewById(R.id.iv_title);
         tv_back = (RelativeLayout) findViewById(R.id.tv_back);
         tv_title.setText("发布的需求");
 
@@ -125,38 +123,32 @@ public class PostNeedFlaotInformation extends AppCompatActivity {
             }
         });
 
-        myposrneed(user);
-
         swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);//刷新
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                refresh();
+                frameLayout_one.removeView(frameLayout_three);
+                frameLayout_one.removeView(frameLayout_two);//移除布局
+                myposrneed(user);
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
+
+        myposrneed(user);
+        setSwipeRefreshLayout(swipeRefreshLayout);
     }
 
-
-    private void refresh(){//刷新
-        new Thread(new Runnable() {
+    public void setSwipeRefreshLayout(SwipeRefreshLayout swipeRefreshLayout) {//解决刷新冲突问题
+        swipeRefreshLayout.setOnChildScrollUpCallback(new SwipeRefreshLayout.OnChildScrollUpCallback() {
             @Override
-            public void run() {
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+            public boolean canChildScrollUp(SwipeRefreshLayout parent, @Nullable View child) {
+                if (recyclerView == null) {
+                    return false;
                 }
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        frameLayout_one.removeView(frameLayout_three);
-                        frameLayout_one.removeView(frameLayout_two);//移除布局
-                        myposrneed(user);
-                    }
-                });
+                LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+                return linearLayoutManager.findFirstCompletelyVisibleItemPosition() != 0;
             }
-        }).start();
+        });
     }
 
 
@@ -212,7 +204,7 @@ public class PostNeedFlaotInformation extends AppCompatActivity {
                     frameLayout_one.addView(frameLayout_three);//添加布局
 
                     recyclerView.setLayoutManager(layoutManager);
-                    recyclerView.addItemDecoration(new DividerItemDecoration(PostNeedFlaotInformation.this, DividerItemDecoration.VERTICAL));
+                    recyclerView.addItemDecoration(new DividerItemDecoration(PostNeedFlaotInformation.this, DividerItemDecoration.VERTICAL));//分割线
                     PostNeedAdapter adapter = new PostNeedAdapter(PostNeedFlaotInformation.this, mData);
                     recyclerView.setNestedScrollingEnabled(false);
                     recyclerView.setAdapter(adapter);

@@ -2,8 +2,10 @@ package com.example.jingjing.xin.Find;
 
 import android.graphics.Color;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
@@ -57,6 +59,7 @@ public class MyFindinformation extends AppCompatActivity {
     private User user;
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -111,6 +114,21 @@ public class MyFindinformation extends AppCompatActivity {
                 frame_one.removeView(frame_you);
                 myfindinformation(need.getNeedId());
                 swipeRefreshLayout.setRefreshing(false);
+            }
+        });
+        setSwipeRefreshLayout(swipeRefreshLayout);
+    }
+
+
+    public void setSwipeRefreshLayout(SwipeRefreshLayout swipeRefreshLayout) {//解决刷新冲突问题
+        swipeRefreshLayout.setOnChildScrollUpCallback(new SwipeRefreshLayout.OnChildScrollUpCallback() {
+            @Override
+            public boolean canChildScrollUp(SwipeRefreshLayout parent, @Nullable View child) {
+                if (recyclerView == null) {
+                    return false;
+                }
+                LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+                return linearLayoutManager.findFirstCompletelyVisibleItemPosition() != 0;
             }
         });
     }

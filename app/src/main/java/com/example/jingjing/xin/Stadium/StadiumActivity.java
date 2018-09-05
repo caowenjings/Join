@@ -25,6 +25,7 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -81,6 +82,7 @@ public class StadiumActivity extends AppCompatActivity  implements View.OnClickL
     private TextView tv_opentime;
     private TextView tv_evaluate_num;
     private TextView tv_noevaluate;
+    private LinearLayout ll_adress;
     private RecyclerView recyclerView;
     private LinearLayoutManager layoutManager;
     private Stadium stadium;
@@ -133,6 +135,7 @@ public class StadiumActivity extends AppCompatActivity  implements View.OnClickL
         tv_aircondition = (TextView) findViewById(R.id.tv_aircondition);
         tv_opentime = (TextView) findViewById(R.id.tv_opentime);
         tv_adress = (TextView) findViewById(R.id.tv_stadiumaddress);
+        ll_adress = (LinearLayout)findViewById(R.id.ll_stadiumaddress);
         ratingBar = (RatingBar) findViewById(R.id.rb_ratbar);
         tv_evaluate_num= (TextView) findViewById(R.id.tv_number);
         tv_picture_num = (TextView) findViewById(R.id.tv_picture_num);
@@ -162,7 +165,7 @@ public class StadiumActivity extends AppCompatActivity  implements View.OnClickL
         tv_area.setText(stadium.getArea() + "平方米");
         tv_num.setText(stadium.getNum() + "人");
         tv_picture_num.setText(String.valueOf(stadium.getIconnum()));//强制转换
-        tv_opentime.setText(stadium.getOpentime());
+        tv_opentime.setText(stadium.getOpentime()+":00");
         if (stadium.getIndoor() == 1) {
             tv_indoor.setText(" 是");
         } else {
@@ -209,7 +212,7 @@ public class StadiumActivity extends AppCompatActivity  implements View.OnClickL
             iv_stadiumpicture.setOnClickListener(this);
             iv_tel.setOnClickListener(this);
             tv_back.setOnClickListener(this);
-            tv_adress.setOnClickListener(this);
+            ll_adress.setOnClickListener(this);
 
     }
 
@@ -250,7 +253,7 @@ public class StadiumActivity extends AppCompatActivity  implements View.OnClickL
                 showPasswordSetDailog();
                 break;
 
-            case R.id.tv_stadiumaddress:
+            case R.id.ll_stadiumaddress:
                 if(isInstallBaidu("com.baidu.BaiduMap")){//传入指定应用包名
                     try {
                         Intent intent2 = Intent.getIntent("intent://map/direction?destination="+stadium.getAdress() + // 终点

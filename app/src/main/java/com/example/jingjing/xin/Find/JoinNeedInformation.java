@@ -4,8 +4,10 @@ import android.app.ActionBar;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -57,8 +59,10 @@ public class JoinNeedInformation extends AppCompatActivity {
     private TextView  tv_nofind;
     private RecyclerView recyclerView;
     private LinearLayoutManager layoutManager;
+    private SwipeRefreshLayout swipeRefreshLayout;
     private User user;
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,8 +85,17 @@ public class JoinNeedInformation extends AppCompatActivity {
 
         tv_nofind=(TextView)findViewById(R.id.tv_nofind);
         recyclerView=(RecyclerView)findViewById(R.id.recycler_view);
+        swipeRefreshLayout=(SwipeRefreshLayout)findViewById(R.id.swipe);
         layoutManager=new LinearLayoutManager(this);
 
+        swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                joinedneed(user.getUserId());
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
     }
 
     private void initDate(){
@@ -95,6 +108,20 @@ public class JoinNeedInformation extends AppCompatActivity {
             }
         });
         joinedneed(user.getUserId());
+        setSwipeRefreshLayout(swipeRefreshLayout);
+    }
+
+    public void setSwipeRefreshLayout(SwipeRefreshLayout swipeRefreshLayout) {//解决刷新冲突问题
+        swipeRefreshLayout.setOnChildScrollUpCallback(new SwipeRefreshLayout.OnChildScrollUpCallback() {
+            @Override
+            public boolean canChildScrollUp(SwipeRefreshLayout parent, @Nullable View child) {
+                if (recyclerView == null) {
+                    return false;
+                }
+                LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+                return linearLayoutManager.findFirstCompletelyVisibleItemPosition() != 0;
+            }
+        });
     }
 
     private void joinedneed(int userId) {
@@ -140,7 +167,6 @@ public class JoinNeedInformation extends AppCompatActivity {
                 try {
                     JSONArray results = new JSONArray(s);
                     for(int i=0;i<results.length();i++){
-//                        int i=results.length()-1;i>=0;i--
                         JSONObject js= results.getJSONObject(i);
                         Need need = new Need();
                         need.setNeedId(js.getInt("needId"));

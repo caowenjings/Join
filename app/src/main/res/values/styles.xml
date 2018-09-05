@@ -25,7 +25,11 @@
         <item name="android:textSize">20sp</item>
         <item name="android:textColor">@color/colorblack</item>
     </style>
-
+    <!--登录界面EditText下划线-->
+    <style name="MyEditText" parent="Theme.AppCompat.Light">
+        <item name="colorControlNormal">@color/colorblack</item>
+        <item name="colorControlActivated">@color/colorAccent</item>
+    </style>
     <!--注册界面LinearLayout -->
     <style name="registerLinearLayout">
         <item name="android:layout_width">match_parent</item>
@@ -173,14 +177,22 @@
         <item name="android:layout_gravity">center</item>
         <item name="android:layout_marginLeft">30dp</item>
     </style>
+
     <!--myfragment里面的imageview-->
     <style name="myfragmentimage">
         <item name="android:layout_height">30dp</item>
         <item name="android:layout_width">30dp</item>
         <item name="android:src">@drawable/back_right</item>
     </style>
-    
 
+    <!--postNeedAdapter里面的list_postneed-->
+    <style name="list_postneed_text">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_marginTop">5dp</item>
+        <item name="android:text">15sp</item>
+        <item name="android:layout_marginLeft">65dp</item>
+    </style>
 </resources>
 
 

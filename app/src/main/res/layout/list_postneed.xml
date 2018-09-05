@@ -7,6 +7,8 @@
    <LinearLayout
        android:orientation="vertical"
        android:layout_marginTop="10dp"
+       android:layout_marginLeft="10dp"
+       android:layout_marginRight="10dp"
        android:layout_width="match_parent"
        android:layout_height="match_parent">
       <TextView
@@ -19,40 +21,24 @@
 
        <TextView
            android:id="@+id/tv_time"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:layout_marginTop="5dp"
-           android:text="15sp"
-           android:layout_marginLeft="60dp"/>
-
+           style="@style/list_postneed_text"/>
        <TextView
            android:id="@+id/tv_num"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:layout_marginTop="5dp"
-           android:text="15sp"
-           android:layout_marginLeft="60dp"/>
+           style="@style/list_postneed_text"/>
        <TextView
            android:id="@+id/tv_num_join"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:layout_marginTop="5dp"
-           android:text="15sp"
-           android:layout_marginLeft="60dp"/>
+           style="@style/list_postneed_text"/>
        <TextView
            android:id="@+id/tv_remark"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:layout_marginTop="5dp"
-           android:text="15sp"
-           android:layout_marginLeft="60dp"/>
+           style="@style/list_postneed_text"/>
 
        <Button
            android:id="@+id/btn_delete"
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
            android:text="删除"
-          android:layout_marginLeft="280dp"
+           android:layout_gravity="right"
+           android:layout_marginBottom="10dp"
            android:background="@color/colorblue"/>
    </LinearLayout>
 </LinearLayout>

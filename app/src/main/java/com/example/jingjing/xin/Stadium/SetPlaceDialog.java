@@ -142,7 +142,6 @@ public class SetPlaceDialog extends DialogFragment {
             System.out.println("返回的数据REPLACE："+s);
             List<Place> mData = new ArrayList<>();
             if (!"null".equals(s)){
-                //s= s.substring(1);
                 try {
                     JSONArray results = new JSONArray(s);
                     for(int i=0;i<results.length();i++){

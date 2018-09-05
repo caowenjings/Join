@@ -60,7 +60,8 @@
             android:textSize="15sp"
             android:minLines="1"
             android:gravity="center"
-            android:textColor="@color/colorblack"/>
+            android:textColor="@color/colorblack"
+            android:theme="@style/MyEditText"/>
         <ImageView
             android:id="@+id/iv_delete"
             android:layout_width="18dp"
@@ -168,7 +169,7 @@
             android:textColor="@color/text_colcor" />
     </LinearLayout>
     <RelativeLayout
-        android:layout_marginBottom="15dp"
+        android:layout_marginBottom="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView

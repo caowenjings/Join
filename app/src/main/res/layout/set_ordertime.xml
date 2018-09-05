@@ -14,7 +14,7 @@
         android:layout_margin="10dp"
         android:textColor="@color/colorwhite"
         android:textSize="20sp"
-        android:background="@color/colorAccent"/>
+        android:background="@color/colorblue"/>
 
     <LinearLayout
         android:layout_marginTop="10dp"
@@ -24,9 +24,9 @@
             android:id="@+id/ep_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:layout_marginLeft="40dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:layout_marginLeft="60dp"
             custom:epvMaxShowNum="3"
             custom:epvRecycleMode="false"
             custom:epvTextColor="#ea8643"

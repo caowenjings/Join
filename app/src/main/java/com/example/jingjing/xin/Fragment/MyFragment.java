@@ -89,6 +89,18 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
     protected void initData() {
         user = (User) getActivity().getIntent().getSerializableExtra("user");
         userId = String.valueOf(user.getUserId());
+        tv_username.setText(user.getUsername());//用户名
+        ImageLoaderConfiguration configuration = ImageLoaderConfiguration.createDefault(getContext());
+        ImageLoader imageLoader = ImageLoader.getInstance();
+        ImageLoader.getInstance().init(configuration);
+        DisplayImageOptions options = new DisplayImageOptions.Builder()
+                .showImageOnFail(R.drawable.error) // 设置图片加载或解码过程中发生错误显示的图片
+                .showImageOnLoading(R.drawable.loading)
+                .resetViewBeforeLoading(false)  // default 设置图片在加载前是否重置、复位
+                .delayBeforeLoading(0)  // 下载前的延迟时间
+                .build();
+        ImageLoader.getInstance().displayImage(user.getProflie(),iv_userhead, options);
+
         btn_exit.setOnClickListener(this);
         btn_information.setOnClickListener(this);
         btn_order.setOnClickListener(this);
@@ -152,18 +164,6 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
                         user.setTel(results.getString("tel"));
                         user.setMyright(results.getString("myRight"));
                         user.setProflie(URL_PROFLIE+results.getString("proflie"));
-                        ImageLoaderConfiguration configuration = ImageLoaderConfiguration.createDefault(getContext());
-                        ImageLoader imageLoader = ImageLoader.getInstance();
-                        ImageLoader.getInstance().init(configuration);
-                        DisplayImageOptions options = new DisplayImageOptions.Builder()
-                                .showImageOnFail(R.drawable.error) // 设置图片加载或解码过程中发生错误显示的图片
-                                .showImageOnLoading(R.drawable.loading)
-                                .resetViewBeforeLoading(false)  // default 设置图片在加载前是否重置、复位
-                                .delayBeforeLoading(0)  // 下载前的延迟时间
-                                .build();
-                        ImageLoader.getInstance().displayImage(user.getProflie(),iv_userhead, options);
-                        tv_username.setText(user.getUsername());//用户名
-
                     }else{
                         Toast.makeText(mContext,"更新错误",Toast.LENGTH_LONG).show();
                     }

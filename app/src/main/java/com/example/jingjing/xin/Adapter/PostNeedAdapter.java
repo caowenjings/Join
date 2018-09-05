@@ -80,6 +80,7 @@ public class PostNeedAdapter extends RecyclerView.Adapter<PostNeedAdapter.ViewHo
 
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_postneed,parent,false);
         final ViewHolder holder = new ViewHolder(view);
+
         holder.postneedview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -183,7 +184,7 @@ public class PostNeedAdapter extends RecyclerView.Adapter<PostNeedAdapter.ViewHo
                     if ("1".equals(result)) {
                         Toast.makeText(mcontext, "删除成功", Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(mcontext, "删除成功", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mcontext, "删除失败", Toast.LENGTH_SHORT).show();
                     }
 
                 } catch (JSONException e) {

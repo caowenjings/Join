@@ -78,11 +78,12 @@ public class UserorderFragment extends BaseFragment {
                 frame_one.removeView(frame_wu);
                 frame_one.removeView(frame_you);
                 stadiumOrderInformation(user);
-                swipeRefreshLayout.setRefreshing(false);
+                swipeRefreshLayout.setRefreshing(false);//结束
             }
         });
         return view;
     }
+
     @Override
     protected void initData() {
 
@@ -106,7 +107,6 @@ public class UserorderFragment extends BaseFragment {
     }
 
     private void stadiumOrderInformation(User user) {
-
         String loadingUrl = URL_ORDERINFORMATION;
         new OrderInformationAsyncTask().execute(loadingUrl, String.valueOf(user.getUserId()));
 

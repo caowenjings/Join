@@ -139,10 +139,12 @@ public class StadiumOrder extends AppCompatActivity implements View.OnClickListe
         time_order = tv_date.getText().toString() + tv_time.getText().toString();
     }
 
+
     public void setPlaceClick(View v) {
         SetPlaceDialog std = new SetPlaceDialog(stadium, time_order);
         std.show(getSupportFragmentManager(), "placePicker");
     }
+
 
     public void setTimeClick(View v) {
         SetOrderTimeDialog timed = new SetOrderTimeDialog(stadium , tv_date.getText().toString());
@@ -216,18 +218,21 @@ public class StadiumOrder extends AppCompatActivity implements View.OnClickListe
 
     private void showDataDialog() {// 显示日期对话框
         DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onDateSet(DatePicker view, int year, int month, int day) {
                 tv_date.setText(year + "年" + (month + 1) + "月" + day + "日");
             }
         };
         // 创建对话框
-        DatePickerDialog datePickerDialog = new DatePickerDialog(StadiumOrder.this, dateSetListener,
+        DatePickerDialog datePickerDialog = new DatePickerDialog(StadiumOrder.this,R.style.MyDatePickerDialogTheme,dateSetListener ,
                 myear, mmonth, mday);
         datePickerDialog.getDatePicker().setMinDate(new Date().getTime());//选定的最小时间,new Date()为获取当前系统时间
         datePickerDialog.getDatePicker().setMaxDate(new Date().getTime() + 3 * 24 * 60 * 60 * 1000);//最大时间
         datePickerDialog.show();
+
     }
+
 
     private void OrderStadium(int userId, int stadiumId, String time, String time_order, String placeId, String tel) {
         String orderURL = URL_ORDERSTADIUM;

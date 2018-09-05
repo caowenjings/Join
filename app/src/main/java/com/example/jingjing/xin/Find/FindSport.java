@@ -94,6 +94,7 @@ public class FindSport extends AppCompatActivity {
             }
         });
     }
+
     private void initData(){
         user= (User) getIntent().getSerializableExtra("user");
 
@@ -104,6 +105,20 @@ public class FindSport extends AppCompatActivity {
             }
         });
         findInformation(user,BookingFragment.city);//根据选择的城市来展示相应的动态
+        setSwipeRefreshLayout(swipeRefresh);
+    }
+
+    public void setSwipeRefreshLayout(SwipeRefreshLayout swipeRefreshLayout) {//解决刷新冲突问题下拉刷新监听
+        swipeRefreshLayout.setOnChildScrollUpCallback(new SwipeRefreshLayout.OnChildScrollUpCallback() {//设置子视图是否允许滚动到顶部
+            @Override
+            public boolean canChildScrollUp(SwipeRefreshLayout parent, @Nullable View child) {
+                if (recyclerView == null) {
+                    return false;
+                }
+                LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+                return linearLayoutManager.findFirstCompletelyVisibleItemPosition() != 0;
+            }
+        });
     }
 
 
