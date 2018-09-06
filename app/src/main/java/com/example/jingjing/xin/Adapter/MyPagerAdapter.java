@@ -22,14 +22,14 @@ public class MyPagerAdapter extends PagerAdapter {
         return mviewList != null ? mviewList.size() : 0;
     }
 
+    //判断是否要生成新子视图，相等就不产生了
     @Override
     public boolean isViewFromObject(View view, Object object) {
         return view == object;
     }
 
-    /**
-     * 将当前的View添加到ViewGroup容器中
-     * 这个方法，return一个对象，这个对象表明了PagerAdapter适配器选择哪个对象放在当前的ViewPage上
+    /*为给定的位置创建相应的View。创建View之后,需要在该方法中自行添加到container中。
+     * return一个对象，这个对象表明了PagerAdapter适配器选择哪个对象放在当前的ViewPage上
      */
     @Override
     public Object instantiateItem(ViewGroup container, int position) {

@@ -74,7 +74,6 @@ import static com.example.jingjing.xin.constant.Conatant.URL_SPORTSTYPE;
  */
 public class  BookingFragment extends BaseFragment {
 
-    private ArrayList bannerLists= new ArrayList<>();;
     private BGABanner  mContentBanner;
 
     private ViewPager viewPager;
@@ -182,9 +181,10 @@ public class  BookingFragment extends BaseFragment {
             }
         });
     }
+
     //banner设置轮播图
     private void setBGAbanner(){
-        mContentBanner.setAdapter(new BGABanner.Adapter<ImageView,String>() {
+        mContentBanner.setAdapter(new BGABanner.Adapter<ImageView,String>() {//加载服务器图片
         @Override
         public void fillBannerItem(BGABanner banner, ImageView imageView, @Nullable String model, int position) {
             Glide.with(BookingFragment.this)
@@ -291,13 +291,14 @@ public class  BookingFragment extends BaseFragment {
                         JSONObject js = results.getJSONObject(i);
                         App app = new App();
                         app.setName(js.getString("sportsname"));
-                        app.setIcon(URL_SPORTSTYPE + js.getString("sportsicon"));
+                        app.setIcon(URL_SPORTSTYPE + js.optString("sportsicon"));
                         mDatas.add(app);
                     }
 
-                    pageCount = (int) Math.ceil(mDatas.size() * 1.0 / pageSize);
+                    pageCount = (int) Math.ceil(mDatas.size() * 1.0 / pageSize);//计算页数
                     mViewList = new ArrayList<>();
                     for (int a = 0; a < pageCount; a++) {
+                        //每个页面都是inflate出一个新实例
                         final GridView gridView = (GridView) View.inflate(mContext, R.layout.grid_view, null);
                         gridView.setSelector(new ColorDrawable(Color.TRANSPARENT));//去掉GridView的选择与被选择的默认样式
 
@@ -319,10 +320,11 @@ public class  BookingFragment extends BaseFragment {
                         });
                         mViewList.add(gridView);
                     }
+
                     MyPagerAdapter pagerAdapter=new MyPagerAdapter(mViewList); //设置适配器
                     viewPager.setAdapter(pagerAdapter);
 
-                    for (int i = 0; i < pageCount; i++) {
+                    for (int i = 0; i < pageCount; i++) {//小圆点
                         mDots.addView(LayoutInflater.from(getContext()).inflate(R.layout.dots,null));//加载布局
                     }
 
@@ -424,6 +426,7 @@ public class  BookingFragment extends BaseFragment {
                         });
                         flipper.addView(content);
                     }
+
                     mCity = new ArrayList();
                     JSONArray cityresults = results.getJSONArray("city");
                     for (int i = 0; i < cityresults.length(); i++) {
@@ -502,7 +505,9 @@ public class  BookingFragment extends BaseFragment {
                         stadium.setIconnum(js.getInt("iconnum"));
                         mData.add(stadium);
                     }
-                    List<String>mbagbanner = new ArrayList<>();//给banner加载图片，来自于场馆的图片
+
+                    //banner数据源
+                    List<String> mbagbanner = new ArrayList<>();//给banner加载图片，来自于场馆的图片
                     for(int i=0; i<3;i++){
                         mbagbanner.add(mData.get(i).getMainpicture());
                     }
@@ -514,7 +519,7 @@ public class  BookingFragment extends BaseFragment {
                    mContentBanner.setData(mbagbanner,mbagbanner1);
                    mContentBanner.setDelegate(new BGABanner.Delegate() {
                         @Override
-                        public void onBannerItemClick(BGABanner banner, View itemView, @Nullable Object model, int position) {
+                        public void onBannerItemClick(BGABanner banner, View itemView, @Nullable Object model, int position) {//点击事件
                             Stadium stadium = mData.get(position);
                             Intent intent = new Intent(getContext(), StadiumActivity.class);
                             Bundle mbundle = new Bundle();

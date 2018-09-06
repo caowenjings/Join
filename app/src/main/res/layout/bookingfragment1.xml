@@ -12,10 +12,12 @@
         android:layout_width="match_parent"
         android:layout_height="180dp"
         app:banner_pageChangeDuration="1000"
-        app:banner_pointAutoPlayAble="false"
+        app:banner_pointAutoPlayInterval="3000"
+        app:banner_pointAutoPlayAble="true"
         app:banner_pointContainerBackground="@android:color/transparent"
         app:banner_pointDrawable="@drawable/bga_banner_selector_point_hollow"
         app:banner_pointTopBottomMargin="15dp"
+        app:banner_pointLeftRightMargin="5dp"
         app:banner_transitionEffect="alpha"></cn.bingoogolapple.bgabanner.BGABanner>
 
     <RelativeLayout

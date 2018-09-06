@@ -27,7 +27,6 @@ public class GridViewAdapter extends BaseAdapter {
     private int curIndex;//页数下标,从0开始(当前是第几页)
     private int pageSize;//每一页显示的个数
     private Context mContext;
-    private User mUser;
 
     public GridViewAdapter(Context context, List<App> mDatas, int curIndex, int pageSize) {
         inflater = LayoutInflater.from(context);
@@ -64,9 +63,9 @@ public class GridViewAdapter extends BaseAdapter {
             viewHolder = new ViewHolder();
             viewHolder.tv = (TextView) convertView.findViewById(R.id.text_icon);
             viewHolder.iv = (ImageView) convertView.findViewById(R.id.image_icon);
-            convertView.setTag(viewHolder);
+            convertView.setTag(viewHolder);////使用tag存放View对应在适配器数据集中的位置参数
         } else {
-            viewHolder = (ViewHolder) convertView.getTag();
+            viewHolder = (ViewHolder) convertView.getTag();//从tag中取出位置参数
         }
 
         int mposition = position + curIndex * pageSize;//计算正确的position = position + curIndex * pageSize，
