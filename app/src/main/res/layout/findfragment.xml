@@ -29,13 +29,13 @@
             android:id="@+id/mian_city"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
-            android:textSize="20sp"
+            android:textSize="23sp"
             android:textColor="@color/colorwhite"
             android:layout_marginTop="15dp"/>
 
         <LinearLayout
             android:orientation="vertical"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -48,14 +48,16 @@
             <TextView
                 android:id="@+id/main_wendu"
                 android:layout_width="wrap_content"
-                android:layout_height="40dp"
+                android:layout_height="wrap_content"
                 android:textSize="20sp"
+                android:layout_marginTop="5dp"
                 android:textColor="@color/colorwhite"/>
             <TextView
                 android:id="@+id/main_fengli"
                 android:layout_width="wrap_content"
-                android:layout_height="40dp"
+                android:layout_height="wrap_content"
                 android:textSize="20sp"
+                android:layout_marginTop="5dp"
                 android:textColor="@color/colorwhite"/>
         </LinearLayout>
 
@@ -153,7 +155,7 @@
                         android:layout_height="wrap_content"
                         android:textColor="@color/colorblue"
                         android:layout_gravity="center_horizontal|center_vertical"
-                        android:textSize="20dp"/>
+                        android:textSize="20sp"/>
 
                     <LinearLayout
                         android:descendantFocusability="blocksDescendants"

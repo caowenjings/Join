@@ -136,7 +136,6 @@ public class StadiumCollection extends AppCompatActivity {
         });
     }
 
-
     private  void stadiumcollection(int userId){
         String SearchUrl = URL_SEARCHCOLLECTSTADIUM;
         new StadiumCollection.StadiumCollectionAsyncTask().execute(SearchUrl,String.valueOf(userId));
@@ -192,6 +191,7 @@ public class StadiumCollection extends AppCompatActivity {
                         stadium.setIconnum(js.getInt("iconnum"));
                         stadium.setOpentime(js.getString("opentime"));
                         stadium.setClosetime(js.getString("closetime"));
+                        stadium.setStadiumtel(js.getString("stadiumtel"));
                         mData.add(stadium);
                     }
                     frame_one.addView(frame_you);//添加布局

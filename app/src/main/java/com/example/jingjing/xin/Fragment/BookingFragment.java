@@ -7,6 +7,8 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -116,7 +118,7 @@ public class  BookingFragment extends BaseFragment {
         swipeRefreshLayout=(SwipeRefreshLayout)view.findViewById(R.id.sr_booking);
         recyclerView = (RecyclerView)view.findViewById(R.id.rv_stadium);
         linearLayoutManager=new LinearLayoutManager(mContext);
-        mLocationClient = new LocationClient(mContext);
+        mLocationClient = new LocationClient(mContext);//接收全局的参数Context
         return view;
     }
 
@@ -124,11 +126,10 @@ public class  BookingFragment extends BaseFragment {
     protected void initData() {
         user = (User) getActivity().getIntent().getSerializableExtra("user");
         setBGAbanner();//轮播图
-        LoadingGongGao();//下载公告
-        LoadingCitys();//获取选择处的城市
+        LoadingGongGao();//下载公告和获取选择处的城市
         LoadingSportsApp();//获取spotrs图标
         requestLocation();//定位
-        mLocationClient.registerLocationListener(new MyLocationListener());
+        mLocationClient.registerLocationListener(new MyLocationListener());//定位监听
 
         tv_city.setOnClickListener(new View.OnClickListener() {//选择城市
             @Override
@@ -162,7 +163,7 @@ public class  BookingFragment extends BaseFragment {
         swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent, R.color.colorPrimary, R.color.colorYellow);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
-            public void onRefresh() {
+            public void onRefresh() {//刷新
                 Loading(tv_city.getText().toString());
                 swipeRefreshLayout.setRefreshing(false);
             }
@@ -170,7 +171,7 @@ public class  BookingFragment extends BaseFragment {
 
         btn_searchstadium.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v) {//跳转搜索界面
                 Intent intent=new Intent(mContext,SearchStadium.class);
                 Bundle mBundle = new Bundle();
                 mBundle.putSerializable("user",user);
@@ -196,56 +197,6 @@ public class  BookingFragment extends BaseFragment {
                     .into(imageView);
         }
     });
-    }
-
-    private void LoadingCitys() {//获取城市
-        String url = URL_CITY;
-        new CitysAsyncTask().execute(url);
-    }
-    private class CitysAsyncTask extends AsyncTask<String, Integer, String> {
-        public CitysAsyncTask() {
-        }
-        @Override
-        protected String doInBackground(String... params) {
-            Response response = null;
-            String results = null;
-            JSONObject json = new JSONObject();
-            try {
-                OkHttpClient okHttpClient = new OkHttpClient();
-                RequestBody requestBody = RequestBody.create(JSON, String.valueOf(json));
-                Request request = new Request.Builder()
-                        .url(params[0])
-                        .post(requestBody)
-                        .build();
-                response = okHttpClient.newCall(request).execute();
-                results = response.body().string();
-                //判断请求是否成功
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return results;
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            System.out.println("返回的数据：" + s);
-            mCity = new ArrayList();
-            if (!"null".equals(s)) {
-                try {
-                    JSONArray results = new JSONArray(s);
-                    for (int i = 0; i < results.length(); i++) {
-                        JSONObject js = results.getJSONObject(i);
-                        String city = js.getString("cityname");
-                        mCity.add(city);
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            } else {
-                System.out.println("结果为空");
-                Toast.makeText(mContext, "获取城市失败", Toast.LENGTH_LONG).show();
-            }
-        }
     }
 
 
@@ -359,7 +310,7 @@ public class  BookingFragment extends BaseFragment {
     }
 
 
-    private void LoadingGongGao(){//装载公告
+    private void LoadingGongGao(){//装载公告和获取城市
         String gonggaoUrl = URL_NOTICE;
         new GongGaoAsyncTask().execute(gonggaoUrl);
 
@@ -395,7 +346,7 @@ public class  BookingFragment extends BaseFragment {
         @Override
         protected void onPostExecute(String s) {
             System.out.println("返回的数据：" + s);
-            List<Notice> testList = new ArrayList<>();
+            List<Notice>  testList = new ArrayList<>();
             if (!TextUtils.isEmpty(s)) {
                 try {
                     JSONObject results = new JSONObject(s);
@@ -424,7 +375,7 @@ public class  BookingFragment extends BaseFragment {
                                 }
                             }
                         });
-                        flipper.addView(content);
+                        flipper.addView(content); //向viewFlipper中动态添加View
                     }
 
                     mCity = new ArrayList();
@@ -446,7 +397,7 @@ public class  BookingFragment extends BaseFragment {
 
 
 
-    private void Loading(String tv_city) {//根据城市出现场馆
+    private void Loading(String tv_city) {//根据选择的城市出现场馆
         String loadingUrl = URL_LOADINGORDER;
         new LoadingAsyncTask().execute(loadingUrl, tv_city);
     }
@@ -478,6 +429,23 @@ public class  BookingFragment extends BaseFragment {
             }
             return results;
         }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog = new ProgressDialog(mContext, R.style.ThemeDialog);
+            progressDialog.setMessage("加载中，请稍后....");
+            progressDialog.show();
+
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            super.onProgressUpdate(values);
+            progressDialog.setProgress(values[0]);
+
+        }
+
         @Override
         protected void onPostExecute(String s) {
             System.out.println("返回的数据："+s);
@@ -535,6 +503,13 @@ public class  BookingFragment extends BaseFragment {
                     StadiumAdapter adapter = new StadiumAdapter(mContext,mData,user);
                     recyclerView.setNestedScrollingEnabled(false);
                     recyclerView.setAdapter(adapter);//适配器
+                    new Handler(new Handler.Callback() {
+                        @Override
+                        public boolean handleMessage(Message msg) {
+                            progressDialog.dismiss();
+                            return false;
+                        }
+                    }).sendEmptyMessageDelayed(0,2000);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -551,22 +526,7 @@ public class  BookingFragment extends BaseFragment {
         }
     }
 
-    private void requestLocation(){//定位
-        initLocation();
-        mLocationClient.start();
-
-    }
-
-    private void initLocation(){
-        LocationClientOption option = new LocationClientOption();
-        option.setIsNeedAddress(true);
-        option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy); //可选，默认高精度，设置定位模式，高精度，低功耗，仅设备
-        // option.setScanSpan(5000);//设置更新的间隔,5秒更新一下当前的位置
-        mLocationClient.setLocOption(option);
-    }
-
-
-    public void doSelect(View view){//搜索列表选项
+    public void   doSelect(View view){//搜索列表选项城市
         SerachSelectDialog.Builder alert = new SerachSelectDialog.Builder(mContext);
         alert.setListData(mCity);
         alert.setTitle("请选择城市");
@@ -576,7 +536,6 @@ public class  BookingFragment extends BaseFragment {
                 tv_city.setText(info);//显示选择的城市
                 city=tv_city.getText().toString();//得到选择的城市
                 swipeRefreshLayout.post(new Runnable() {
-
                     @Override
                     public void run() {
                         swipeRefreshLayout.setRefreshing(true);//更新
@@ -595,8 +554,21 @@ public class  BookingFragment extends BaseFragment {
     }
 
 
-    private class MyLocationListener implements BDLocationListener
-    {
+    private void requestLocation(){//开始定位
+        initLocation();
+        mLocationClient.start();
+
+    }
+
+    private void initLocation(){//实时更新位置
+        LocationClientOption option = new LocationClientOption();
+        option.setIsNeedAddress(true);
+        option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy); //可选，默认高精度，设置定位模式，高精度，低功耗，仅设备
+        mLocationClient.setLocOption(option);
+    }
+
+
+    private class MyLocationListener implements BDLocationListener {//定位的结果给注册的这个监听器中
         private MyLocationListener() {}
 
         public void onReceiveLocation(final BDLocation BDLocation)
@@ -606,13 +578,12 @@ public class  BookingFragment extends BaseFragment {
             {
                 public void run()
                 {
-                    System.out.println("12" + BDLocation.getCity());
                     if ("".equals(BDLocation.getCity())) {
                         tv_city.setText("城市名");
                     }else {
-                        tv_city.setText(BDLocation.getCity());
+                        tv_city.setText(BDLocation.getCity());//BDLocation调用方法
                         city=tv_city.getText().toString();//得到选择的城市
-                        Loading(tv_city.getText().toString());
+                        Loading(city);//调用服务器
                         mLocationClient.stop();
                         return;
                     }
@@ -628,30 +599,53 @@ public class  BookingFragment extends BaseFragment {
     }
 }
 
- /*
-    public void setDots() {
-        for (int i = 0; i < pageCount; i++) {
-            mDots.addView(inflater.inflate(R.layout.dots, null));//加载布局
-        }
-        mDots.getChildAt(0).findViewById(R.id.v_dot)  // 默认显示第一页
-                .setBackgroundResource(R.drawable.selecet);
 
-        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {//viewpager的点击事件
-            public void onPageSelected(int position) {
-
-                mDots.getChildAt(curIndex)  // 取消圆点选中
-                        .findViewById(R.id.v_dot)
-                        .setBackgroundResource(R.drawable.unselecet);
-
-                mDots.getChildAt(position) // 圆点选中
-                        .findViewById(R.id.v_dot)
-                        .setBackgroundResource(R.drawable.selecet);
-                curIndex = position;
-            }
-            public void onPageScrolled(int arg0, float arg1, int arg2) {
-            }
-            public void onPageScrollStateChanged(int arg0) {
-            }
-        });
-    }
-*/
+//    private void LoadingCitys() {//获取城市
+//        String url = URL_CITY;
+//        new CitysAsyncTask().execute(url);
+//    }
+//    private class CitysAsyncTask extends AsyncTask<String, Integer, String> {
+//        public CitysAsyncTask() {
+//        }
+//        @Override
+//        protected String doInBackground(String... params) {
+//            Response response = null;
+//            String results = null;
+//            JSONObject json = new JSONObject();
+//            try {
+//                OkHttpClient okHttpClient = new OkHttpClient();
+//                RequestBody requestBody = RequestBody.create(JSON, String.valueOf(json));
+//                Request request = new Request.Builder()
+//                        .url(params[0])
+//                        .post(requestBody)
+//                        .build();
+//                response = okHttpClient.newCall(request).execute();
+//                results = response.body().string();
+//                //判断请求是否成功
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//            return results;
+//        }
+//
+//        @Override
+//        protected void onPostExecute(String s) {
+//            System.out.println("返回的数据：" + s);
+//            mCity = new ArrayList();
+//            if (!"null".equals(s)) {
+//                try {
+//                    JSONArray results = new JSONArray(s);
+//                    for (int i = 0; i < results.length(); i++) {
+//                        JSONObject js = results.getJSONObject(i);
+//                        String city = js.getString("cityname");
+//                        mCity.add(city);
+//                    }
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//            } else {
+//                System.out.println("结果为空");
+//                Toast.makeText(mContext, "获取城市失败", Toast.LENGTH_LONG).show();
+//            }
+//        }
+//    }

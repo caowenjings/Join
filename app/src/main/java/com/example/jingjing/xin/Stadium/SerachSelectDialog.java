@@ -75,13 +75,11 @@ public class SerachSelectDialog extends Dialog {
         private boolean state = false;
 
         public Builder(Context context) {
-            //这里传入自定义的style，直接影响此Dialog的显示效果。style具体实现见style.xml
             this.context = context;
             dialog = new SerachSelectDialog(context, R.style.selectDialog);
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             layout = inflater.inflate(R.layout.dialog_select_search, null);
             listView = (ListView) layout.findViewById(R.id.listview);
-            //searchView = (SearchView) layout.findViewById(R.id.searchView);
             searchView = (DialogSearchView) layout.findViewById(R.id.searchView);
             searchBtn = (ImageButton) layout.findViewById(R.id.btn_dialog_select_search);
             closeBtn = (ImageButton) layout.findViewById(R.id.imb_dialog_select_close);
@@ -169,7 +167,6 @@ public class SerachSelectDialog extends Dialog {
             //用户不能通过点击对话框之外的地方取消对话框显示
             dialog.setCanceledOnTouchOutside(false);
             return dialog;
-
         }
 
         public List<String> searchItem(String name) {

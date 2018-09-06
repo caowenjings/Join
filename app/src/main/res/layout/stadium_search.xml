@@ -23,7 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="请输入场馆名字"
-            android:textSize="18sp"
+            android:textSize="16sp"
             android:drawablePadding="40dp"
             android:paddingLeft="20dp"
             android:drawableLeft="@drawable/stadium_search"
@@ -36,7 +36,8 @@
             android:id="@+id/iv_delete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/cha" />
+            android:src="@drawable/cha"
+            android:layout_gravity="center_vertical"/>
 
     </LinearLayout>
 

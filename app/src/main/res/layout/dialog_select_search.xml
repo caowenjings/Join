@@ -5,23 +5,24 @@
     android:orientation="vertical">
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_weight="1"
-        android:background="@drawable/dialog_bg"
         android:layout_height="match_parent"
-        android:orientation="vertical" >
+        android:orientation="vertical"
+        android:background="@drawable/dialog_bg"
+        android:layout_weight="1">
         <RelativeLayout
-            android:background="@android:color/holo_blue_dark"
+            android:background="@color/colorblue"
             android:layout_width="match_parent"
             android:layout_height="50dp">
             <TextView
+                android:id="@+id/tv_dialog_select_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_centerVertical="true"
                 android:textSize="18sp"
-                android:textColor="@android:color/white"
-                android:id="@+id/tv_dialog_select_title"/>
+                android:textColor="@android:color/white" />
             <ImageButton
+                android:id="@+id/btn_dialog_select_search"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:padding="8dp"
@@ -30,9 +31,9 @@
                 android:layout_alignParentRight="true"
                 android:scaleType="centerInside"
                 android:background="@color/transparent"
-                android:src="@drawable/im_search_back"
-                android:id="@+id/btn_dialog_select_search"/>
+                android:src="@drawable/im_search_back" />
         </RelativeLayout>
+
         <com.example.jingjing.xin.Stadium.DialogSearchView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -53,9 +54,9 @@
         android:gravity="center"
         android:background="@color/transparent">
         <ImageButton
+            android:id="@+id/imb_dialog_select_close"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:id="@+id/imb_dialog_select_close"
             android:scaleType="centerInside"
             android:src="@drawable/dialog_close"
             android:background="@color/transparent"/>

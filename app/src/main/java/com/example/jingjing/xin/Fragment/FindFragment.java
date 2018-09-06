@@ -1,23 +1,32 @@
 package com.example.jingjing.xin.Fragment;
 
+import android.annotation.SuppressLint;
 import android.app.FragmentManager;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.jingjing.xin.Activity.LoginActivity;
 import com.example.jingjing.xin.Adapter.FindAdapter;
+import com.example.jingjing.xin.Adapter.SearchSelectAdapter;
 import com.example.jingjing.xin.Base.BaseFragment;
 import com.example.jingjing.xin.Bean.Need;
 import com.example.jingjing.xin.Bean.User;
@@ -95,6 +104,15 @@ public class FindFragment extends BaseFragment{
         swipeRefresh=(SwipeRefreshLayout)view.findViewById(R.id.swipe);
         tv_nofind=(TextView)view.findViewById(R.id.tv_nofind);
         layoutManager=new LinearLayoutManager(getContext());
+
+        swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {//更新
+            @Override
+            public void onRefresh() {
+                initData();
+                swipeRefresh.setRefreshing(false);
+            }
+        });
+
         return  view;
     }
     @Override
@@ -128,19 +146,14 @@ public class FindFragment extends BaseFragment{
         find_information.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new MyWeather().execute(API + BookingFragment.city);
+//                new MyWeather().execute(API + BookingFragment.city);
+                showPasswordSetDailog();
             }
         });
 
         findInformation(user,BookingFragment.city);//根据选择的城市来展示相应的动态
+        new MyWeather().execute(API + BookingFragment.city);//调用天气
 
-        swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {//更新
-            @Override
-            public void onRefresh() {
-                initData();
-                swipeRefresh.setRefreshing(false);
-            }
-        });
     }
 
     private void findInformation(User user,String city) {//服务器
@@ -280,8 +293,69 @@ public class FindFragment extends BaseFragment{
             }else {
                 Toast.makeText(getContext(), "网络异常", Toast.LENGTH_SHORT).show();
             }
-
         }
-
     }
+
+    //天气的弹框
+    private void showPasswordSetDailog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        final AlertDialog dialog = builder.create();
+
+        View view = View.inflate(getContext(), R.layout.tianqi_dialog, null);  // dialog.setView(view);// 将自定义的布局文件设置给dialog
+        dialog.setView(view, 0, 0, 0, 0);// 设置边距为0
+
+        final Button btn_sure =(Button) view.findViewById(R.id.btn_tianqi);
+        final ImageView iv_back = (ImageView)view.findViewById(R.id.iv_title);
+        final TextView iv_title = (TextView) view.findViewById(R.id.tv_title);
+        final EditText et_tianqi = (EditText)view.findViewById(R.id.et_tianqi);
+        final FrameLayout frame_one = (FrameLayout)view.findViewById(R.id.framee_one);
+        final FrameLayout frame_xuan = (FrameLayout)view.findViewById(R.id.frame_xuan);
+        final FrameLayout frame_sou = (FrameLayout)view.findViewById(R.id.frame_sou);
+        final Button btn_sou = (Button)view.findViewById(R.id.btn_sou);
+        final ListView list_city = (ListView) view.findViewById(R.id.list_city);
+        iv_title.setText("请输入城市名");
+
+        frame_one.removeView(frame_xuan);
+
+//        btn_sou.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                frame_one.removeView(frame_xuan);
+//                frame_one.addView(frame_sou);
+//            }
+//        });
+        btn_sure.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("MissingPermission")
+            @Override
+            public void onClick(View v) {
+                String city_tianqi = et_tianqi.getText().toString();
+                new MyWeather().execute(API + city_tianqi);
+                dialog.dismiss();
+            }
+        });
+        iv_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();// 隐藏dialog
+            }
+        });
+        dialog.show();
+
+//        List<String> lists = new ArrayList<>();
+//        for(int i=0 ; i< city.length(); i++){
+//            lists.add(BookingFragment.city);
+//        }
+//
+//        final SearchSelectAdapter sa = new SearchSelectAdapter(getContext(), lists);
+//        list_city.setAdapter(sa);
+//        list_city.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                String city_tianqi = sa.getItem(position);
+//               new MyWeather().execute(API + city_tianqi);
+//                dialog.dismiss();
+//            }
+//        });
+    }
+
 }

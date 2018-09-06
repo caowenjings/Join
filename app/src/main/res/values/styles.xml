@@ -31,6 +31,7 @@
         <item name="colorControlNormal">@color/colorblack</item>
         <item name="colorControlActivated">@color/colorAccent</item>
     </style>
+
     <!--注册界面LinearLayout -->
     <style name="registerLinearLayout">
         <item name="android:layout_width">match_parent</item>
