@@ -20,39 +20,39 @@
             android:orientation="vertical"
             android:layout_weight="1"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp">
 
             <TextView
+                android:text="22"
                 android:id="@+id/tv_stadiumname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorblack"
-                android:textSize="15dp"
-                android:layout_marginLeft="5dp"
+                android:textSize="15sp"
                 android:layout_marginTop="10dp"/>
 
-            <RatingBar
-                android:layout_gravity="center"
-                android:layout_marginTop="5dp"
-                android:id="@+id/rb_ratbar"
-                style="@style/bookingRatingBar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:rating="2"
-                android:numStars="5"
-                android:stepSize="0.5"
-                android:isIndicator="false"
-                android:progressTint="@color/color_redrating"
-                android:background="@color/transparent"/>
-
             <TextView
+                android:text="22"
                 android:id="@+id/tv_stadiumtype"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorblack"
-                android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:textSize="15sp" />
+
+            <RatingBar
+                android:id="@+id/rb_ratbar"
+                android:layout_marginTop="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:numStars="5"
+                android:stepSize="0.5"
+                android:isIndicator="false"
+                android:progressTint="@color/color_redrating"
+                android:background="@color/transparent"
+                style="@style/bookingRatingBar"/>
+
 
             <RelativeLayout
                 android:layout_width="wrap_content"
@@ -64,9 +64,12 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/colorblack"
                     android:textSize="15sp"
+                    android:ellipsize="end"
+                    android:maxEms="6"
+                    android:maxLines="1"
                     android:layout_alignParentRight="true"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="10dp"/>
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp" />
             </RelativeLayout>
         </LinearLayout>
     </LinearLayout>

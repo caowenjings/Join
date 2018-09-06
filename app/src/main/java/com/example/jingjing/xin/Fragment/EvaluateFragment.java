@@ -58,6 +58,7 @@ public class EvaluateFragment extends BaseFragment {
         frame_wu=(FrameLayout)view.findViewById(R.id.frame_wu);
         frame_you=(FrameLayout)view.findViewById(R.id.frame_you);
         layoutManager = new LinearLayoutManager(getContext());
+        recyclerView.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL));
 
         frame_one.removeView(frame_wu);
         frame_one.removeView(frame_you);//移除
@@ -84,7 +85,6 @@ public class EvaluateFragment extends BaseFragment {
 
     }
 
-
     public void setSwipeRefreshLayout(SwipeRefreshLayout swipeRefreshLayout) {//解决刷新冲突问题
         swipeRefreshLayout.setOnChildScrollUpCallback(new SwipeRefreshLayout.OnChildScrollUpCallback() {
             @Override
@@ -97,6 +97,7 @@ public class EvaluateFragment extends BaseFragment {
             }
         });
     }
+
     private void evaluatefragment(User user){
         String loadingUrl = URL_EVALUATEINFORMATION;
         new EvaluateAsyncTask().execute(loadingUrl, String.valueOf(user.getUserId()));
@@ -135,10 +136,10 @@ public class EvaluateFragment extends BaseFragment {
         protected void onPostExecute(String s) {
             System.out.println(s);
             List<Book> mDate = new ArrayList<>();
-            if(!"null".equals(s)){
+            if(!"null".equals(s) && s != null){
                 try {
                     JSONArray jsonArray = new JSONArray(s);//定义一个JSON数组
-                    for (int i=0;i<jsonArray.length();i++){
+                    for (int i=jsonArray.length()-1;i>=0;i--){
                         JSONObject js = jsonArray.getJSONObject(i);//循环遍历数组
                         Book book = new Book();
                         book.setUserId(user.getUserId());
@@ -154,7 +155,6 @@ public class EvaluateFragment extends BaseFragment {
                     frame_one.addView(frame_you);//添加布局
                     recyclerView.setLayoutManager(layoutManager);
                     EvaluateAdapter adapter = new EvaluateAdapter(getContext(),mDate);
-                    recyclerView.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL));
                     recyclerView.setNestedScrollingEnabled(false);
                     recyclerView.setAdapter(adapter);
 
@@ -168,7 +168,6 @@ public class EvaluateFragment extends BaseFragment {
                 tv_noevaluate.setText("当前没有待评论的预约订单");
                 recyclerView.setLayoutManager(layoutManager);
                 EvaluateAdapter adapter = new EvaluateAdapter(getContext(),mDate);
-                recyclerView.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL));
                 recyclerView.setNestedScrollingEnabled(false);
                 recyclerView.setAdapter(adapter);
             }

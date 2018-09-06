@@ -11,18 +11,19 @@
 
       <ImageView
           android:id="@+id/iv_back"
-          android:layout_width="40dp"
+          android:layout_width="30dp"
           android:layout_height="wrap_content"
+          android:layout_marginLeft="10dp"
           android:layout_centerVertical="true"
           android:layout_alignParentLeft="true"
           android:src="@drawable/go_back_selected"/>
       <TextView
-          android:layout_width="match_parent"
+          android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_marginLeft="60dp"
-          android:layout_centerVertical="true"
-          android:text="评价"
-          android:textSize="25dp"
+          android:layout_centerInParent="true"
+          android:text="评价场馆"
+          android:textSize="20sp"
           android:textColor="@color/colorwhite"/>
       <TextView
           android:id="@+id/tv_fabu"
@@ -32,14 +33,14 @@
           android:layout_centerVertical="true"
           android:textSize="20sp"
           android:text="发布"
+          android:layout_marginRight="10dp"
           android:textColor="@color/colorwhite"/>
   </RelativeLayout>
 
 
-
     <LinearLayout
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
@@ -49,8 +50,6 @@
             android:textSize="18sp"
             android:textColor="@color/colorblack"/>
         <TextView
-            android:text="333"
-            android:layout_margin="10dp"
             android:id="@+id/tv_stadiumname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -80,7 +79,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="18sp"
-        android:text="评价星级"
+        android:text="评价星级:"
         android:textColor="@color/colorblack"/>
     <RatingBar
         android:layout_marginLeft="90dp"
@@ -91,11 +90,12 @@
         android:background="#00000000"
         android:numStars="5"
         android:layout_marginBottom="10dp"/>
-
     <View
         android:layout_width="match_parent"
         android:layout_height="2dp"
-        android:background="@android:color/darker_gray"/>
+        android:background="@android:color/darker_gray"
+        android:layout_marginBottom="10dp"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="120dp"
@@ -103,11 +103,14 @@
         android:background="@drawable/border">
 
         <EditText
+            android:layout_margin="10dp"
             android:id="@+id/et_evaluate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="15sp"
-            android:hint="这次场馆体验满足你的期待吗？说说你的心得，分享给大家吧"/>
+            android:maxLength="3"
+            android:background="#fff"
+            android:hint="     这次场馆体验满足你的期待吗？说说你的心得，分享给大家吧"/>
     </LinearLayout>
 
 </LinearLayout>

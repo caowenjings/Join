@@ -53,6 +53,7 @@ public class NouserorderFragment extends BaseFragment {
         iv_imageview=(ImageView) view.findViewById(R.id.iv_image);
         iv_imageview.setVisibility(View.GONE);//区别于评论
         layoutManager = new LinearLayoutManager(getContext());
+        recyclerView.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL));
         return view;
     }
 
@@ -121,7 +122,7 @@ public class NouserorderFragment extends BaseFragment {
         protected void onPostExecute(String s) {
             System.out.println("返回的数据：" + s);
             List<Book> mData = new ArrayList<>();
-            if (!"null".equals(s)) {
+            if (!"null".equals(s) && s != null) {
                 try {
                     JSONArray results = new JSONArray(s);
                     for (int i=results.length()-1;i>=0;i--) {
@@ -135,7 +136,6 @@ public class NouserorderFragment extends BaseFragment {
                         mData.add(book);
                     }
                     recyclerView.setLayoutManager(layoutManager);
-                    recyclerView.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL));
                     OrderInfromationAdapter adapter = new  OrderInfromationAdapter(mContext, mData);
                     recyclerView.setNestedScrollingEnabled(false);
                     recyclerView.setAdapter(adapter);
@@ -149,7 +149,6 @@ public class NouserorderFragment extends BaseFragment {
                 tv_nouser.setVisibility(View.VISIBLE);
                 tv_nouser.setText("当前没有使用过的预约订单");
                 recyclerView.setLayoutManager(layoutManager);
-                recyclerView.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL));
                 OrderInfromationAdapter adapter = new OrderInfromationAdapter(mContext, mData2);
                 recyclerView.setNestedScrollingEnabled(false);
                 recyclerView.setAdapter(adapter);

@@ -50,7 +50,6 @@ public class SetStadiumAdapter extends RecyclerView.Adapter<SetStadiumAdapter.Vi
         }
     }
 
-
     public SetStadiumAdapter(Context context,List<Stadium> stadiumList){
         mcontext = context;
         mstadiumlist = stadiumList;

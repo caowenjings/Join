@@ -3,12 +3,7 @@
    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <LinearLayout
-        android:id="@+id/find_information"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <include layout="@layout/title_top"></include>
-    </LinearLayout>
+
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipe"
         android:layout_width="match_parent"
@@ -32,13 +27,6 @@
                     android:layout_marginTop="120dp"
                     android:src="@drawable/orderinformation_frist"/>
 
-                <ImageView
-                    android:id="@+id/no_find"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="140dp"
-                    android:src="@drawable/findinformation"/>
                 <TextView
                     android:id="@+id/tv_nobooking"
                     android:layout_width="wrap_content"

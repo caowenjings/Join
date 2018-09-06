@@ -23,6 +23,7 @@ import com.example.jingjing.xin.Bean.Book;
 import com.example.jingjing.xin.Bean.Need;
 import com.example.jingjing.xin.Bean.User;
 import com.example.jingjing.xin.R;
+import com.example.jingjing.xin.Stadium.StadiumCollection;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -44,14 +45,13 @@ import static com.example.jingjing.xin.constant.Conatant.URL_PROFLIE;
 public class MyFindinformation extends AppCompatActivity {
 
     private TextView tv_title;
-    private ImageView iv_title;
     private RelativeLayout tv_back;
 
     private RecyclerView recyclerView;
-    private LinearLayoutManager layoutManager;
-    private TextView tv_nobooking;
     private SwipeRefreshLayout swipeRefreshLayout;
-    private ImageView no_book;
+    private LinearLayoutManager layoutManager;
+    private TextView tv_nojoin;
+    private ImageView no_collection;
     private FrameLayout frame_one;
     private FrameLayout frame_wu;
     private FrameLayout frame_you;
@@ -68,29 +68,28 @@ public class MyFindinformation extends AppCompatActivity {
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);//取消设置透明状态栏
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         getWindow().setStatusBarColor(Color.BLACK);//设置颜色
-        setContentView(R.layout.userorder_information);
+        setContentView(R.layout.stadium_collection);
         initView();
         initData();
     }
 
     private void initView(){
         tv_title=(TextView)findViewById(R.id.tv_title);
-        iv_title=(ImageView)findViewById(R.id.iv_title);
         tv_back=(RelativeLayout)findViewById(R.id.tv_back);
         tv_title.setText("消 息");
 
-
-        tv_nobooking = (TextView)findViewById(R.id.tv_nobooking);
-        no_book = (ImageView) findViewById(R.id.no_book);
-        recyclerView = (RecyclerView)findViewById(R.id.recycler_view);
-        swipeRefreshLayout=(SwipeRefreshLayout)findViewById(R.id.swipe);
-        frame_one=(FrameLayout)findViewById(R.id.frame_one);
-        frame_wu=(FrameLayout)findViewById(R.id.frame_wu);
-        frame_you=(FrameLayout)findViewById(R.id.frame_you);
+        tv_nojoin = (TextView)findViewById(R.id.tv_text);
+        no_collection = (ImageView) findViewById(R.id.iv_icon);
+        recyclerView =(RecyclerView)findViewById(R.id.rv_stadiumcollection);
+        swipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.swipe);
+        frame_one = (FrameLayout)findViewById(R.id.framelayout_one);
+        frame_wu = (FrameLayout)findViewById(R.id.framelayout_wu);
+        frame_you = (FrameLayout)findViewById(R.id.framelayout_you);
         layoutManager = new LinearLayoutManager(this);
+        recyclerView.addItemDecoration(new DividerItemDecoration(MyFindinformation.this,DividerItemDecoration.VERTICAL));
 
+        frame_one.removeView(frame_you);//移除
         frame_one.removeView(frame_wu);
-        frame_one.removeView(frame_you);//移
     }
     private void  initData(){
         user = (User)getIntent().getSerializableExtra("user");
@@ -103,19 +102,19 @@ public class MyFindinformation extends AppCompatActivity {
            }
        });
 
-        myfindinformation(need.getNeedId());
-
         swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
 
+                frame_one.removeView(frame_you);//移除
                 frame_one.removeView(frame_wu);
-                frame_one.removeView(frame_you);
                 myfindinformation(need.getNeedId());
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
+
+        myfindinformation(need.getNeedId());
         setSwipeRefreshLayout(swipeRefreshLayout);
     }
 
@@ -169,7 +168,7 @@ public class MyFindinformation extends AppCompatActivity {
         protected void onPostExecute(String s) {
             System.out.println("返回的数据："+s);
             List<User> mData = new ArrayList<>();
-            if (!"null".equals(s)){
+            if (!"null".equals(s) && s != null){
                 try {
                     JSONArray results = new JSONArray(s);
                     for(int i=results.length()-1;i>=0;i--){
@@ -183,8 +182,8 @@ public class MyFindinformation extends AppCompatActivity {
                     }
                     frame_one.addView(frame_you);//添加布局
                     recyclerView.setLayoutManager(layoutManager);
-                    recyclerView.addItemDecoration(new DividerItemDecoration(MyFindinformation.this,DividerItemDecoration.VERTICAL));
                     JoinUserAdapter adapter = new JoinUserAdapter(MyFindinformation.this,mData);
+                    recyclerView.setNestedScrollingEnabled(false);
                     recyclerView.setAdapter(adapter);
 
                 } catch (JSONException e) {
@@ -194,12 +193,10 @@ public class MyFindinformation extends AppCompatActivity {
                 System.out.println("结果为空");
                 List<User> mData2 = new ArrayList<>();
                 frame_one.addView(frame_wu);//添加布局
-                no_book.setVisibility(View.GONE);
-                tv_nobooking.setText("目前没有动友加入你哟！");
+                no_collection.setVisibility(View.GONE);
+                tv_nojoin.setText("目前没有动友加入你哟！");
                 recyclerView.setLayoutManager(layoutManager);
-                recyclerView.addItemDecoration(new DividerItemDecoration(MyFindinformation.this,DividerItemDecoration.VERTICAL));
                 JoinUserAdapter adapter = new JoinUserAdapter(MyFindinformation.this,mData2);
-                recyclerView.setNestedScrollingEnabled(false);
                 recyclerView.setAdapter(adapter);
             }
         }

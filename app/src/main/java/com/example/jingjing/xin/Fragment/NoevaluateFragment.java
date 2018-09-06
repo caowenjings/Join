@@ -55,6 +55,7 @@ public class NoevaluateFragment extends BaseFragment {
         frame_wu=(FrameLayout)view.findViewById(R.id.frame_wu);
         frame_you=(FrameLayout)view.findViewById(R.id.frame_you);
         layoutManager = new LinearLayoutManager(getContext());
+        recyclerView.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL));
 
         frame_one.removeView(frame_wu);
         frame_one.removeView(frame_you);//移除
@@ -128,10 +129,10 @@ public class NoevaluateFragment extends BaseFragment {
         protected void onPostExecute(String s) {
             System.out.println(s);
             List<Book> mDate = new ArrayList<>();
-            if(!"null".equals(s)){
+            if(!"null".equals(s) && s != null){
                 try {
                     JSONArray jsonArray = new JSONArray(s);//定义一个JSON数组
-                    for (int i=0;i<jsonArray.length();i++){
+                    for (int i=jsonArray.length()-1;i>=0;i--){
                         JSONObject js = jsonArray.getJSONObject(i);//循环遍历数组
                         Book book = new Book();
                         book.setUserId(user.getUserId());
@@ -146,15 +147,12 @@ public class NoevaluateFragment extends BaseFragment {
                     frame_one.addView(frame_you);//添加布局
                     recyclerView.setLayoutManager(layoutManager);
                     EvaluatePastAdapter adapter = new   EvaluatePastAdapter(getContext(),mDate);
-                    recyclerView.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL));
                     recyclerView.setNestedScrollingEnabled(false);
                     recyclerView.setAdapter(adapter);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
-
             }else {
                 System.out.println("结果为空");
                 List<Book> mDate2 = new ArrayList<>();
@@ -162,7 +160,6 @@ public class NoevaluateFragment extends BaseFragment {
                 tv_noevaluate.setText("当前没有已评论的预约订单");
                 recyclerView.setLayoutManager(layoutManager);
                 EvaluatePastAdapter adapter = new   EvaluatePastAdapter(getContext(),mDate);
-                recyclerView.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL));
                 recyclerView.setNestedScrollingEnabled(false);
                 recyclerView.setAdapter(adapter);
             }

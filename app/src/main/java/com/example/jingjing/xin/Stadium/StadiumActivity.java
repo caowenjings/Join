@@ -384,7 +384,7 @@ public class StadiumActivity extends AppCompatActivity  implements View.OnClickL
         @Override
         protected void onPostExecute(String s) {
             System.out.println(s);
-           if(s != null){
+           if(!"null".equals(s) && s != null){
                try {
                    JSONObject result = new JSONObject(s);
                    String js = result.getString("result");
@@ -438,7 +438,7 @@ public class StadiumActivity extends AppCompatActivity  implements View.OnClickL
         protected void onPostExecute(String s) {
             System.out.println("数据：" + s);
             List<Evaluation> mData = new ArrayList<>();
-            if (!"null".equals(s)) {
+            if (!"null".equals(s) && s != null) {
                 try {
                     JSONArray results = new JSONArray(s);
                     for (int i = 0; i < results.length(); i++) {

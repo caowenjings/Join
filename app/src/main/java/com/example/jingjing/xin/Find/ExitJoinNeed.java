@@ -179,7 +179,7 @@ public class ExitJoinNeed extends AppCompatActivity implements View.OnClickListe
         @Override
         protected void onPostExecute(String s) {
             System.out.println(s);
-            if (s != null){
+            if (!"null".equals(s) && s != null){
                 try {
                     JSONObject results = new JSONObject(s);
                     String loginresult = results.getString("result");

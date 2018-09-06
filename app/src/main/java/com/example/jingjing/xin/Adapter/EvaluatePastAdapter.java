@@ -74,7 +74,7 @@ public class EvaluatePastAdapter extends RecyclerView.Adapter<EvaluatePastAdapte
         holder.tv_stadiumname.setText("场馆名："+book.getStadiumname());
         holder.tv_time.setText("今天时间："+book.getTime());
         holder.tv_ordertime.setText("预定时间："+book.getTime_order());
-        holder.tv_place.setText(book.getPlaceName());
+        holder.tv_place.setText("场地号："+book.getPlaceName());
 
     }
 

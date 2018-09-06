@@ -183,7 +183,7 @@ public class FindFragment extends BaseFragment{
         protected void onPostExecute(String s) {
             System.out.println("返回的数据："+s);
             List<Need> mData = new ArrayList<>();
-            if (!"null".equals(s)){
+            if (!"null".equals(s) && s != null){
                 try {
                     JSONArray results = new JSONArray(s);
                     for(int i=results.length()-1;i>=0;i--){

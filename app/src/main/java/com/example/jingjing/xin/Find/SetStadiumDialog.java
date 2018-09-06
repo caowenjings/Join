@@ -92,18 +92,9 @@ public class SetStadiumDialog extends DialogFragment{
        initStadium();
     }
 
-    @NonNull
-    @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
-        Dialog dialog = super.onCreateDialog(savedInstanceState);
-        return dialog;
-    }
-
-
     public interface SetStadiumListener {//设置接口
         void onSetStadiumComplete(Stadium stadium);
     }
-
 
     @Override
     public void onAttach(Context context) {
@@ -114,7 +105,6 @@ public class SetStadiumDialog extends DialogFragment{
             throw new ClassCastException(context.toString());
         }
     }
-
 
     @Override
     public void onDestroy() {
@@ -189,7 +179,7 @@ public class SetStadiumDialog extends DialogFragment{
         protected void onPostExecute(String s) {
             System.out.println("返回的数据："+s);
             List<Stadium> mData = new ArrayList<>();
-            if (!"null".equals(s)){
+            if (!"null".equals(s) && s != null){
                 try {
                     JSONArray results = new JSONArray(s);
                     for(int i=0;i<results.length();i++){
@@ -202,7 +192,7 @@ public class SetStadiumDialog extends DialogFragment{
                         stadium.setIndoor(js.getInt("indoor"));
                         stadium.setAircondition(js.getInt("aircondition"));
                         stadium.setCity(js.getString("city"));
-                        stadium.setMainpicture(URL_PICTURE+js.getString("mainpicture"));
+                        stadium.setMainpicture(URL_PICTURE+js.optString("mainpicture"));
                         stadium.setAdress(js.getString("adress"));
                         stadium.setOpentime(js.getString("opentime"));
                         stadium.setClosetime(js.getString("closetime"));

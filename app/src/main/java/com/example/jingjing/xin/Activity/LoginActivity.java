@@ -1,5 +1,6 @@
 package com.example.jingjing.xin.Activity;
 
+import android.Manifest;
 import android.app.ActionBar;
 import android.app.Dialog;
 import android.content.Intent;
@@ -14,6 +15,7 @@ import android.preference.Preference;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
@@ -71,6 +73,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private SharedPreferences preferences;
     private SharedPreferences.Editor editor;
+    private static final int MY_PERMISSION_REQUEST_CODE = 10000;
 
 
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
@@ -85,6 +88,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         getWindow().setStatusBarColor(Color.BLACK);//设置颜色
         setContentView(R.layout.login);
+        ActivityCompat.requestPermissions(this,new String[]{
+                Manifest.permission.INTERNET,
+                Manifest.permission.ACCESS_COARSE_LOCATION,
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.WRITE_APN_SETTINGS
+        }, MY_PERMISSION_REQUEST_CODE);
 
         initView();
         initData();

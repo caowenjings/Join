@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="180dp">
+    android:layout_height="150dp">
 
    <LinearLayout
        android:layout_weight="16"
@@ -14,8 +14,8 @@
            android:layout_width="match_parent"
            android:layout_height="wrap_content"
            android:layout_marginTop="10dp"
-           android:layout_marginLeft="5dp"
-           android:textSize="20dp"
+           android:layout_marginLeft="10dp"
+           android:textSize="20sp"
            android:textColor="@color/colorblack"/>
 
        <TextView
@@ -23,8 +23,8 @@
            android:layout_width="match_parent"
            android:layout_height="wrap_content"
            android:layout_marginTop="10dp"
-           android:layout_marginLeft="30dp"
-           android:textSize="15dp"
+           android:layout_marginLeft="40dp"
+           android:textSize="15sp"
            android:textColor="@color/colorblack"/>
 
        <TextView
@@ -32,8 +32,8 @@
            android:layout_width="match_parent"
            android:layout_height="wrap_content"
            android:layout_marginTop="10dp"
-           android:layout_marginLeft="30dp"
-           android:textSize="15dp"
+           android:layout_marginLeft="40dp"
+           android:textSize="15sp"
            android:textColor="@color/colorblack" />
 
        <TextView
@@ -41,8 +41,8 @@
            android:layout_width="match_parent"
            android:layout_height="wrap_content"
            android:layout_marginTop="10dp"
-           android:layout_marginLeft="30dp"
-           android:textSize="15dp"
+           android:layout_marginLeft="40dp"
+           android:textSize="15sp"
            android:textColor="@color/colorblack" />
 
    </LinearLayout>
@@ -56,7 +56,7 @@
 
         <ImageView
             android:layout_width="wrap_content"
-            android:layout_height="180dp"
+            android:layout_height="150dp"
             android:src="@drawable/back_right"/>
     </LinearLayout>
 </LinearLayout>

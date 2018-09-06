@@ -54,7 +54,6 @@ public class StadiumOrder extends AppCompatActivity implements View.OnClickListe
 
 
     private TextView tv_title;
-    private ImageView iv_title;
     private RelativeLayout tv_back;
 
     private Button btn_date;
@@ -96,7 +95,6 @@ public class StadiumOrder extends AppCompatActivity implements View.OnClickListe
     private void initView() {
 
         tv_title = (TextView) findViewById(R.id.tv_title);
-        iv_title = (ImageView) findViewById(R.id.iv_title);
         tv_back = (RelativeLayout) findViewById(R.id.tv_back);
         tv_title.setText("预定场地");
 

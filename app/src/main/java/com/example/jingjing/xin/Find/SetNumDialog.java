@@ -3,14 +3,17 @@ package com.example.jingjing.xin.Find;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.NumberPicker;
+import android.widget.Toast;
 
 import com.example.jingjing.xin.Bean.Stadium;
 import com.example.jingjing.xin.R;
@@ -36,6 +39,7 @@ public class SetNumDialog extends DialogFragment implements  NumberPicker.OnValu
         View view = View.inflate(getActivity(), R.layout.list_num, null);//布局
         numberPicker = (NumberPicker) view.findViewById(R.id.numberPicker);
         btn_sure = (Button) view.findViewById(R.id.btn_sure);
+        numberPicker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);//禁止输入
         return view;
     }
 
@@ -63,9 +67,7 @@ public class SetNumDialog extends DialogFragment implements  NumberPicker.OnValu
     public interface SetNumListener {//设置接口
         void onSetNumComplete(int num);
 
-     //   void onSetStadiumComplete(Stadium stadium);
     }
-
 
     @Override
     public void onAttach(Context context) {
@@ -86,9 +88,9 @@ public class SetNumDialog extends DialogFragment implements  NumberPicker.OnValu
     private void initNum() {
         numberPicker.setFormatter(this); //格式化数字，需重写format方法
         numberPicker.setOnValueChangedListener(this); //值变化监听事件
-        numberPicker.setMinValue(1);//最小值
+        numberPicker.setMinValue(0);//最小值
         numberPicker.setMaxValue(20);//最大值
-        numberPicker.setValue(1);//设置初始选定值
+        numberPicker.setValue(0);//设置初始选定值
 
         btn_sure.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,10 +112,11 @@ public class SetNumDialog extends DialogFragment implements  NumberPicker.OnValu
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
         // num=numberPicker.getValue();
-        this.num=newVal;//获取选到的值
+            this.num=newVal;//获取选到的值
     }
 
 }

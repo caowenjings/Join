@@ -129,7 +129,7 @@ public class StadiumPicture extends AppCompatActivity {
                     JSONArray results = new JSONArray(s);
                     for (int i = 0; i < results.length(); i++) {
                         JSONObject js = results.getJSONObject(i);
-                        String icon = URL_PICTURE+js.getString("icon");
+                        String icon = URL_PICTURE+js.optString("icon");
                         mData.add(icon);
                     }
                     GridPictureAdapter gridIconAdapter = new GridPictureAdapter(StadiumPicture.this,mData);

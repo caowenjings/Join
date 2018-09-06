@@ -131,7 +131,7 @@ public class StadiumOrderInformation extends AppCompatActivity implements RadioG
     public void onCheckedChanged(RadioGroup group, int checkedId) {//当 RadioButton 状态变化,同步Viewpager 的选中页面
         switch (checkedId){
             case R.id.rb_userorder:
-                viewPager.setCurrentItem(0,false);//显示第一个Fragment并关闭动画效果
+                viewPager.setCurrentItem(0,false);
                 break;
             case R.id.rb_pastuser:
                 viewPager.setCurrentItem(1,false);

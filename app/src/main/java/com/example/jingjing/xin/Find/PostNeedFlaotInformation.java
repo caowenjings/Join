@@ -94,7 +94,7 @@ public class PostNeedFlaotInformation extends AppCompatActivity {
         fab_add_sport = (FloatingActionButton) findViewById(R.id.fab_add_sport);
         tv_nopostneed = (TextView) findViewById(R.id.no_postneed);
         swipeRefreshLayout=(SwipeRefreshLayout)findViewById(R.id.swipe);
-
+        recyclerView.addItemDecoration(new DividerItemDecoration(PostNeedFlaotInformation.this, DividerItemDecoration.VERTICAL));//分割线
 
         frameLayout_one.removeView(frameLayout_three);
         frameLayout_one.removeView(frameLayout_two);//移除
@@ -187,10 +187,10 @@ public class PostNeedFlaotInformation extends AppCompatActivity {
         protected void onPostExecute(String s) {
             System.out.println("返回的数据：" + s);
             List<Need> mData = new ArrayList<>();
-            if (!"null".equals(s)) {
+            if (!"null".equals(s) && s != null) {
                 try {
                     JSONArray results = new JSONArray(s);
-                    for (int i = 0; i < results.length(); i++) {
+                    for (int i = results.length()-1; i>=0; i--) {
                         JSONObject js = results.getJSONObject(i);
                         Need need = new Need();
                         need.setNeedId(js.getInt("needId"));
@@ -202,9 +202,7 @@ public class PostNeedFlaotInformation extends AppCompatActivity {
                         mData.add(need);
                     }
                     frameLayout_one.addView(frameLayout_three);//添加布局
-
                     recyclerView.setLayoutManager(layoutManager);
-                    recyclerView.addItemDecoration(new DividerItemDecoration(PostNeedFlaotInformation.this, DividerItemDecoration.VERTICAL));//分割线
                     PostNeedAdapter adapter = new PostNeedAdapter(PostNeedFlaotInformation.this, mData);
                     recyclerView.setNestedScrollingEnabled(false);
                     recyclerView.setAdapter(adapter);
@@ -218,7 +216,6 @@ public class PostNeedFlaotInformation extends AppCompatActivity {
                 tv_nopostneed.setText("你还没有约起任何运动，还等什么呢？赶紧约起来吧！");
                 List<Need> mData2 = new ArrayList<>();
                 recyclerView.setLayoutManager(layoutManager);
-                recyclerView.addItemDecoration(new DividerItemDecoration(PostNeedFlaotInformation.this, DividerItemDecoration.VERTICAL));
                 PostNeedAdapter adapter = new PostNeedAdapter(PostNeedFlaotInformation.this, mData);
                 recyclerView.setNestedScrollingEnabled(false);
                 recyclerView.setAdapter(adapter);

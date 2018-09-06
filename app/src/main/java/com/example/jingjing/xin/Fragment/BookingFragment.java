@@ -479,7 +479,7 @@ public class  BookingFragment extends BaseFragment {
         protected void onPostExecute(String s) {
             System.out.println("返回的数据："+s);
             final List<Stadium> mData = new ArrayList<>();
-            if (!"null".equals(s)){
+            if (!"null".equals(s) && s != null){
                 try {
                     JSONArray results = new JSONArray(s);
                     for(int i=0;i<results.length();i++){

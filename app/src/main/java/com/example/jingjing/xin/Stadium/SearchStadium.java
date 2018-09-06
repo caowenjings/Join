@@ -198,7 +198,7 @@ public class SearchStadium extends AppCompatActivity {
         protected void onPostExecute(String s) {
             System.out.println("返回的数据：" + s);
             List<Stadium> mData = new ArrayList<>();
-            if (!"null".equals(s)) {
+            if (!"null".equals(s) && s != null) {
                 try {
                     JSONArray results = new JSONArray(s);
                     for (int i = 0; i < results.length(); i++) {
@@ -211,7 +211,7 @@ public class SearchStadium extends AppCompatActivity {
                         stadium.setIndoor(js.getInt("indoor"));
                         stadium.setAircondition(js.getInt("aircondition"));
                         stadium.setCity(js.getString("city"));
-                        stadium.setMainpicture(URL_PICTURE + js.getString("mainpicture"));
+                        stadium.setMainpicture(URL_PICTURE + js.optString("mainpicture"));
                         stadium.setAdress(js.getString("adress"));
                         stadium.setNum(js.getString("num"));
                         stadium.setOpentime(js.getString("opentime"));

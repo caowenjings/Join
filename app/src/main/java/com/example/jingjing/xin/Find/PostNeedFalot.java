@@ -53,7 +53,6 @@ import static com.example.jingjing.xin.constant.Conatant.URL_INSERTNEED;
 public class PostNeedFalot extends AppCompatActivity implements View.OnClickListener,SetNumDialog.SetNumListener,SetStadiumDialog.SetStadiumListener ,SetOrderTimeDialog.SetOrdertime{
 
     private TextView tv_title;
-    private ImageView iv_title;
     private RelativeLayout tv_back;
 
     public Button btn_stadiumname;
@@ -94,7 +93,6 @@ public class PostNeedFalot extends AppCompatActivity implements View.OnClickList
     private void initView() {
 
         tv_title = (TextView) findViewById(R.id.tv_title);
-        iv_title = (ImageView) findViewById(R.id.iv_title);
         tv_back = (RelativeLayout) findViewById(R.id.tv_back);
         tv_title.setText("约运动");
 
@@ -136,7 +134,12 @@ public class PostNeedFalot extends AppCompatActivity implements View.OnClickList
                 setPlaceClick(v);
                 break;
             case R.id.btn_date:
-                showDataDialog();
+                getEditString();
+                if(TextUtils.isEmpty(stadiumname)){
+                    Toast.makeText(PostNeedFalot.this, "请先选择场馆", Toast.LENGTH_SHORT).show();
+                }else {
+                    showDataDialog();
+                }
                 break;
             case R.id.btn_time:
                 getEditString();
@@ -202,21 +205,10 @@ public class PostNeedFalot extends AppCompatActivity implements View.OnClickList
     }
 
 
-    public void setTimeClick(View v) {
-        SetOrderTimeDialog timed = new SetOrderTimeDialog(set_stadium , tv_date.getText().toString());
-        timed.show(getFragmentManager(),"timePicker");
-    }
-    @Override
-    public void onSetNumComplete(int num) {//选择人数
-          set_num = String.valueOf(num);
-        tv_num.setText(String.valueOf(num) + "位");
-
+    public void getordertime(String time) {//调用接口
+        tv_time.setText(time);
     }
 
-    public void setNumClick(View v) {
-        SetNumDialog std = new SetNumDialog();
-        std.show(getFragmentManager(), "numPicker");
-    }
 
     @Override
     public void onSetStadiumComplete(Stadium stadium) {//实现接口，选择场馆
@@ -228,34 +220,29 @@ public class PostNeedFalot extends AppCompatActivity implements View.OnClickList
         }
     }
 
+    public void setTimeClick(View v) {//选择时间
+        SetOrderTimeDialog timed = new SetOrderTimeDialog(set_stadium , tv_date.getText().toString());
+        timed.show(getFragmentManager(),"timePicker");
+    }
+
+    @Override
+    public void onSetNumComplete(int num) {//选择人数
+        set_num = String.valueOf(num);
+        tv_num.setText(String.valueOf(num) + "位");
+
+    }
+
     public void setPlaceClick(View v) {
         SetStadiumDialog std = new SetStadiumDialog();
         std.show(getSupportFragmentManager(), "adaPicker");
     }
 
-    public void getordertime(String time) {//调用接口
-        tv_time.setText(time);
+
+    public void setNumClick(View v) {
+        SetNumDialog std = new SetNumDialog();
+        std.show(getFragmentManager(), "numPicker");
     }
 
-//    private void showDataDialog() {// 显示日期对话框
-//        DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
-//
-//            @Override
-//            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-//                // 根据对话框的调整，设置日历
-//                mCalendar.set(year, monthOfYear, dayOfMonth);
-//                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");//设置时间格式
-//                tv_date.setText(dateFormat.format(mCalendar.getTime()));// 获取系统当前时间，显示在textview上
-//            }
-//        };
-//        // 创建对话框
-//        DatePickerDialog datePickerDialog = new DatePickerDialog(PostNeedFalot.this, dateSetListener,
-//                myear, mmonth, mday);
-//
-//        datePickerDialog.getDatePicker().setMinDate(new Date().getTime());//选定的最小时间,new Date()为获取当前系统时间
-//        datePickerDialog.getDatePicker().setMaxDate(new Date().getTime() + 3 * 24 * 60 * 60 * 1000);//最大时间
-//        datePickerDialog.show();
-//    }
 
     private void showDataDialog() {// 显示日期对话框
         DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
@@ -263,11 +250,11 @@ public class PostNeedFalot extends AppCompatActivity implements View.OnClickList
             public void onDateSet(DatePicker view, int year, int month, int day) {
                 Calendar calendar = Calendar.getInstance();
                 calendar.set(year, month, day);
-                tv_date.setText(year + "年" + (month+1) + "月" + day + "日");
+                tv_date.setText(year + "年" + (month+1) + "月" + day + "日");// 获取系统当前时间，显示在textview上
             }
         };
         // 创建对话框
-        DatePickerDialog datePickerDialog = new DatePickerDialog(PostNeedFalot.this, dateSetListener,
+        DatePickerDialog datePickerDialog = new DatePickerDialog(PostNeedFalot.this,R.style.MyDatePickerDialogTheme, dateSetListener,
                 myear, mmonth, mday);
         datePickerDialog.getDatePicker().setMinDate(new Date().getTime());//选定的最小时间,new Date()为获取当前系统时间
         datePickerDialog.getDatePicker().setMaxDate(new Date().getTime() + 3 * 24 * 60 * 60 * 1000);//最大时间

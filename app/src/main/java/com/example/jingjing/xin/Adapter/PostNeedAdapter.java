@@ -1,5 +1,7 @@
 package com.example.jingjing.xin.Adapter;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -43,8 +45,8 @@ public class PostNeedAdapter extends RecyclerView.Adapter<PostNeedAdapter.ViewHo
     private List<Need> mneed;
     private Context mcontext;
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
-    public PostNeedAdapter(Context context,List<Need> need){
 
+    public PostNeedAdapter(Context context,List<Need> need){
         mcontext = context;
         mneed = need;
 
@@ -63,14 +65,12 @@ public class PostNeedAdapter extends RecyclerView.Adapter<PostNeedAdapter.ViewHo
         public ViewHolder(View view) {
             super(view);
             postneedview=view;
-
             tv_stadiumname = (TextView) view.findViewById(R.id.tv_stadiumname);
             tv_num = (TextView) view.findViewById(R.id.tv_num);
             tv_time= (TextView) view.findViewById(R.id.tv_time);
             tv_num_join = (TextView) view.findViewById(R.id.tv_num_join);
             tv_remark = (TextView) view.findViewById(R.id.tv_remark);
             btn_delete = (Button) view.findViewById(R.id.btn_delete);
-
 
         }
     }
@@ -85,7 +85,7 @@ public class PostNeedAdapter extends RecyclerView.Adapter<PostNeedAdapter.ViewHo
             @Override
             public void onClick(View v) {
                 int position = holder.getAdapterPosition();
-                Need need =mneed.get(position);//通过position拿到stadium实例
+                Need need =mneed.get(position);//通过position拿到用户点击的
                 Intent intent = new Intent(mcontext,MyFindinformation.class);
                 Bundle mBundle = new Bundle();
                 mBundle.putSerializable("need",need);
@@ -124,9 +124,9 @@ public class PostNeedAdapter extends RecyclerView.Adapter<PostNeedAdapter.ViewHo
         builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                mneed.remove(position);//移除
-                notifyItemRemoved(position);//更新
-                notifyItemRangeChanged(0, mneed.size());
+                mneed.remove(position);//移除指定位置Item
+                notifyItemRemoved(position);//移除recycleview指定位置Item
+                notifyItemRangeChanged(0, mneed.size());//更新指定位置Item
                 deleteorderInformation(need);//调用方法
             }
         });
@@ -136,7 +136,6 @@ public class PostNeedAdapter extends RecyclerView.Adapter<PostNeedAdapter.ViewHo
                 dialog.dismiss();
             }
         });
-
         android.app.AlertDialog dialog=builder.create();//获取dialog
         builder.show();//显示对话框
     }

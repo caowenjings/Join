@@ -1,8 +1,11 @@
 package com.example.jingjing.xin.Stadium;
 
+import android.graphics.Color;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.WindowManager;
@@ -37,7 +40,6 @@ import static com.example.jingjing.xin.constant.Conatant.URL_SELECTEVALUATION;
 public class MyEvaluate extends AppCompatActivity {
 
     private TextView tv_title;
-    private ImageView iv_title;
     private RelativeLayout tv_back;
 
     private TextView tv_stadiumname;
@@ -52,12 +54,15 @@ public class MyEvaluate extends AppCompatActivity {
 
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         android.support.v7.app.ActionBar actionBar =getSupportActionBar();
         actionBar.hide();
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);//取消设置透明状态栏
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        getWindow().setStatusBarColor(Color.BLACK);//设置颜色
         setContentView(R.layout.my_evaluate);
 
         initView();
@@ -67,9 +72,8 @@ public class MyEvaluate extends AppCompatActivity {
     private void initView(){
 
         tv_title=(TextView)findViewById(R.id.tv_title);
-        iv_title=(ImageView)findViewById(R.id.iv_title);
         tv_back=(RelativeLayout)findViewById(R.id.tv_back);
-        tv_title.setText("评价");
+        tv_title.setText("评价信息");
 
         rb_ratbar=(RatingBar)findViewById(R.id.rb_ratbar);
         et_evaluate= ( TextView) findViewById(R.id.et_evaluate);
@@ -143,7 +147,7 @@ public class MyEvaluate extends AppCompatActivity {
                         float grade = (float)results.getDouble("grade");
                         String content = results.getString("content");
                         rb_ratbar.setRating(grade);
-                        tv_grade.setText("评价分数:"+grade);
+                        tv_grade.setText("分数:"+grade);
                         et_evaluate.setText(content);
                     } else {
                         Toast.makeText(MyEvaluate.this, "获取失败,请重试", Toast.LENGTH_SHORT).show();

@@ -1,8 +1,10 @@
 package com.example.jingjing.xin.Stadium;
 
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -29,7 +31,6 @@ import okhttp3.MediaType;
 public class EvaluateInformation extends AppCompatActivity implements RadioGroup.OnCheckedChangeListener,ViewPager.OnPageChangeListener {
 
     private TextView tv_title;
-    private ImageView iv_title;
     private RelativeLayout tv_back;
 
     private RadioGroup rg_userorder;
@@ -44,6 +45,7 @@ public class EvaluateInformation extends AppCompatActivity implements RadioGroup
 
     private static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,7 +65,6 @@ public class EvaluateInformation extends AppCompatActivity implements RadioGroup
     private void initView() {
 
         tv_title = (TextView) findViewById(R.id.tv_title);
-        iv_title = (ImageView) findViewById(R.id.iv_title);
         tv_back = (RelativeLayout) findViewById(R.id.tv_back);
         tv_title.setText("我的评价");
 
@@ -125,13 +126,11 @@ public class EvaluateInformation extends AppCompatActivity implements RadioGroup
 
     }
 
-
-
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
         switch (checkedId){
             case R.id.rb_userorder:
-                viewPager.setCurrentItem(0,false);//显示第一个Fragment并关闭动画效果
+                viewPager.setCurrentItem(0,false);////ViewPager切换Fragment时,当页面切换完成被选中时,同步 RadioButton 的状态
                 break;
             case R.id.rb_pastuser:
                 viewPager.setCurrentItem(1,false);

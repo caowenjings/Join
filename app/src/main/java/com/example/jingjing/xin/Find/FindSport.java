@@ -48,7 +48,6 @@ import static com.example.jingjing.xin.constant.Conatant.URL_PROFLIE;
 public class FindSport extends AppCompatActivity {
 
     private TextView tv_title;
-    private ImageView iv_title;
     private RelativeLayout tv_back;
 
     private RecyclerView recyclerView;
@@ -77,7 +76,6 @@ public class FindSport extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void initView() {
         tv_title = (TextView) findViewById(R.id.tv_title);
-        iv_title = (ImageView) findViewById(R.id.iv_title);
         tv_back = (RelativeLayout) findViewById(R.id.tv_back);
         tv_title.setText("运动圈");
 
@@ -85,6 +83,7 @@ public class FindSport extends AppCompatActivity {
         swipeRefresh=(SwipeRefreshLayout)findViewById(R.id.swipe);
         tv_nofind=(TextView)findViewById(R.id.tv_nofind);
         layoutManager=new LinearLayoutManager(this);
+        recyclerView.addItemDecoration(new DividerItemDecoration(FindSport.this,DividerItemDecoration.VERTICAL));
 
         swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {//更新
             @Override
@@ -162,7 +161,7 @@ public class FindSport extends AppCompatActivity {
         protected void onPostExecute(String s) {
             System.out.println("返回的数据："+s);
             List<Need> mData = new ArrayList<>();
-            if (!"null".equals(s)){
+            if (!"null".equals(s) && s != null){
                 try {
                     JSONArray results = new JSONArray(s);
                     for( int i=results.length()-1;i>=0;i--){
@@ -181,7 +180,6 @@ public class FindSport extends AppCompatActivity {
                         mData.add(need);
                     }
                     recyclerView.setLayoutManager(layoutManager);
-                    recyclerView.addItemDecoration(new DividerItemDecoration(FindSport.this,DividerItemDecoration.VERTICAL));
                     FindAdapter adapter = new FindAdapter(FindSport.this,mData,user,true);
                     recyclerView.setNestedScrollingEnabled(false);
                     recyclerView.setAdapter(adapter);
@@ -194,9 +192,7 @@ public class FindSport extends AppCompatActivity {
                 tv_nofind.setText("当前没有任何召集信息");
                 List<Need> mData2 = new ArrayList<>();
                 recyclerView.setLayoutManager(layoutManager);
-                recyclerView.addItemDecoration(new DividerItemDecoration(FindSport.this,DividerItemDecoration.VERTICAL));
                 FindAdapter adapter = new FindAdapter(FindSport.this,mData,user,true);
-                recyclerView.setNestedScrollingEnabled(false);
                 recyclerView.setAdapter(adapter);
             }
         }
