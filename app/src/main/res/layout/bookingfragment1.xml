@@ -50,7 +50,7 @@
         android:id="@+id/lout3"
         android:layout_below="@+id/lout2"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:background="@color/colorYellow">
         <TextView
             android:layout_marginLeft="10dp"
@@ -63,11 +63,11 @@
         <View
             android:layout_width="2px"
             android:layout_height="fill_parent"
-            android:background="@color/colorqianhui">
+            android:background="@color/colorqianhui"
+            android:layout_marginLeft="5dp">
         </View>
 
         <ViewFlipper
-            android:layout_marginLeft="10dp"
             android:layout_gravity="center_vertical"
             android:id="@+id/flipper"
             android:layout_width="match_parent"

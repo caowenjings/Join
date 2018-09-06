@@ -539,7 +539,6 @@ public class  BookingFragment extends BaseFragment {
                 List<Stadium> mData2 = new ArrayList<>();
                 recyclerView.setLayoutManager(linearLayoutManager);//指定布局方式
                 StadiumAdapter adapter = new StadiumAdapter(mContext,mData2,user);
-                recyclerView.setNestedScrollingEnabled(false);
                 recyclerView.setAdapter(adapter);
                 Toast.makeText(mContext,"该城市上没有体育场所加入",Toast.LENGTH_LONG).show();
 

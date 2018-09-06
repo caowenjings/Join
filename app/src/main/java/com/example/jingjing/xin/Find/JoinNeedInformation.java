@@ -87,6 +87,7 @@ public class JoinNeedInformation extends AppCompatActivity {
         recyclerView=(RecyclerView)findViewById(R.id.recycler_view);
         swipeRefreshLayout=(SwipeRefreshLayout)findViewById(R.id.swipe);
         layoutManager=new LinearLayoutManager(this);
+        recyclerView.addItemDecoration(new DividerItemDecoration(JoinNeedInformation.this,DividerItemDecoration.VERTICAL));
 
         swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -181,7 +182,6 @@ public class JoinNeedInformation extends AppCompatActivity {
                         mData.add(need);
                     }
                     recyclerView.setLayoutManager(layoutManager);
-                    recyclerView.addItemDecoration(new DividerItemDecoration(JoinNeedInformation.this,DividerItemDecoration.VERTICAL));
                     FindAdapter adapter = new FindAdapter(JoinNeedInformation.this,mData,user,false);
                     recyclerView.setNestedScrollingEnabled(false);
                     recyclerView.setAdapter(adapter);
@@ -194,9 +194,7 @@ public class JoinNeedInformation extends AppCompatActivity {
                 tv_nofind.setText("你还没有参加任何运动，还等什么呢？赶紧加入我们吧！");
                 List<Need> mData2 = new ArrayList<>();
                 recyclerView.setLayoutManager(layoutManager);
-                recyclerView.addItemDecoration(new DividerItemDecoration(JoinNeedInformation.this,DividerItemDecoration.VERTICAL));
                 FindAdapter adapter = new FindAdapter(JoinNeedInformation.this,mData2,user,false);
-                recyclerView.setNestedScrollingEnabled(false);
                 recyclerView.setAdapter(adapter);
             }
         }

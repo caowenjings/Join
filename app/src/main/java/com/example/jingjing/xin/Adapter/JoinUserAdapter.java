@@ -73,7 +73,7 @@ public class JoinUserAdapter extends RecyclerView.Adapter<JoinUserAdapter.ViewHo
 
         holder.tv_username.setText(user.getUsername());
         holder.tv_usersex.setText("性别："+user.getSex());
-        holder.tv_usertel.setText("电话"+user.getTel());
+        holder.tv_usertel.setText("电话:"+user.getTel());
 
         ImageLoaderConfiguration configuration = ImageLoaderConfiguration.createDefault(mcontext);
         ImageLoader.getInstance().init(configuration);

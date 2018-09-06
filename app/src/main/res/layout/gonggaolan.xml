@@ -6,15 +6,14 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:background="@color/colorYellow">
 
         <ImageView
-            android:layout_marginLeft="5dp"
             android:layout_marginRight="10dp"
             android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:src="@drawable/gonggaolan_information"
+            android:layout_height="25dp"
+            android:src="@drawable/gonggaolan"
             android:layout_gravity="center_vertical"/>
         <TextView
             android:id="@+id/tv_gonggao"

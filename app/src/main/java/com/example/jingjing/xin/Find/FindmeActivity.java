@@ -1,8 +1,10 @@
 package com.example.jingjing.xin.Find;
 
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.WindowManager;
@@ -39,6 +41,7 @@ public class FindmeActivity extends AppCompatActivity {
     private User user;
     private Need need;
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,8 +86,8 @@ public class FindmeActivity extends AppCompatActivity {
         tv_username.setText(need.getUsername());
         tv_stadiumname.setText("地点："+need.getStadiumname());
         tv_time.setText("时间："+need.getTime());
-        tv_num.setText("召集人数："+String.valueOf(need.getNum()));
-        tv_num_join.setText("已加入人数："+String.valueOf(need.getNum_join()));
+        tv_num.setText("召集人数："+String.valueOf(need.getNum())+"人");
+        tv_num_join.setText("已加入人数："+String.valueOf(need.getNum_join())+"人");
         tv_remark.setText("备注："+need.getRemark());
         ImageLoaderConfiguration configuration = ImageLoaderConfiguration.createDefault(this);
         ImageLoader.getInstance().init(configuration);

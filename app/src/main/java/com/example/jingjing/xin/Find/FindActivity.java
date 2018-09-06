@@ -101,8 +101,8 @@ public class FindActivity  extends AppCompatActivity implements View.OnClickList
         tv_username.setText(need.getUsername());
         tv_stadiumname.setText("地点："+need.getStadiumname());
         tv_time.setText("时间："+need.getTime());
-        tv_num.setText("召集人数："+String.valueOf(need.getNum()));
-        tv_num_join.setText("已加入人数："+String.valueOf(need.getNum_join()));
+        tv_num.setText("召集人数："+String.valueOf(need.getNum())+"人");
+        tv_num_join.setText("已加入人数："+String.valueOf(need.getNum_join())+"人");
         tv_remark.setText("备注："+need.getRemark());
         ImageLoaderConfiguration configuration = ImageLoaderConfiguration.createDefault(this);
         ImageLoader.getInstance().init(configuration);

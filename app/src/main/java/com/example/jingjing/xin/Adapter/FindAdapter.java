@@ -119,9 +119,9 @@ public class FindAdapter  extends  RecyclerView.Adapter<FindAdapter.ViewHolder> 
         final Need need = mneed.get(position);
         holder.tv_username.setText(need.getUsername());
         holder.tv_stadiumname.setText("场馆名："+need.getStadiumname());
-        holder.tv_num.setText("召集人数："+need.getNum());
+        holder.tv_num.setText("召集人数："+need.getNum()+"人");
         holder.tv_time.setText("时间："+need.getTime());
-        holder.tv_num_join.setText("加入人数:"+need.getNum_join());
+        holder.tv_num_join.setText("加入人数 :"+need.getNum_join()+"人");
         holder.tv_remark.setText("备注："+need.getRemark());
         holder.tv_releasetime.setText(need.getReleasetime());
 

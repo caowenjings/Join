@@ -28,7 +28,6 @@
                 android:layout_height="50dp">
 
                 <TextView
-                    android:text="22"
                     android:id="@+id/user_name"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
@@ -62,25 +61,22 @@
 
             <TextView
                 android:id="@+id/stadium_name"
-                style="@style/find_me_textview"
-                android:text="22"/>
+                style="@style/find_me_textview" />
 
             <TextView
                 android:id="@+id/tv_time"
-                style="@style/find_me_textview"
-                android:text="22"/>
+                style="@style/find_me_textview" />
             <TextView
                 android:id="@+id/tv_num"
-                style="@style/find_me_textview"
-                android:text="22"/>
+                style="@style/find_me_textview" />
             <TextView
                 android:id="@+id/tv_num_join"
-                style="@style/find_me_textview"
-                android:text="22"/>
+                style="@style/find_me_textview" />
             <TextView
                 android:id="@+id/tv_remark"
-                style="@style/find_me_textview"
-                android:text="22"/>
+                android:singleLine="true"
+                android:ellipsize="end"
+                style="@style/find_me_textview" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>
