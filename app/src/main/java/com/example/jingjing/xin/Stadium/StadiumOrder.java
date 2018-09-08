@@ -215,6 +215,10 @@ public class StadiumOrder extends AppCompatActivity implements View.OnClickListe
 
 
     private void showDataDialog() {// 显示日期对话框
+        final Calendar c = Calendar.getInstance();
+        int year = c.get(Calendar.YEAR);
+        int month = c.get(Calendar.MONTH);
+        int day = c.get(Calendar.DAY_OF_MONTH);
         DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
@@ -224,7 +228,7 @@ public class StadiumOrder extends AppCompatActivity implements View.OnClickListe
         };
         // 创建对话框
         DatePickerDialog datePickerDialog = new DatePickerDialog(StadiumOrder.this,R.style.MyDatePickerDialogTheme,dateSetListener ,
-                myear, mmonth, mday);
+                year, month, day);
         datePickerDialog.getDatePicker().setMinDate(new Date().getTime());//选定的最小时间,new Date()为获取当前系统时间
         datePickerDialog.getDatePicker().setMaxDate(new Date().getTime() + 3 * 24 * 60 * 60 * 1000);//最大时间
         datePickerDialog.show();

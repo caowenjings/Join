@@ -217,10 +217,9 @@ public class  BookingFragment extends BaseFragment {
             JSONObject json = new JSONObject();
             try {
                 OkHttpClient okHttpClient = new OkHttpClient();
-                RequestBody requestBody = RequestBody.create(JSON, String.valueOf(json));
                 Request request = new Request.Builder()
                         .url(params[0])
-                        .post(requestBody)
+                        .get()
                         .build();
                 response = okHttpClient.newCall(request).execute();
                 results = response.body().string();
@@ -325,19 +324,15 @@ public class  BookingFragment extends BaseFragment {
             String results = null;
             JSONObject json = new JSONObject();
             try {
-                json.put("gonggao", 1);
                 OkHttpClient okHttpClient = new OkHttpClient();
-                RequestBody requestBody = RequestBody.create(JSON, String.valueOf(json));
                 Request request = new Request.Builder()
                         .url(params[0])
-                        .post(requestBody)
+                        .get()
                         .build();
                 response = okHttpClient.newCall(request).execute();
                 results = response.body().string();
                 //判断请求是否成功
             } catch (IOException e) {
-                e.printStackTrace();
-            } catch (JSONException e) {
                 e.printStackTrace();
             }
             return results;
@@ -521,7 +516,7 @@ public class  BookingFragment extends BaseFragment {
                 StadiumAdapter adapter = new StadiumAdapter(mContext,mData2,user);
                 recyclerView.setAdapter(adapter);
                 Toast.makeText(mContext,"该城市上没有体育场所加入",Toast.LENGTH_LONG).show();
-
+                progressDialog.dismiss();
             }
         }
     }
@@ -541,7 +536,6 @@ public class  BookingFragment extends BaseFragment {
                         swipeRefreshLayout.setRefreshing(true);//更新
                         Loading(tv_city.getText().toString());
                         swipeRefreshLayout.setRefreshing(true);
-
                         swipeRefreshLayout.setRefreshing(false);
                     }
                 });

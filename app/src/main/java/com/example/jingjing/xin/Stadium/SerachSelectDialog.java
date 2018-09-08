@@ -30,7 +30,6 @@ public class SerachSelectDialog extends Dialog {
         super(context, themeResId);
     }
 
-
    // 设置 Dialog的大小 @param x 宽比例 @param y 高比例
 
     public void setDialogWindowAttr(double x, double y, Activity activity) {

@@ -2,6 +2,7 @@ package com.example.jingjing.xin.Fragment;
 
 import android.annotation.SuppressLint;
 import android.app.FragmentManager;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -12,7 +13,11 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.InputType;
+import android.text.TextUtils;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -21,6 +26,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +35,7 @@ import com.example.jingjing.xin.Adapter.FindAdapter;
 import com.example.jingjing.xin.Adapter.SearchSelectAdapter;
 import com.example.jingjing.xin.Base.BaseFragment;
 import com.example.jingjing.xin.Bean.Need;
+import com.example.jingjing.xin.Bean.Notice;
 import com.example.jingjing.xin.Bean.User;
 import com.example.jingjing.xin.Find.FindSport;
 import com.example.jingjing.xin.Find.MyFindinformation;
@@ -58,13 +65,14 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 import static com.example.jingjing.xin.constant.Conatant.URL_FINDINFORMATION;
+import static com.example.jingjing.xin.constant.Conatant.URL_NOTICE;
 import static com.example.jingjing.xin.constant.Conatant.URL_PROFLIE;
 
 /**
  * Created by jingjing on 2018/4/24.
  */
 
-public class FindFragment extends BaseFragment{
+public class FindFragment extends BaseFragment implements View.OnClickListener{
 
     private LinearLayout add_sport;
     private LinearLayout find_soprt;
@@ -82,6 +90,7 @@ public class FindFragment extends BaseFragment{
     private TextView tv_fengli;
     private TextView tv_city;
     private TextView tv_pm;
+    private List<String> mCity;
 
 
     //利用和风天气
@@ -120,46 +129,45 @@ public class FindFragment extends BaseFragment{
         user = (User) getActivity().getIntent().getSerializableExtra("user");
         need = (Need) getActivity().getIntent().getSerializableExtra("need");
 
-        add_sport.setOnClickListener(new View.OnClickListener() {//发布需求
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getContext(), PostNeedFalot.class);
-                Bundle mbundle = new Bundle();
-                mbundle.putSerializable("user",user);
-                intent.putExtras(mbundle);
-                startActivity(intent);
-            }
-        });
+        add_sport.setOnClickListener(this);
+        find_soprt.setOnClickListener(this);
+        find_information.setOnClickListener(this);
 
-        find_soprt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        findInformation(user,BookingFragment.city);//根据首页选择的城市来展示相应的动态
+        new MyWeather().execute(API + BookingFragment.city);//调用天气
+        LoadingGongGao();//获取城市
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.add_sport://发布需求
+                Intent intent1 = new Intent(getContext(), PostNeedFalot.class);
+                Bundle mbundle1 = new Bundle();
+                mbundle1.putSerializable("user",user);
+                intent1.putExtras(mbundle1);
+                startActivity(intent1);
+                break;
+            case R.id.find_sport://运动圈
                 Intent intent = new Intent(getContext(), FindSport.class);
                 Bundle mbundle = new Bundle();
                 mbundle.putSerializable("user",user);
                 mbundle.putSerializable("city", "成都市");
                 intent.putExtras(mbundle);
                 startActivity(intent);
-            }
-        });
-
-        find_information.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                new MyWeather().execute(API + BookingFragment.city);
+                break;
+            case R.id.find_information://天气
                 showPasswordSetDailog();
-            }
-        });
-
-        findInformation(user,BookingFragment.city);//根据选择的城市来展示相应的动态
-        new MyWeather().execute(API + BookingFragment.city);//调用天气
-
+                break;
+        }
     }
+
 
     private void findInformation(User user,String city) {//服务器
         String loadingUrl = URL_FINDINFORMATION;
         new findInformationAsyncTask().execute(loadingUrl,String.valueOf(user.getUserId()),city);
     }
+
 
     private class findInformationAsyncTask extends AsyncTask<String, Integer, String> {
         public findInformationAsyncTask() {
@@ -236,7 +244,7 @@ public class FindFragment extends BaseFragment{
         }
     }
 
-    class MyWeather extends AsyncTask<String, String, String> {
+    class MyWeather extends AsyncTask<String, String, String> {//天气
         @Override
         protected String doInBackground(String... strings) {
             StringBuffer stringBuffer = null;
@@ -300,7 +308,6 @@ public class FindFragment extends BaseFragment{
     private void showPasswordSetDailog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         final AlertDialog dialog = builder.create();
-
         View view = View.inflate(getContext(), R.layout.tianqi_dialog, null);  // dialog.setView(view);// 将自定义的布局文件设置给dialog
         dialog.setView(view, 0, 0, 0, 0);// 设置边距为0
 
@@ -315,47 +322,99 @@ public class FindFragment extends BaseFragment{
         final ListView list_city = (ListView) view.findViewById(R.id.list_city);
         iv_title.setText("请输入城市名");
 
-        frame_one.removeView(frame_xuan);
+        frame_one.removeView(frame_sou);
 
-//        btn_sou.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                frame_one.removeView(frame_xuan);
-//                frame_one.addView(frame_sou);
-//            }
-//        });
+        btn_sou.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                frame_one.removeView(frame_xuan);
+                frame_one.addView(frame_sou);
+            }
+        });
         btn_sure.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("MissingPermission")
             @Override
             public void onClick(View v) {
+
                 String city_tianqi = et_tianqi.getText().toString();
                 new MyWeather().execute(API + city_tianqi);
                 dialog.dismiss();
             }
         });
+
         iv_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialog.dismiss();// 隐藏dialog
+                dialog.dismiss();
             }
         });
         dialog.show();
+        dialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
 
-//        List<String> lists = new ArrayList<>();
-//        for(int i=0 ; i< city.length(); i++){
-//            lists.add(BookingFragment.city);
-//        }
-//
-//        final SearchSelectAdapter sa = new SearchSelectAdapter(getContext(), lists);
-//        list_city.setAdapter(sa);
-//        list_city.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                String city_tianqi = sa.getItem(position);
-//               new MyWeather().execute(API + city_tianqi);
-//                dialog.dismiss();
-//            }
-//        });
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, mCity);
+        list_city.setAdapter(adapter);
+        list_city.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (view instanceof TextView) {
+                    TextView textView = (TextView) view;
+                    String content = textView.getText().toString();
+                    new MyWeather().execute(API + content);
+                    dialog.dismiss();
+                }
+            }
+        });
     }
 
+
+
+    private void LoadingGongGao(){//获取城市显示出来
+        String gonggaoUrl = URL_NOTICE;
+        new cityAsyncTask().execute(gonggaoUrl);
+    }
+    private class cityAsyncTask extends AsyncTask<String, Integer, String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+            Response response = null;
+            String results = null;
+            JSONObject json = new JSONObject();
+            try {
+                OkHttpClient okHttpClient = new OkHttpClient();
+                Request request = new Request.Builder()
+                        .url(params[0])
+                        .get()
+                        .build();
+                response = okHttpClient.newCall(request).execute();
+                results = response.body().string();
+                //判断请求是否成功
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return results;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            System.out.println("返回的数据：" + s);
+            mCity = new ArrayList();
+            if (!TextUtils.isEmpty(s)) {
+                try {
+                    JSONObject results = new JSONObject(s);
+                    JSONArray cityresults = results.getJSONArray("city");
+                    for (int i = 0; i < cityresults.length(); i++) {
+                        JSONObject js = cityresults.getJSONObject(i);
+                        String city = js.getString("cityname");
+                        mCity.add(city);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                System.out.println("结果为空");
+                Toast.makeText(getContext(), "目前没有城市", Toast.LENGTH_LONG).show();
+            }
+        }
+    }
 }

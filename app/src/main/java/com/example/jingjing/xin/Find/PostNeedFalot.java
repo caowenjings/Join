@@ -245,6 +245,10 @@ public class PostNeedFalot extends AppCompatActivity implements View.OnClickList
 
 
     private void showDataDialog() {// 显示日期对话框
+        final Calendar c = Calendar.getInstance();
+        int year = c.get(Calendar.YEAR);
+        int month = c.get(Calendar.MONTH);
+        int day = c.get(Calendar.DAY_OF_MONTH);
         DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int day) {
@@ -255,7 +259,7 @@ public class PostNeedFalot extends AppCompatActivity implements View.OnClickList
         };
         // 创建对话框
         DatePickerDialog datePickerDialog = new DatePickerDialog(PostNeedFalot.this,R.style.MyDatePickerDialogTheme, dateSetListener,
-                myear, mmonth, mday);
+                year, month, day);
         datePickerDialog.getDatePicker().setMinDate(new Date().getTime());//选定的最小时间,new Date()为获取当前系统时间
         datePickerDialog.getDatePicker().setMaxDate(new Date().getTime() + 3 * 24 * 60 * 60 * 1000);//最大时间
         datePickerDialog.show();
