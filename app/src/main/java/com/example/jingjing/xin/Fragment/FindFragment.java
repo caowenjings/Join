@@ -352,7 +352,7 @@ public class FindFragment extends BaseFragment implements View.OnClickListener{
         dialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
 
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, mCity);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_expandable_list_item_1, mCity);
         list_city.setAdapter(adapter);
         list_city.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
